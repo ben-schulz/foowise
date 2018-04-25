@@ -1,4 +1,4 @@
-import HasType
+import Validity as V
 
 class Cla:
 
@@ -6,5 +6,8 @@ class Cla:
         self.tok = []
         self.typ = []
 
+        self.valid = V.HasType.VALID
+        self.invalid = V.HasType.INVALID
+
     def isValid(self):
-    	return VALID
+    	return self.invalid
