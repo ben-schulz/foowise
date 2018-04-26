@@ -4,7 +4,7 @@ from test_context import Cla
 from test_context import Validity as V
 
 
-class Cla_Test(unittest.TestCase):
+class Test_Cla(unittest.TestCase):
 
     valid = V.HasType.VALID
     invalid = V.HasType.INVALID
