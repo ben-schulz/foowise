@@ -81,6 +81,7 @@ class Test_Cla(unittest.TestCase):
 
         pass
 
+
     def test_addValidity_independentOfImplementationTypes(self):
 
         systemUnderTest = C.Cla()
@@ -94,7 +95,13 @@ class Test_Cla(unittest.TestCase):
 
         self.assertEqual(self.valid, result)
 
+    def test_Empty_hasNoTokensNoTypesAndNoValidities(self):
 
+        systemUnderTest = C.Cla.Empty()
+
+        self.assertEqual(0, len(systemUnderTest.tok))
+        self.assertEqual(0, len(systemUnderTest.typ))
+        self.assertEqual(self.invalid, systemUnderTest.isValid(None, None))
 
 class EquableTestClass:
 

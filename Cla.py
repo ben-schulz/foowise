@@ -2,10 +2,19 @@ import Validity as V
 
 class Cla:
 
-    def __init__(self):
+    def Empty():
+        return Cla()
 
-        self.tok = set()
-        self.typ = set()
+    def __init__(self, tok=None, typ=None):
+
+        if not tok:
+            tok = set()
+
+        if not typ:
+            typ = set()
+
+        self.tok = tok
+        self.typ = typ
 
         self.validities = {}
 

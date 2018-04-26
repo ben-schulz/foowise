@@ -1,0 +1,2 @@
+class InfomorphismConstraintError(Exception):
+    pass

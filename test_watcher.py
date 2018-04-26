@@ -93,7 +93,7 @@ def watcher(test_path, watch_paths=None, testfile_pattern=None):
                 run_tests(test_path, test_files)
 
 
-        time.sleep(2)
+        time.sleep(1)
 
 
 def main():
