@@ -14,38 +14,91 @@ def get_args():
     parser.add_argument('--project', action='store', required=False,
                         help='path to watch for changes')
 
+    parser.add_argument('--pattern', action='store', required=False,
+                        help='pattern to match inside the test directory')
+
     return parser.parse_args()
 
 
-def watcher(test_path, project_path=None):
-    if not project_path:
-        project_path = os.path.dirname(test_path)
+def get_matching_files(project_path, pattern=None):
 
-    f_dict = {}
+    files = os.listdir(project_path)
 
+    if not pattern:
+        return files
+
+    matching_files = []
+
+    for f in files:
+        if fnmatch.fnmatch(f, pattern):
+            matching_files.append(f)
+
+    return matching_files
+
+
+def run_tests(test_path, test_names):
+
+    cmd = ['python3']
+
+    for t in test_names:
+        subprocess.call(cmd + [t])
+
+    print('-' * 70)
+
+
+def get_fullpath_listing(search_path, search_pattern=None):
+
+    filelist = os.listdir(search_path)
+    fullpath_filelist = []
+
+    if not search_pattern:
+        search_pattern = '*'
+
+    for f in filelist:
+        if fnmatch.fnmatch(f, search_pattern):        
+            fullpath_filelist.append(search_path + '/' + f)
+
+    return fullpath_filelist
+
+
+def get_modtime(filepath):
+
+    try:
+        modtime = os.stat(filepath).st_mtime
+    except:
+        modtime = None
+    
+    return modtime
+
+
+def watcher(test_path, watch_paths=None, testfile_pattern=None):
+
+    filemod_lookup = {}
     while True:
-        files = os.listdir(project_path)
 
-        for f in files:
+        test_files = get_fullpath_listing(test_path, testfile_pattern)
 
-            full_path = os.path.join(project_path, f)
-            mod_time = os.stat(full_path).st_mtime
+        watch_files = []
+        for p in watch_paths:
+            watch_files = watch_files + get_fullpath_listing(p)
 
-            if full_path not in f_dict:
-                f_dict[full_path] = mod_time
+        for f in watch_files:
+            mod_time = get_modtime(f)
 
-            elif mod_time != f_dict[full_path]:
-                cmd = ['python', test_path]
-                subprocess.call(cmd)
-                print('-' * 70)
-                f_dict[full_path] = mod_time
+            if f not in filemod_lookup:
+                filemod_lookup[f] = mod_time
 
-        time.sleep(1)
+            elif mod_time != filemod_lookup[f]:
+                filemod_lookup[f] = mod_time
+                run_tests(test_path, test_files)
+
+
+        time.sleep(2)
 
 
 def main():
     args = get_args()
-    w = watcher(args.tests, args.project)
+    w = watcher(args.tests, [args.project, args.tests], args.pattern)
 
 if __name__ == '__main__':
     main()
