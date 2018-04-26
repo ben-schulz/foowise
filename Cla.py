@@ -40,6 +40,16 @@ class Cla:
         return set()
 
 
+    def getTokens(self, someType):
+
+        tokens = []
+        for t in self.validities.keys():
+            if self.valid == self.isValid(t, someType):
+                tokens.append(t)
+
+        return tokens
+
+
     def addValidity(self, someToken, someType):
 
         self.tok.add(someToken)

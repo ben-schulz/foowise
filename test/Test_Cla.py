@@ -43,6 +43,44 @@ class Test_Cla(unittest.TestCase):
 
         self.assertEqual(self.valid, result)
 
+
+    def test_getTypes_returnsAllandOnlyTypesOfGivenToken(self):
+
+        systemUnderTest = C.Cla()
+
+        testToken = 'x'
+        testTypeOne = 1
+        testTypeTwo = 2
+
+        systemUnderTest.addValidity(testToken, testTypeOne)
+        systemUnderTest.addValidity(testToken, testTypeTwo)
+
+        result = systemUnderTest.getTypes(testToken)
+
+        self.assertTrue(testTypeOne in result)
+        self.assertTrue(testTypeTwo in result)
+        self.assertEqual(2, len(result))
+
+
+    def test_getTokens_returnsAllAndOnlyTokensOfType(self):
+
+        systemUnderTest = C.Cla()
+
+        testType = 'x'
+        testTokenOne = 1
+        testTokenTwo = 2
+
+        systemUnderTest.addValidity(testTokenOne, testType)
+        systemUnderTest.addValidity(testTokenTwo, testType)
+
+        result = systemUnderTest.getTokens(testType)
+
+        self.assertTrue(testTokenOne in result)
+        self.assertTrue(testTokenTwo in result)
+        self.assertEqual(2, len(result))
+
+        pass
+
     def test_addValidity_independentOfImplementationTypes(self):
 
         systemUnderTest = C.Cla()
@@ -65,6 +103,7 @@ class EquableTestClass:
 
     def __hash__(self):
         return self.id
+
 
     def __eq__(self, other):
 
