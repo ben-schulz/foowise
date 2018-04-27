@@ -23,12 +23,22 @@ class Infomorphism_Test(unittest.TestCase):
         d = self.testClassification
 
         try:
-            I.Infomorphism.create(p, d, f_Up, f_Down)
+            I.Infomorphism(p, d, f_Up, f_Down)
 
             self.assertTrue(False, "Expected 'InfomorphismConstraintError' raised.")
 
         except IE.InfomorphismConstraintError:
             pass
+
+    def test_create_identity(self):
+
+        f_Up = lambda x : x
+        f_Down = lambda x : x
+
+        p = self.testClassification
+        d = self.testClassification
+
+        result = I.Infomorphism(p, d, f_Up, f_Down)
 
         
 
