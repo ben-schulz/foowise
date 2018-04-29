@@ -81,5 +81,26 @@ class Infomorphism_Test(unittest.TestCase):
             pass
 
 
+    def test_InfomorphismConstraintError_IncludesInvalidRels(self):
+
+        f_Up = lambda x : x
+        f_Down = lambda x : 'alpha'
+
+        p = self.createTestClassification()
+        d = self.createTestClassification()
+
+        p.addValidity('x', 'beta')
+        d.addValidity('x', 'alpha')
+
+        try:
+            I.Infomorphism(p, d, f_Up, f_Down)
+            self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
+        except IE.InfomorphismConstraintError as e:
+            failureCase = (('x', 'alpha'), ('x', 'alpha'))
+
+            message = 'Expected \'' + str(failureCase) + '\' but got: \'' + str(e.constraintViolations) + '\''
+            self.assertTrue(failureCase in e.constraintViolations, message)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -20,8 +20,11 @@ class Infomorphism:
 
         self.f_Down_img = set(self.f_Down.values())
 
-        if not self.satisfiesInfoAxioms():
-            raise IE.InfomorphismConstraintError
+        try:
+            self.satisfiesInfoAxioms()
+
+        except Exception as e:
+            raise e
 
 
     def is_valid_distal(self, x, alpha):
@@ -44,29 +47,32 @@ class Infomorphism:
     def satisfiesInfoAxioms(self):
 
         if not self.f_Up_img.issubset(self.distal.tok):
-            return False
+            raise IE.InfomorphismConstraintError(IE.InfomorphismErroReason.BAD_RANGE_F_UP)
 
         if not self.f_Down_img.issubset(self.proximal.typ):
-            return False
+            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_DOWN)
 
-        invalidProximalTypes = {}
+        infoConstraintViolations = []
         for x in self.proximal.tok:
 
             x_types = self.proximal.getTypes(x)
 
-            f_x = self.f_Up[x]
-            f_x_types = self.distal.getTypes(f_x)
+            f_Up_x = self.f_Up[x]
+            f_x_types = self.distal.getTypes(f_Up_x)
 
-            invalidProximalTypes[x] = set()
             for t in f_x_types:
 
                 f_Down_t = self.f_Down[t]
                 if not self.is_valid_proximal(x, f_Down_t):
 
-                    invalidProximalTypes[x].add(f_Down_t)
+                    badInfoPair = ((x, f_Down_t), (f_Up_x, t))
+                    infoConstraintViolations.append(badInfoPair)
 
-        for x in invalidProximalTypes.keys():
-            if 0 < len(invalidProximalTypes[x]):
-                return False
+        violationCount = len(infoConstraintViolations)
+        if 0 < violationCount:
 
-        return True
+            violationListCount = min(5, violationCount)
+
+            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.INFO_AXIOM_VIOLATED, infoConstraintViolations)
+
+        return
