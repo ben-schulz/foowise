@@ -1,4 +1,5 @@
 import Validity as V
+import InfoPair as I
 
 class Cla:
 
@@ -21,7 +22,11 @@ class Cla:
         if validities:
             vs = self.unpackValidities(validities)
             for v in vs:
+
                 (x, t) = v
+
+                self.tok.add(x)
+                self.typ.add(t)
                 self.addValidity(x, t)
 
         self.valid = V.HasType.VALID
@@ -45,15 +50,34 @@ class Cla:
         return unpacked_vs
 
 
-    def isValid(self, someToken, someType):
+    def isValid(self, theToken, theType):
 
-        typeSet = self.getTypes(someToken)
+        typeSet = self.getTypes(theToken)
 
-        if someType not in typeSet:
+        if theType not in typeSet:
             return self.invalid
 
         else:
             return self.valid
+
+
+    def infoPairsByToken(self, tok):
+
+        pairs = set()
+        for typ in self.validities[tok]:
+            pairs.add(I.InfoPair.valid(tok, typ))
+
+        return pairs
+
+
+    def infoPairsByType(self, typ):
+
+        pairs = set()
+        for tok in self.tok:
+            if typ in self.validities[tok]:
+                pairs.add(I.InfoPair.valid(tok, typ))
+
+        return pairs
 
 
     def addToken(self, newToken):
@@ -64,30 +88,30 @@ class Cla:
         self.typ.add(newType)
 
 
-    def getTypes(self, someToken):
+    def getTypes(self, theToken):
 
-        if someToken in self.validities:
-            return self.validities[someToken]
+        if theToken in self.validities:
+            return self.validities[theToken]
 
         return set()
 
 
-    def getTokens(self, someType):
+    def getTokens(self, theType):
 
         tokens = []
         for t in self.validities.keys():
-            if self.valid == self.isValid(t, someType):
+            if self.valid == self.isValid(t, theType):
                 tokens.append(t)
 
         return tokens
 
 
-    def addValidity(self, someToken, someType):
+    def addValidity(self, theToken, theType):
 
-        self.tok.add(someToken)
-        self.typ.add(someType)
+        self.tok.add(theToken)
+        self.typ.add(theType)
 
-        if someToken not in self.validities:
-            self.validities[someToken] = set()
+        if theToken not in self.validities:
+            self.validities[theToken] = set()
 
-        self.validities[someToken].add(someType)
+        self.validities[theToken].add(theType)

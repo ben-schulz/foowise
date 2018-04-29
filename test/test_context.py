@@ -7,3 +7,5 @@ import Cla
 import Validity
 import Infomorphism
 import InfomorphismConstraintError
+import InfoPair
+import InfoTetrad

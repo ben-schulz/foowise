@@ -17,7 +17,6 @@ class Infomorphism:
         self.f_Down = Infomorphism.calculate_function_image(f_Down, self.distal.typ)
 
         self.f_Up_img = set(self.f_Up.values())
-
         self.f_Down_img = set(self.f_Down.values())
 
         try:

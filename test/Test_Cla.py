@@ -2,7 +2,7 @@ import unittest
 
 from test_context import Cla as C
 from test_context import Validity as V
-
+from test_context import InfoPair as I
 
 class Test_Cla(unittest.TestCase):
 
@@ -181,6 +181,46 @@ class Test_Cla(unittest.TestCase):
         self.assertValid(c, 'y', 'beta')
         self.assertValid(c, 'z', 'gamma')
 
+    def test_infoPairsByToken_ReturnsEachValidType(self):
+
+        vals = {
+            ('y', 'beta'),
+            ('x', 'alpha'),
+            ('z', 'gamma'),
+            ('x', 'beta'),
+        }
+
+        c = C.Cla(validities=vals)
+
+        result = c.infoPairsByToken('x')
+
+        expectAlpha = I.InfoPair.valid('x', 'alpha')
+        expectBeta = I.InfoPair.valid('x', 'beta')
+
+        self.assertEqual(2, len(result))
+        self.assertTrue(expectAlpha in result)
+        self.assertTrue(expectBeta in result)
+
+
+    def test_infoPairsByType_ReturnsEachValidToken(self):
+
+        vals = {
+            ('y', 'beta'),
+            ('x', 'alpha'),
+            ('z', 'gamma'),
+            ('x', 'beta'),
+        }
+
+        c = C.Cla(validities=vals)
+
+        result = c.infoPairsByType('beta')
+
+        expect_x = I.InfoPair.valid('x', 'beta')
+        expect_y = I.InfoPair.valid('y', 'beta')
+
+        self.assertEqual(2, len(result))
+        self.assertTrue(expect_x in result)
+        self.assertTrue(expect_y in result)
 
 
 class EquableTestClass:
