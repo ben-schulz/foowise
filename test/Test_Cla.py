@@ -9,53 +9,66 @@ class Test_Cla(unittest.TestCase):
     valid = V.HasType.VALID
     invalid = V.HasType.INVALID
 
+
+    def assertValid(self, c, tok, typ):
+        result = c.isValid(tok, typ)
+        message = 'Expected ' + str(tok) + " |= " + str(typ)
+        self.assertEqual(self.valid, result, message)
+
+
+    def assertNotValid(self, c, tok, typ):
+        result = c.isValid(tok, typ)
+        message = 'Expected ' + str(tok) + " !|= " + str(typ)
+        self.assertEqual(self.invalid, result, message)
+
+
     def test_isValid_returnsInvalidIfTokenDoesNotHaveType(self):
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
-        result = systemUnderTest.isValid('x', None)
+        result = c.isValid('x', None)
 
-        self.assertEqual(self.invalid, result)
+        self.assertNotValid(c, 'x', None)
 
 
     def test_addToken_addsNewTokenToTokenSet(self):
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
-        systemUnderTest.addToken('t')
+        c.addToken('t')
 
-        self.assertTrue('t' in systemUnderTest.tok)
+        self.assertTrue('t' in c.tok)
 
 
     def test_addType_addsNewTypeToTypeSet(self):
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
-        systemUnderTest.addType('t')
+        c.addType('t')
 
-        self.assertTrue('t' in systemUnderTest.typ)
+        self.assertTrue('t' in c.typ)
 
 
     def test_addValidity_causes_isValidToReturnTrue(self):
 
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
-        systemUnderTest.addValidity('x', 'alpha')
+        c.addValidity('x', 'alpha')
 
-        result = systemUnderTest.isValid('x', 'alpha')
+        result = c.isValid('x', 'alpha')
 
-        self.assertEqual(self.valid, result)
+        self.assertValid(c, 'x', 'alpha')
 
 
     def test_getTypes_returnsAllandOnlyTypesOfGivenToken(self):
 
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
         testToken = 'x'
         testTypeOne = 1
         testTypeTwo = 2
 
-        systemUnderTest.addValidity(testToken, testTypeOne)
-        systemUnderTest.addValidity(testToken, testTypeTwo)
+        c.addValidity(testToken, testTypeOne)
+        c.addValidity(testToken, testTypeTwo)
 
-        result = systemUnderTest.getTypes(testToken)
+        result = c.getTypes(testToken)
 
         self.assertTrue(testTypeOne in result)
         self.assertTrue(testTypeTwo in result)
@@ -64,44 +77,111 @@ class Test_Cla(unittest.TestCase):
 
     def test_getTokens_returnsAllAndOnlyTokensOfType(self):
 
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
         testType = 'x'
         testTokenOne = 1
         testTokenTwo = 2
 
-        systemUnderTest.addValidity(testTokenOne, testType)
-        systemUnderTest.addValidity(testTokenTwo, testType)
+        c.addValidity(testTokenOne, testType)
+        c.addValidity(testTokenTwo, testType)
 
-        result = systemUnderTest.getTokens(testType)
+        result = c.getTokens(testType)
 
         self.assertTrue(testTokenOne in result)
         self.assertTrue(testTokenTwo in result)
         self.assertEqual(2, len(result))
 
-        pass
-
 
     def test_addValidity_independentOfImplementationTypes(self):
 
-        systemUnderTest = C.Cla()
+        c = C.Cla()
 
         testToken = FooClass(1)
         testType = BarClass(2)
 
-        systemUnderTest.addValidity(testToken, testType)
+        c.addValidity(testToken, testType)
 
-        result = systemUnderTest.isValid(testToken, testType)
+        result = c.isValid(testToken, testType)
 
         self.assertEqual(self.valid, result)
 
+
     def test_Empty_hasNoTokensNoTypesAndNoValidities(self):
 
-        systemUnderTest = C.Cla.Empty()
+        c = C.Cla.Empty()
 
-        self.assertEqual(0, len(systemUnderTest.tok))
-        self.assertEqual(0, len(systemUnderTest.typ))
-        self.assertEqual(self.invalid, systemUnderTest.isValid(None, None))
+        self.assertEqual(0, len(c.tok))
+        self.assertEqual(0, len(c.typ))
+        self.assertEqual(self.invalid, c.isValid(None, None))
+
+
+    def test_constructor_populatesValiditiesGivenSet(self):
+
+        vals = {
+            ('x', 'alpha'),
+            ('x', 'beta'),
+            ('y', 'beta'),
+            ('z', 'gamma')
+        }
+
+        c = C.Cla(validities=vals)
+
+        self.assertValid(c, 'x', 'alpha')
+        self.assertValid(c, 'x', 'beta')
+        self.assertValid(c, 'y', 'beta')
+        self.assertValid(c, 'z', 'gamma')
+
+    def test_constructor_populatesValiditiesGivenSet(self):
+
+        vals = {
+            ('x', 'alpha'),
+            ('x', 'beta'),
+            ('y', 'beta'),
+            ('z', 'gamma')
+        }
+
+        c = C.Cla(validities=vals)
+
+        self.assertValid(c, 'x', 'alpha')
+        self.assertValid(c, 'x', 'beta')
+        self.assertValid(c, 'y', 'beta')
+        self.assertValid(c, 'z', 'gamma')
+
+    def test_constructor_populatesValiditiesGivenSet(self):
+
+        vals = {
+            ('x', 'alpha'),
+            ('x', 'beta'),
+            ('y', 'beta'),
+            ('z', 'gamma')
+        }
+
+        c = C.Cla(validities=vals)
+
+        self.assertValid(c, 'x', 'alpha')
+        self.assertValid(c, 'x', 'beta')
+        self.assertValid(c, 'y', 'beta')
+        self.assertValid(c, 'z', 'gamma')
+
+
+    def test_constructor_populatesValiditiesGivenDict(self):
+
+        vals = {
+            'x': {'alpha', 'beta'},
+            'y': {'beta'},
+            'z': {'gamma'},
+            'q': set()
+        }
+
+        c = C.Cla(validities=vals)
+
+        self.assertValid(c, 'x', 'alpha')
+        self.assertValid(c, 'x', 'beta')
+        self.assertValid(c, 'y', 'beta')
+        self.assertValid(c, 'z', 'gamma')
+
+
 
 class EquableTestClass:
 

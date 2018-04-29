@@ -5,21 +5,44 @@ class Cla:
     def Empty():
         return Cla()
 
-    def __init__(self, tok=None, typ=None):
+    def __init__(self, validities=None, tok=None, typ=None):
 
-        if not tok:
-            tok = set()
+        if tok:
+            self.tok = tok
+        else:
+            self.tok = set()
 
-        if not typ:
-            typ = set()
-
-        self.tok = tok
-        self.typ = typ
+        if typ:
+            self.typ = typ            
+        else:
+            self.typ = set()
 
         self.validities = {}
+        if validities:
+            vs = self.unpackValidities(validities)
+            for v in vs:
+                (x, t) = v
+                self.addValidity(x, t)
 
         self.valid = V.HasType.VALID
         self.invalid = V.HasType.INVALID
+
+
+    def unpackValidities(self, vs):
+
+        unpacked_vs = []
+        for v in vs:
+
+            try:
+                (x, t) = v
+                unpacked_vs.append(v)
+
+            except ValueError:
+                v_typ = vs[v]
+                for t in v_typ:
+                    unpacked_vs.append((v, t))
+
+        return unpacked_vs
 
 
     def isValid(self, someToken, someType):
