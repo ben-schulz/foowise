@@ -4,6 +4,7 @@ from test_context import Infomorphism as I
 from test_context import Cla as C
 from test_context import Validity as V
 from test_context import InfomorphismConstraintError as IE
+from test_context import InfoPair as IP
 
 class Infomorphism_Test(unittest.TestCase):
 
@@ -97,7 +98,9 @@ class Infomorphism_Test(unittest.TestCase):
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError as e:
-            failureCase = (('x', 'alpha'), ('x', 'alpha'))
+            inDistal = IP.InfoPair.valid('x', 'alpha')
+            notInProximal = IP.InfoPair.invalid('x', 'alpha')
+            failureCase = (notInProximal, inDistal)
 
             message = 'Expected \'' + str(failureCase) + '\' but got: \'' + str(e.constraintViolations) + '\''
             self.assertTrue(failureCase in e.constraintViolations, message)

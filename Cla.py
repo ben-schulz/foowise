@@ -64,6 +64,10 @@ class Cla:
     def infoPairsByToken(self, tok):
 
         pairs = set()
+
+        if tok not in self.validities:
+            return pairs
+
         for typ in self.validities[tok]:
             pairs.add(I.InfoPair.valid(tok, typ))
 

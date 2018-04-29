@@ -1,6 +1,7 @@
 import Cla as C
 import Validity as V
 import InfomorphismConstraintError as IE
+import InfoPair as I
 
 class Infomorphism:
 
@@ -54,17 +55,20 @@ class Infomorphism:
         infoConstraintViolations = []
         for x in self.proximal.tok:
 
-            x_types = self.proximal.getTypes(x)
+            x_validities = self.proximal.infoPairsByToken(x)
 
             f_Up_x = self.f_Up[x]
-            f_x_types = self.distal.getTypes(f_Up_x)
+            f_x_validities = self.distal.infoPairsByToken(f_Up_x)
 
-            for t in f_x_types:
+            for inDistal in f_x_validities:
 
+                t = inDistal.typ
                 f_Down_t = self.f_Down[t]
                 if not self.is_valid_proximal(x, f_Down_t):
 
-                    badInfoPair = ((x, f_Down_t), (f_Up_x, t))
+                    notInProximal = I.InfoPair.invalid(x, f_Down_t)
+                    badInfoPair = (notInProximal, inDistal)
+
                     infoConstraintViolations.append(badInfoPair)
 
         violationCount = len(infoConstraintViolations)

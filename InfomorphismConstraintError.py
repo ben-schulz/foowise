@@ -38,15 +38,9 @@ class InfomorphismConstraintError(Exception):
 
         message = ''
         for v in violations:
-            message += InfomorphismConstraintError.violationToString(v) + '\n'
+            message += str(v) + '\n'
 
         return message
-
-
-    def violationToString(v):
-        ((x, f_Down_t), (f_Up_x, t)) = v
-
-        return str(v)
 
 
     messages = {
