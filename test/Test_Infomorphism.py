@@ -95,6 +95,7 @@ class Infomorphism_Test(unittest.TestCase):
         try:
             I.Infomorphism(p, d, f_Up, f_Down)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
+
         except IE.InfomorphismConstraintError as e:
             failureCase = (('x', 'alpha'), ('x', 'alpha'))
 
