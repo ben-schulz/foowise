@@ -47,7 +47,7 @@ class Infomorphism:
     def satisfiesInfoAxioms(self):
 
         if not self.f_Up_img.issubset(self.distal.tok):
-            raise IE.InfomorphismConstraintError(IE.InfomorphismErroReason.BAD_RANGE_F_UP)
+            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_UP)
 
         if not self.f_Down_img.issubset(self.proximal.typ):
             raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_DOWN)
