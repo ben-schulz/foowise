@@ -10,3 +10,6 @@ import InfomorphismConstraintError
 import InfoPair
 import InfoTetrad
 import Theory
+import JudgementSet
+import Sequent
+
