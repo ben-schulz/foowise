@@ -9,3 +9,4 @@ import Infomorphism
 import InfomorphismConstraintError
 import InfoPair
 import InfoTetrad
+import Theory
