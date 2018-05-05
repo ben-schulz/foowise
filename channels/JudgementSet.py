@@ -19,6 +19,14 @@ class JudgementSet:
         return len(self.judgements) * sum(individual_hashes)
 
 
+    def try_comparison(action):
+        try:
+            return action()
+
+        except AttributeError:
+            raise NotImplementedError
+
+
     def __eq__(self, other):
 
         return\
@@ -27,8 +35,41 @@ class JudgementSet:
 
 
     def __neq__(self, other):
-
         return not (self == other)
+
+    def __lt__(self, other):
+
+        len_self = len(self.judgements)
+        len_other = len(other.judgements)
+        
+        lt = lambda:\
+             len_self < len_other and\
+             self.judgements.issubset(other.judgements)
+
+        return JudgementSet.try_comparison(lt)
+
+    def __gt__(self, other):
+
+        len_self = len(self.judgements)
+        len_other = len(other.judgements)
+
+        gt = lambda:\
+             len_self > len_other and\
+             other.judgements.issubset(self.judgements)
+
+        return JudgementSet.try_comparison(gt)
+
+
+    def __le__(self, other):
+
+        if(self < other):
+            return True
+
+        return self == other
+
+    
+    def __ge__(self, other):
+        return False
 
 
     def entails(self, other):
