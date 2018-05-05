@@ -1,7 +1,7 @@
 import unittest
 
 from test_context import Cla as C
-from test_context import JudgementSet as J
+from test_context import JudgeSet as J
 from test_context import Sequent as S
 from test_context import Theory as T
 
@@ -9,11 +9,11 @@ class Theory_Test(unittest.TestCase):
 
     def test_entailment_populatesOnInstantiate(self):
 
-        alpha = J.JudgementSet({'alpha'})
-        alpha_and_beta = J.JudgementSet({'alpha', 'beta'})
+        alpha = J.JudgeSet({'alpha'})
+        alpha_and_beta = J.JudgeSet({'alpha', 'beta'})
 
-        beta_or_gamma = J.JudgementSet({'beta', 'gamma'})
-        gamma = J.JudgementSet({'gamma'})
+        beta_or_gamma = J.JudgeSet({'beta', 'gamma'})
+        gamma = J.JudgeSet({'gamma'})
 
         constraints = {
             alpha.entails(beta_or_gamma),
@@ -34,11 +34,11 @@ class Theory_Test(unittest.TestCase):
             'q' : {'1', '2', '3', '4'},
         })
 
-        _1 = J.JudgementSet({'1'})
-        _3 = J.JudgementSet({'3'})
+        _1 = J.JudgeSet({'1'})
+        _3 = J.JudgeSet({'3'})
 
-        _1_2_and_3 = J.JudgementSet({'1', '2', '3'})
-        _4 = J.JudgementSet({'4'})
+        _1_2_and_3 = J.JudgeSet({'1', '2', '3'})
+        _4 = J.JudgeSet({'4'})
 
 
         theory = T.Theory.fromClassification(cla)

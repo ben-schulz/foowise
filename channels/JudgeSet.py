@@ -1,6 +1,6 @@
 import Sequent as S
 
-class JudgementSet:
+class JudgeSet:
 
     def __init__(self, judgements=set()):
         self.judgements = judgements
@@ -46,7 +46,7 @@ class JudgementSet:
              len_self < len_other and\
              self.judgements.issubset(other.judgements)
 
-        return JudgementSet.try_comparison(lt)
+        return JudgeSet.try_comparison(lt)
 
     def __gt__(self, other):
 
@@ -57,7 +57,7 @@ class JudgementSet:
              len_self > len_other and\
              other.judgements.issubset(self.judgements)
 
-        return JudgementSet.try_comparison(gt)
+        return JudgeSet.try_comparison(gt)
 
 
     def __le__(self, other):
