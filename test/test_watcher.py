@@ -11,7 +11,7 @@ def get_args():
     parser.add_argument('--tests', action='store', required=True,
                         help='path to the tests')
 
-    parser.add_argument('--project', action='store', required=False,
+    parser.add_argument('--project', nargs='+', action='store', required=False,
                         help='path to watch for changes')
 
     parser.add_argument('--pattern', action='store', required=False,
@@ -98,7 +98,7 @@ def watcher(test_path, watch_paths=None, testfile_pattern=None):
 
 def main():
     args = get_args()
-    w = watcher(args.tests, [args.project, args.tests], args.pattern)
+    w = watcher(args.tests, args.project, args.pattern)
 
 if __name__ == '__main__':
     main()
