@@ -36,14 +36,11 @@ def get_matching_files(project_path, pattern=None):
     return matching_files
 
 
-def run_tests(test_path, test_names):
+def run_tests(test_path, test_pattern='Test_*.py'):
+    cmd = [ 'python3', '-m', 'unittest', 'discover',\
+           '-s', test_path, '-p', test_pattern]
 
-    cmd = ['python3']
-
-    for t in test_names:
-        subprocess.call(cmd + [t])
-
-    print('-' * 70)
+    subprocess.call(cmd)
 
 
 def get_fullpath_listing(search_path, search_pattern=None):
@@ -71,12 +68,12 @@ def get_modtime(filepath):
     return modtime
 
 
-def watcher(test_path, watch_paths=None, testfile_pattern=None):
+def watcher(test_path, watch_paths=None, test_pattern=None):
 
     filemod_lookup = {}
     while True:
 
-        test_files = get_fullpath_listing(test_path, testfile_pattern)
+        test_files = get_fullpath_listing(test_path, test_pattern)
 
         watch_files = []
         for p in watch_paths:
@@ -90,7 +87,7 @@ def watcher(test_path, watch_paths=None, testfile_pattern=None):
 
             elif mod_time != filemod_lookup[f]:
                 filemod_lookup[f] = mod_time
-                run_tests(test_path, test_files)
+                run_tests(test_path, test_pattern=test_pattern)
 
 
         time.sleep(1)
