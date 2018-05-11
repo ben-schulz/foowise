@@ -1,4 +1,3 @@
-import Validity as V
 import numpy as np
 
 class ClaTable:
@@ -41,7 +40,7 @@ class ClaTable:
         for tok in cla.tok:
             row = []
             for typ in cla.typ:
-                if V.HasType.VALID == cla.isValid(tok, typ):
+                if cla.is_valid(tok, typ):
                     row.append(1)
                 else:
                     row.append(0)

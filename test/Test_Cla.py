@@ -1,31 +1,24 @@
 import unittest
 
 from test_context import Cla as C
-from test_context import Validity as V
 from test_context import InfoPair as I
 
 class Test_Cla(unittest.TestCase):
 
-    valid = V.HasType.VALID
-    invalid = V.HasType.INVALID
-
-
     def assertValid(self, c, tok, typ):
-        result = c.isValid(tok, typ)
+        result = c.is_valid(tok, typ)
         message = 'Expected ' + str(tok) + " |= " + str(typ)
-        self.assertEqual(self.valid, result, message)
+        self.assertTrue(result, message)
 
 
     def assertNotValid(self, c, tok, typ):
-        result = c.isValid(tok, typ)
+        result = c.is_valid(tok, typ)
         message = 'Expected ' + str(tok) + " !|= " + str(typ)
-        self.assertEqual(self.invalid, result, message)
+        self.assertFalse(result, message)
 
 
-    def test_isValid_returnsInvalidIfTokenDoesNotHaveType(self):
+    def test_is_valid_returnsInvalidIfTokenDoesNotHaveType(self):
         c = C.Cla()
-
-        result = c.isValid('x', None)
 
         self.assertNotValid(c, 'x', None)
 
@@ -46,13 +39,13 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue('t' in c.typ)
 
 
-    def test_addValidity_causes_isValidToReturnTrue(self):
+    def test_addValidity_causes_is_validToReturnTrue(self):
 
         c = C.Cla()
 
         c.addValidity('x', 'alpha')
 
-        result = c.isValid('x', 'alpha')
+        result = c.is_valid('x', 'alpha')
 
         self.assertValid(c, 'x', 'alpha')
 
@@ -102,9 +95,7 @@ class Test_Cla(unittest.TestCase):
 
         c.addValidity(testToken, testType)
 
-        result = c.isValid(testToken, testType)
-
-        self.assertEqual(self.valid, result)
+        self.assertTrue(c.is_valid(testToken, testType))
 
 
     def test_Empty_hasNoTokensNoTypesAndNoValidities(self):
@@ -113,7 +104,7 @@ class Test_Cla(unittest.TestCase):
 
         self.assertEqual(0, len(c.tok))
         self.assertEqual(0, len(c.typ))
-        self.assertEqual(self.invalid, c.isValid(None, None))
+        self.assertFalse(c.is_valid(None, None))
 
 
     def test_constructor_populatesValiditiesGivenSet(self):

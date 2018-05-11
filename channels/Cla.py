@@ -1,4 +1,3 @@
-import Validity as V
 import InfoPair as I
 
 class Cla:
@@ -29,9 +28,6 @@ class Cla:
                 self.typ.add(t)
                 self.addValidity(x, t)
 
-        self.valid = V.HasType.VALID
-        self.invalid = V.HasType.INVALID
-
 
     def unpackValidities(self, vs):
 
@@ -50,15 +46,8 @@ class Cla:
         return unpacked_vs
 
 
-    def isValid(self, theToken, theType):
-
-        typeSet = self.getTypes(theToken)
-
-        if theType not in typeSet:
-            return self.invalid
-
-        else:
-            return self.valid
+    def is_valid(self, tok, typ):
+        return typ in self.getTypes(tok)
 
 
     def infoPairsByToken(self, tok):
@@ -104,7 +93,7 @@ class Cla:
 
         tokens = []
         for t in self.validities.keys():
-            if self.valid == self.isValid(t, theType):
+            if self.is_valid(t, theType):
                 tokens.append(t)
 
         return tokens

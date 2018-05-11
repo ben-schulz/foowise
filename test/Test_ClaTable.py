@@ -122,7 +122,7 @@ class ClaTable_Test(unittest.TestCase):
             row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
                 col_ix = ct.typ_to_col[typ]
-                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                if c.is_valid(tok, typ):                    
                     self.assertEqual(1, ct.mat[row_ix, col_ix])
                 else:
                     self.assertEqual(0, ct.mat[row_ix, col_ix])
@@ -143,7 +143,7 @@ class ClaTable_Test(unittest.TestCase):
             row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
                 col_ix = ct.typ_to_col[typ]
-                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                if c.is_valid(tok, typ):                    
                     self.assertEqual(1, ct.mat[row_ix, col_ix])
                 else:
                     self.assertEqual(0, ct.mat[row_ix, col_ix])
@@ -163,7 +163,7 @@ class ClaTable_Test(unittest.TestCase):
             row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
                 col_ix = ct.typ_to_col[typ]
-                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                if c.is_valid(tok, typ):                    
                     self.assertEqual(1, ct.mat[row_ix, col_ix])
                 else:
                     self.assertEqual(0, ct.mat[row_ix, col_ix])

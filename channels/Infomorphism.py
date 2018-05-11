@@ -7,9 +7,6 @@ class Infomorphism:
 
     def __init__(self, c_Proximal, c_Distal, f_Up, f_Down):
 
-        self.valid = V.HasType.VALID
-        self.invalid = V.HasType.INVALID
-
         self.proximal = c_Proximal
         self.distal = c_Distal
 
@@ -28,11 +25,11 @@ class Infomorphism:
 
 
     def is_valid_distal(self, x, alpha):
-        return self.valid == self.distal.isValid(x, alpha)
+        return self.distal.is_valid(x, alpha)
 
 
     def is_valid_proximal(self, x, alpha):
-        return self.valid == self.proximal.isValid(x, alpha)
+        return self.proximal.is_valid(x, alpha)
 
     
     def calculate_function_image(f, dom):
