@@ -53,8 +53,8 @@ class Infomorphism_Test(unittest.TestCase):
         p = self.createTestClassification()
         d = self.createTestClassification()
 
-        p.addValidity('x', 'beta')
-        d.addValidity('x', 'alpha')
+        p.add_validity('x', 'beta')
+        d.add_validity('x', 'alpha')
 
         try:
             I.Infomorphism(p, d, f_Up, f_Down)
@@ -71,8 +71,8 @@ class Infomorphism_Test(unittest.TestCase):
         p = self.createTestClassification()
         d = self.createTestClassification()
 
-        p.addValidity('z', 'alpha')
-        d.addValidity('z', 'alpha')
+        p.add_validity('z', 'alpha')
+        d.add_validity('z', 'alpha')
 
         try:
             I.Infomorphism(p, d, f_Up, f_Down)
@@ -90,8 +90,8 @@ class Infomorphism_Test(unittest.TestCase):
         p = self.createTestClassification()
         d = self.createTestClassification()
 
-        p.addValidity('x', 'beta')
-        d.addValidity('x', 'alpha')
+        p.add_validity('x', 'beta')
+        d.add_validity('x', 'alpha')
 
         try:
             I.Infomorphism(p, d, f_Up, f_Down)

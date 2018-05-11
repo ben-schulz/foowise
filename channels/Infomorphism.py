@@ -52,10 +52,10 @@ class Infomorphism:
         infoConstraintViolations = []
         for x in self.proximal.tok:
 
-            x_validities = self.proximal.infoPairsByToken(x)
+            x_validities = self.proximal.infopairs_by_token(x)
 
             f_Up_x = self.f_Up[x]
-            f_x_validities = self.distal.infoPairsByToken(f_Up_x)
+            f_x_validities = self.distal.infopairs_by_token(f_Up_x)
 
             for inDistal in f_x_validities:
 

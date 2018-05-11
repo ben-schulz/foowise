@@ -23,34 +23,34 @@ class Test_Cla(unittest.TestCase):
         self.assertNotValid(c, 'x', None)
 
 
-    def test_addToken_addsNewTokenToTokenSet(self):
+    def test_add_token_addsNewTokenToTokenSet(self):
         c = C.Cla()
 
-        c.addToken('t')
+        c.add_token('t')
 
         self.assertTrue('t' in c.tok)
 
 
-    def test_addType_addsNewTypeToTypeSet(self):
+    def test_add_type_addsNewTypeToTypeSet(self):
         c = C.Cla()
 
-        c.addType('t')
+        c.add_type('t')
 
         self.assertTrue('t' in c.typ)
 
 
-    def test_addValidity_causes_is_validToReturnTrue(self):
+    def test_add_validity_causes_is_validToReturnTrue(self):
 
         c = C.Cla()
 
-        c.addValidity('x', 'alpha')
+        c.add_validity('x', 'alpha')
 
         result = c.is_valid('x', 'alpha')
 
         self.assertValid(c, 'x', 'alpha')
 
 
-    def test_getTypes_returnsAllandOnlyTypesOfGivenToken(self):
+    def test_get_types_returnsAllandOnlyTypesOfGivenToken(self):
 
         c = C.Cla()
 
@@ -58,10 +58,10 @@ class Test_Cla(unittest.TestCase):
         testTypeOne = 1
         testTypeTwo = 2
 
-        c.addValidity(testToken, testTypeOne)
-        c.addValidity(testToken, testTypeTwo)
+        c.add_validity(testToken, testTypeOne)
+        c.add_validity(testToken, testTypeTwo)
 
-        result = c.getTypes(testToken)
+        result = c.get_types(testToken)
 
         self.assertTrue(testTypeOne in result)
         self.assertTrue(testTypeTwo in result)
@@ -76,24 +76,24 @@ class Test_Cla(unittest.TestCase):
         testTokenOne = 1
         testTokenTwo = 2
 
-        c.addValidity(testTokenOne, testType)
-        c.addValidity(testTokenTwo, testType)
+        c.add_validity(testTokenOne, testType)
+        c.add_validity(testTokenTwo, testType)
 
-        result = c.getTokens(testType)
+        result = c.get_tokens(testType)
 
         self.assertTrue(testTokenOne in result)
         self.assertTrue(testTokenTwo in result)
         self.assertEqual(2, len(result))
 
 
-    def test_addValidity_independentOfImplementationTypes(self):
+    def test_add_validity_independentOfImplementationTypes(self):
 
         c = C.Cla()
 
         testToken = FooClass(1)
         testType = BarClass(2)
 
-        c.addValidity(testToken, testType)
+        c.add_validity(testToken, testType)
 
         self.assertTrue(c.is_valid(testToken, testType))
 
@@ -183,7 +183,7 @@ class Test_Cla(unittest.TestCase):
 
         c = C.Cla(validities=vals)
 
-        result = c.infoPairsByToken('x')
+        result = c.infopairs_by_token('x')
 
         expectAlpha = I.InfoPair.valid('x', 'alpha')
         expectBeta = I.InfoPair.valid('x', 'beta')
@@ -204,7 +204,7 @@ class Test_Cla(unittest.TestCase):
 
         c = C.Cla(validities=vals)
 
-        result = c.infoPairsByType('beta')
+        result = c.infopairs_by_type('beta')
 
         expect_x = I.InfoPair.valid('x', 'beta')
         expect_y = I.InfoPair.valid('y', 'beta')

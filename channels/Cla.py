@@ -17,40 +17,42 @@ class Cla:
         else:
             self.typ = set()
 
+        def unpackValidities(vs):
+
+            unpacked_vs = []
+            for v in vs:
+
+                try:
+                    (x, t) = v
+                    unpacked_vs.append(v)
+
+                except ValueError:
+                    v_typ = vs[v]
+                    for t in v_typ:
+                        unpacked_vs.append((v, t))
+
+            return unpacked_vs
+
+
         self.validities = {}
         if validities:
-            vs = self.unpackValidities(validities)
+            vs = unpackValidities(validities)
             for v in vs:
 
                 (x, t) = v
 
                 self.tok.add(x)
                 self.typ.add(t)
-                self.addValidity(x, t)
+                self.add_validity(x, t)
 
 
-    def unpackValidities(self, vs):
-
-        unpacked_vs = []
-        for v in vs:
-
-            try:
-                (x, t) = v
-                unpacked_vs.append(v)
-
-            except ValueError:
-                v_typ = vs[v]
-                for t in v_typ:
-                    unpacked_vs.append((v, t))
-
-        return unpacked_vs
 
 
     def is_valid(self, tok, typ):
-        return typ in self.getTypes(tok)
+        return typ in self.get_types(tok)
 
 
-    def infoPairsByToken(self, tok):
+    def infopairs_by_token(self, tok):
 
         pairs = set()
 
@@ -63,7 +65,7 @@ class Cla:
         return pairs
 
 
-    def infoPairsByType(self, typ):
+    def infopairs_by_type(self, typ):
 
         pairs = set()
         for tok in self.tok:
@@ -73,15 +75,15 @@ class Cla:
         return pairs
 
 
-    def addToken(self, newToken):
+    def add_token(self, newToken):
         self.tok.add(newToken)
 
 
-    def addType(self, newType):
+    def add_type(self, newType):
         self.typ.add(newType)
 
 
-    def getTypes(self, theToken):
+    def get_types(self, theToken):
 
         if theToken in self.validities:
             return self.validities[theToken]
@@ -89,7 +91,7 @@ class Cla:
         return set()
 
 
-    def getTokens(self, theType):
+    def get_tokens(self, theType):
 
         tokens = []
         for t in self.validities.keys():
@@ -99,7 +101,7 @@ class Cla:
         return tokens
 
 
-    def addValidity(self, theToken, theType):
+    def add_validity(self, theToken, theType):
 
         self.tok.add(theToken)
         self.typ.add(theType)
