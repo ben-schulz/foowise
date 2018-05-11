@@ -1,5 +1,6 @@
 import unittest
 
+from test_context import Validity as V
 from test_context import Cla as C
 from test_context import ClaTable as CT
 
@@ -69,6 +70,105 @@ class ClaTable_Test(unittest.TestCase):
         self.assertEqual(len(c_types), len(table_indices))
 
         self.assertTrue(all(types_present))
+
+
+    def test_from_classification_maps_tokens_to_rows(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'alpha', 'beta', 'zeta'},
+            'z' : {'beta', 'gamma', 'zeta'},
+            'q' : {'alpha', 'gamma', 'zeta'}
+            }
+
+        c_tokens = c_vals.keys()
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        self.assertEqual(c_tokens, ct.tok_to_row.keys())
+
+
+    def test_from_classification_maps_rows_to_tokens(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'alpha', 'beta', 'zeta'},
+            'z' : {'beta', 'gamma', 'zeta'},
+            'q' : {'alpha', 'gamma', 'zeta'}
+            }
+
+        c_tokens = set(c_vals.keys())
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        self.assertEqual(set(c_tokens), set(ct.row_to_tok.values()))
+
+
+    def test_from_classification_produces_the_table_0(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'alpha', 'beta', 'zeta'},
+            'z' : {'beta', 'gamma', 'zeta'},
+            'q' : {'alpha', 'gamma', 'zeta'}
+            }
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        for tok in c_vals.keys():
+            row_ix = ct.tok_to_row[tok]
+            for typ in c.typ:
+                col_ix = ct.typ_to_col[typ]
+                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                    self.assertEqual(1, ct.mat[row_ix, col_ix])
+                else:
+                    self.assertEqual(0, ct.mat[row_ix, col_ix])
+
+
+    def test_from_classification_produces_the_table_1(self):
+
+        c_vals = {
+            'x' : {'alpha'},
+            'y' : {'beta'},
+            'z' : { 'gamma'},
+            }
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        for tok in c_vals.keys():
+            row_ix = ct.tok_to_row[tok]
+            for typ in c.typ:
+                col_ix = ct.typ_to_col[typ]
+                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                    self.assertEqual(1, ct.mat[row_ix, col_ix])
+                else:
+                    self.assertEqual(0, ct.mat[row_ix, col_ix])
+
+
+    def test_from_classification_produces_the_table_2(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'zeta'},
+            }
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        for tok in c_vals.keys():
+            row_ix = ct.tok_to_row[tok]
+            for typ in c.typ:
+                col_ix = ct.typ_to_col[typ]
+                if(V.HasType.VALID == c.isValid(tok, typ)):                    
+                    self.assertEqual(1, ct.mat[row_ix, col_ix])
+                else:
+                    self.assertEqual(0, ct.mat[row_ix, col_ix])
+
+
 
 
 if __name__ == '__main__':
