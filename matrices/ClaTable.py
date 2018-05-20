@@ -6,26 +6,25 @@ class ClaTable:
 
         if not typ_to_col:
             self.typ_to_col = {}
+            self.col_to_typ = {}
+
         else:
             self.typ_to_col = dict(typ_to_col)
-
-        col_to_typ = map(lambda p: (p[1], p[0]), typ_to_col)
-        self.col_to_typ = dict(col_to_typ)
+            col_to_typ = map(lambda p: (p[1], p[0]), typ_to_col)
+            self.col_to_typ = dict(col_to_typ)
 
         if not tok_to_row:
             self.tok_to_row = {}
+            self.row_to_tok = {}
         else:
             self.tok_to_row = dict(tok_to_row)
-
-        row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
-        self.row_to_tok = dict(row_to_tok)
+            row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
+            self.row_to_tok = dict(row_to_tok)
 
         if not rows:
             self.mat = np.matrix([])
         else:
             self.mat = np.matrix(rows)
-            
-
 
 
     def from_classification(cla):
