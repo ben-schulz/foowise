@@ -36,15 +36,15 @@ class ClaTable:
         tok_count = len(cla.tok)
         tok_to_row = list(zip(cla.tok, range(0, tok_count)))
 
-        rows = []
-        for tok in cla.tok:
-            row = []
-            for typ in cla.typ:
-                if cla.is_valid(tok, typ):
-                    row.append(1)
-                else:
-                    row.append(0)
-            rows.append(row)
+        def validity_to_int(tok, typ):
+            if cla.is_valid(tok,typ):
+                return 1
+            else:
+                return 0
+
+        rows = [[validity_to_int(tok,typ) \
+                for typ in cla.typ] \
+                for tok in cla.tok]
 
         return ClaTable(\
                     rows=rows,\
