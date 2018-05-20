@@ -46,8 +46,6 @@ class Cla:
                 self.add_validity(x, t)
 
 
-
-
     def is_valid(self, tok, typ):
         return typ in self.get_types(tok)
 
