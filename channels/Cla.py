@@ -2,7 +2,7 @@ import InfoPair as I
 
 class Cla:
 
-    def Empty():
+    def empty():
         return Cla()
 
     def __init__(self, validities=None, tok=None, typ=None):
@@ -17,7 +17,7 @@ class Cla:
         else:
             self.typ = set()
 
-        def unpackValidities(vs):
+        def unpack_validities(vs):
 
             unpacked_vs = []
             for v in vs:
@@ -36,7 +36,7 @@ class Cla:
 
         self.validities = {}
         if validities:
-            vs = unpackValidities(validities)
+            vs = unpack_validities(validities)
             for v in vs:
 
                 (x, t) = v

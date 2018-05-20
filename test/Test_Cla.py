@@ -100,7 +100,7 @@ class Test_Cla(unittest.TestCase):
 
     def test_Empty_hasNoTokensNoTypesAndNoValidities(self):
 
-        c = C.Cla.Empty()
+        c = C.Cla.empty()
 
         self.assertEqual(0, len(c.tok))
         self.assertEqual(0, len(c.typ))

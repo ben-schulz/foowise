@@ -24,7 +24,7 @@ class Infomorphism_Test(unittest.TestCase):
         f_Up = lambda x : None
         f_Down = lambda x : None
 
-        p = C.Cla.Empty()
+        p = C.Cla.empty()
         d = self.createTestClassification()
 
         try:
