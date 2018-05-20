@@ -1,4 +1,5 @@
 import unittest
+import numpy as np
 
 from test_context import Validity as V
 from test_context import Cla as C
@@ -167,8 +168,6 @@ class ClaTable_Test(unittest.TestCase):
                     self.assertEqual(1, ct.mat[row_ix, col_ix])
                 else:
                     self.assertEqual(0, ct.mat[row_ix, col_ix])
-
-
 
 
 if __name__ == '__main__':
