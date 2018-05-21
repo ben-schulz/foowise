@@ -17,10 +17,13 @@ class Theory:
 
     def isconsequent(self, gamma, delta):
 
-        return S.Sequent(gamma, delta) in self.constraints
+        if gamma.entails(delta) in self.constraints:
+            return True
+
+        return self.table.is_consequent(gamma, delta)
 
 
-    def fromClassification(cla):
+    def from_classification(cla):
 
         table = CT.ClaTable.from_classification(cla)
 

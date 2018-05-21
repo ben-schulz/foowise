@@ -6,12 +6,17 @@ class JudgeSet:
         self.judgements = judgements
 
 
+    def __len__(self):
+        return len(self.judgements)
+
+
     def __repr__(self):
         return repr(self.judgements)
 
 
     def __iter__(self):
-        return self.judgements.__iter__
+        for x in self.judgements:
+            yield x
 
 
     def __hash__(self):

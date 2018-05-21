@@ -27,6 +27,33 @@ class ClaTable:
             self.mat = np.matrix(rows)
 
 
+    def is_consequent(self, gamma, delta):
+
+        seq = np.matrix([
+            self.to_vector(gamma),
+            self.to_vector(delta)
+        ])
+
+        cases = np.dot(self.mat, seq.transpose())
+
+        not_all_gammas = cases[:,0] < len(gamma)
+        at_least_one_delta = cases[:,1] > 0
+
+        return np.logical_or(not_all_gammas, at_least_one_delta) \
+                 .all()
+
+
+    def to_vector(self, judges):
+
+        v = np.zeros(len(self.typ_to_col))
+
+        for x in judges:
+            ix = self.typ_to_col[x]
+            v[ix] = 1
+
+        return v
+
+
     def from_classification(cla):
         
         typ_count = len(cla.typ)

@@ -26,7 +26,7 @@ class Theory_Test(unittest.TestCase):
         self.assertTrue(theory.isconsequent(alpha_and_beta, gamma))
 
 
-    def test_fromClassification_returnsCorrectEntailment(self):
+    def test_from_classification_returnsCorrectEntailment(self):
         cla = C.Cla({
             'x' : {'1', '3'},
             'y' : {'2', '3'},
@@ -35,16 +35,17 @@ class Theory_Test(unittest.TestCase):
         })
 
         _1 = J.JudgeSet({'1'})
-        _3 = J.JudgeSet({'3'})
+        _2_or_3 = J.JudgeSet({'2', '3'})
 
         _1_2_and_3 = J.JudgeSet({'1', '2', '3'})
         _4 = J.JudgeSet({'4'})
 
 
-        theory = T.Theory.fromClassification(cla)
+        theory = T.Theory.from_classification(cla)
 
-        self.assertTrue(theory.isconsequent(_1, _3))
+        self.assertTrue(theory.isconsequent(_1, _2_or_3))
         self.assertTrue(theory.isconsequent(_1_2_and_3, _4))
+
 
 if __name__ == '__main__':
     unittest.main()

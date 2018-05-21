@@ -170,6 +170,30 @@ class ClaTable_Test(unittest.TestCase):
                     self.assertEqual(0, ct.mat[row_ix, col_ix])
 
 
+    def test_to_vector_maps_types_to_indices(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'zeta', 'theta', 'omega'},
+            }
+
+        c = C.Cla(c_vals)
+        ct = CT.ClaTable.from_classification(c)
+
+        judges = {'alpha', 'beta'}
+        result = ct.to_vector(judges)
+
+        self.assertEqual(1, result[ct.typ_to_col['alpha']])
+        self.assertEqual(1, result[ct.typ_to_col['beta']])
+
+        others = [t for t in c.typ if t not in judges]
+        other_ixs = [ct.typ_to_col[t] for t in others]
+
+        are_zero = [0 == result[i] for i in other_ixs]
+
+        self.assertTrue(all(are_zero))
+
+
 if __name__ == '__main__':
     unittest.main()
 
