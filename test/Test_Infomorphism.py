@@ -21,14 +21,14 @@ class Infomorphism_Test(unittest.TestCase):
 
     def test_raiseInvalidInfomorphismErrorOnEmptyDomain(self):
 
-        f_Up = lambda x : None
-        f_Down = lambda x : None
+        f_down = lambda x : None
+        f_up = lambda x : None
 
         p = C.Cla.empty()
         d = self.createTestClassification()
 
         try:
-            I.Infomorphism(p, d, f_Up, f_Down)
+            I.Infomorphism(p, d, f_down, f_up)
 
             self.assertTrue(False, "Expected 'InfomorphismConstraintError' raised.")
 
@@ -37,18 +37,18 @@ class Infomorphism_Test(unittest.TestCase):
 
     def test_create_identityAlwaysValid(self):
 
-        f_Up = lambda x : x
-        f_Down = lambda x : x
+        f_down = lambda x : x
+        f_up = lambda x : x
 
         p = self.createTestClassification()
         d = self.createTestClassification()
 
-        result = I.Infomorphism(p, d, f_Up, f_Down)
+        result = I.Infomorphism(p, d, f_down, f_up)
 
     def test_create_raiseErrorIfValidityViolatedForward(self):
 
-        f_Up = lambda x : x
-        f_Down = lambda x : 'alpha'
+        f_down = lambda x : x
+        f_up = lambda x : 'alpha'
 
         p = self.createTestClassification()
         d = self.createTestClassification()
@@ -57,7 +57,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('x', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_Up, f_Down)
+            I.Infomorphism(p, d, f_down, f_up)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError:
@@ -65,8 +65,8 @@ class Infomorphism_Test(unittest.TestCase):
 
 
     def test_create_raiseErrorIfValidityViolatedBack(self):
-        f_Up = lambda x : 'z'
-        f_Down = lambda x : 'gamma'
+        f_down = lambda x : 'z'
+        f_up = lambda x : 'gamma'
 
         p = self.createTestClassification()
         d = self.createTestClassification()
@@ -75,7 +75,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('z', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_Up, f_Down)
+            I.Infomorphism(p, d, f_down, f_up)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError:
@@ -84,8 +84,8 @@ class Infomorphism_Test(unittest.TestCase):
 
     def test_InfomorphismConstraintError_IncludesInvalidRels(self):
 
-        f_Up = lambda x : x
-        f_Down = lambda x : 'alpha'
+        f_down = lambda x : x
+        f_up = lambda x : 'alpha'
 
         p = self.createTestClassification()
         d = self.createTestClassification()
@@ -94,7 +94,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('x', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_Up, f_Down)
+            I.Infomorphism(p, d, f_down, f_up)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError as e:
