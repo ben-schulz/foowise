@@ -9,7 +9,7 @@ from test_context import InfoPair as IP
 class Infomorphism_Test(unittest.TestCase):
 
 
-    def createTestClassification(self):
+    def test_classification(self):
         return C.Cla(tok= self.testTokens, typ=self.testTypes)
 
 
@@ -25,7 +25,7 @@ class Infomorphism_Test(unittest.TestCase):
         f_up = lambda x : None
 
         p = C.Cla.empty()
-        d = self.createTestClassification()
+        d = self.test_classification()
 
         try:
             I.Infomorphism(p, d, f_down, f_up)
@@ -40,8 +40,8 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : x
 
-        p = self.createTestClassification()
-        d = self.createTestClassification()
+        p = self.test_classification()
+        d = self.test_classification()
 
         result = I.Infomorphism(p, d, f_down, f_up)
 
@@ -50,8 +50,8 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = self.createTestClassification()
-        d = self.createTestClassification()
+        p = self.test_classification()
+        d = self.test_classification()
 
         p.add_validity('x', 'beta')
         d.add_validity('x', 'alpha')
@@ -68,8 +68,8 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : 'z'
         f_up = lambda x : 'gamma'
 
-        p = self.createTestClassification()
-        d = self.createTestClassification()
+        p = self.test_classification()
+        d = self.test_classification()
 
         p.add_validity('z', 'alpha')
         d.add_validity('z', 'alpha')
@@ -87,8 +87,8 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = self.createTestClassification()
-        d = self.createTestClassification()
+        p = self.test_classification()
+        d = self.test_classification()
 
         p.add_validity('x', 'beta')
         d.add_validity('x', 'alpha')
@@ -102,8 +102,8 @@ class Infomorphism_Test(unittest.TestCase):
             notInProximal = IP.InfoPair.invalid('x', 'alpha')
             failureCase = (notInProximal, inDistal)
 
-            message = 'Expected \'' + str(failureCase) + '\' but got: \'' + str(e.constraintViolations) + '\''
-            self.assertTrue(failureCase in e.constraintViolations, message)
+            message = 'Expected \'' + str(failureCase) + '\' but got: \'' + str(e.violations) + '\''
+            self.assertTrue(failureCase in e.violations, message)
 
 
 if __name__ == '__main__':
