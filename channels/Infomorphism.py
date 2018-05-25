@@ -5,19 +5,19 @@ import InfoPair as I
 
 class Infomorphism:
 
-    def __init__(self, c_Proximal, c_Distal, f_down, f_up):
+    def __init__(self, c_Proximal, c_Distal, f_down, f_up, debug=False):
 
         self.proximal = c_Proximal
         self.distal = c_Distal
 
-        self.f_down = {x:f_down(x) for x in self.proximal.tok}
-        self.f_up = {x:f_up(x) for x in self.distal.typ}
+        self.f_down = {x:f_down(x) for x in self.distal.tok}
+        self.f_up = {x:f_up(x) for x in self.proximal.typ}
 
         self.f_down_img = set(self.f_down.values())
         self.f_up_img = set(self.f_up.values())
 
         try:
-            self.satisfiesInfoAxioms()
+            self.satisfiesInfoAxioms(debug=debug)
 
         except Exception as e:
             raise e
@@ -31,16 +31,16 @@ class Infomorphism:
         return self.proximal.is_valid(x, alpha)
 
 
-    def satisfiesInfoAxioms(self):
-
-        if not self.f_down_img.issubset(self.distal.tok):
+    def satisfiesInfoAxioms(self, debug=False):
+            
+        if not self.f_down_img.issubset(self.proximal.tok):
             raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_UP)
 
-        if not self.f_up_img.issubset(self.proximal.typ):
+        if not self.f_up_img.issubset(self.distal.typ):
             raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_DOWN)
 
         infoConstraintViolations = []
-        for x in self.proximal.tok:
+        for x in self.distal.tok:
 
             x_validities = self.proximal.infopairs_by_token(x)
 
