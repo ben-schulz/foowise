@@ -10,9 +10,8 @@ class Infomorphism:
         self.proximal = c_Proximal
         self.distal = c_Distal
 
-        self.f_down = Infomorphism.calculate_function_image(f_down, self.proximal.tok)
-
-        self.f_up = Infomorphism.calculate_function_image(f_up, self.distal.typ)
+        self.f_down = {x:f_down(x) for x in self.proximal.tok}
+        self.f_up = {x:f_up(x) for x in self.distal.typ}
 
         self.f_down_img = set(self.f_down.values())
         self.f_up_img = set(self.f_up.values())
@@ -30,15 +29,6 @@ class Infomorphism:
 
     def is_valid_proximal(self, x, alpha):
         return self.proximal.is_valid(x, alpha)
-
-    
-    def calculate_function_image(f, dom):
-
-        img = {}
-        for x in dom:
-            img[x] = f(x)
-
-        return img
 
 
     def satisfiesInfoAxioms(self):
