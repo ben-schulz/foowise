@@ -34,10 +34,14 @@ class Infomorphism:
     def satisfiesInfoAxioms(self):
             
         if not self.f_down_img.issubset(self.proximal.tok):
-            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_UP)
+            f_name = "'f_down'"
+            r_name = "the proximal classification's token set"
+            raise IE.MorphismRangeError(f_name=f_name,r_name=r_name)
 
         if not self.f_up_img.issubset(self.distal.typ):
-            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_DOWN)
+            f_name = "'f_up'"
+            r_name = "the distal classification's type set"
+            raise IE.MorphismRangeError(f_name=f_name,r_name=r_name)
 
         infoConstraintViolations = []
         for x in self.distal.tok:

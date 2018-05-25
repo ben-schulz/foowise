@@ -30,10 +30,11 @@ class Infomorphism_Test(unittest.TestCase):
         try:
             I.Infomorphism(p, d, f_down, f_up)
 
-            self.assertTrue(False, "Expected 'InfomorphismConstraintError' raised.")
+            self.assertTrue(False, "Expected 'MorphismRangeError'.")
 
-        except IE.InfomorphismConstraintError:
+        except IE.MorphismRangeError:
             pass
+
 
     def test_create_identityAlwaysValid(self):
 
@@ -44,6 +45,7 @@ class Infomorphism_Test(unittest.TestCase):
         d = self.test_classification()
 
         result = I.Infomorphism(p, d, f_down, f_up)
+
 
     def test_create_raiseErrorIfValidityViolatedForward(self):
 
@@ -65,8 +67,9 @@ class Infomorphism_Test(unittest.TestCase):
 
 
     def test_create_raiseErrorIfValidityViolatedBack(self):
-        f_down = lambda x : 'z'
+
         f_up = lambda x : 'gamma'
+        f_down = lambda x : 'z'
 
         p = self.test_classification()
         d = self.test_classification()

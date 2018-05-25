@@ -29,7 +29,7 @@ class Infomorphism_Correctness(unittest.TestCase):
             message += ' due to: ' + violation_list_message
 
         try:
-            I.Infomorphism(p, d, f_down, f_up)
+            I.Infomorphism(p, d, f_up, f_down)
             self.assertTrue(False, message)
 
         except IE.InfomorphismConstraintError as e:
@@ -68,14 +68,14 @@ class Infomorphism_Correctness(unittest.TestCase):
 
     def test_minNonemptyNotInfomorphic(self):
 
-        v1 = {'x': 'alpha', 'y':'beta'}
-        v2 = {'x': 'alpha'}
+        v1 = [('x', 'alpha')]
+        v2 = [('x','alpha'), ('y', 'beta')]
 
         p = C.Cla(validities=v1)
         d = C.Cla(validities=v2)
 
-        f_up = lambda x: 'x'
-        f_down = lambda x: 'alpha'
+        f_up = lambda x: 'alpha'
+        f_down = lambda x: 'x'
 
         expected_violations = [IP.InfoPair.invalid('y', 'alpha')]
 

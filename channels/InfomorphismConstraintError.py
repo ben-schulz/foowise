@@ -7,6 +7,18 @@ class InfomorphismErrorReason(e.Enum):
     BAD_RANGE_F_UP = 1,
     BAD_RANGE_F_DOWN =2
 
+class MorphismRangeError(Exception):
+
+    def __init__(self, f_name=None, r_name=None):
+
+        if not f_name:
+            f_name = 'the given function'
+        if not r_name:
+            'the expected range'
+
+        self.message = 'The image of ' + f_name \
+                       + ' must be a subset of ' + r_name + '.'
+
 
 class InfomorphismConstraintError(Exception):
 
