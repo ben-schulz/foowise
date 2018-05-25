@@ -9,16 +9,16 @@ from test_context import InfoPair as IP
 class Infomorphism_Correctness(unittest.TestCase):
 
 
-    def expect_infomorphism(self, c1, c2, f_Down, f_Up, debug=False):
+    def expect_infomorphism(self, p, d, f_up, f_down):
 
         try:
-            I.Infomorphism(c1, c2, f_Down, f_Up, debug=debug)
+            I.Infomorphism(p, d, f_up, f_down)
 
         except IE.InfomorphismConstraintError as e:
             raise e
 
 
-    def expect_axiom_violation(self, c1, c2, f_Down, f_Up, expected_violations=None):
+    def expect_axiom_violation(self, p, d, f_up, f_down, expected_violations=None):
 
         violation_list_message = ''
         
@@ -29,7 +29,7 @@ class Infomorphism_Correctness(unittest.TestCase):
             message += ' due to: ' + violation_list_message
 
         try:
-            I.Infomorphism(c1, c2, f_Down, f_Up)
+            I.Infomorphism(p, d, f_down, f_up)
             self.assertTrue(False, message)
 
         except IE.InfomorphismConstraintError as e:
@@ -43,13 +43,13 @@ class Infomorphism_Correctness(unittest.TestCase):
             'y':{'beta'}
             }
 
-        c1 = C.Cla(validities=v1)
-        c2 = C.Cla(validities=v1)
+        p = C.Cla(validities=v1)
+        d = C.Cla(validities=v1)
 
-        f_Up = lambda x: x
-        f_Down = lambda x: x
+        f_up = lambda x: x
+        f_down = lambda x: x
 
-        self.expect_infomorphism(c1, c2, f_Down, f_Up)
+        self.expect_infomorphism(p, d, f_up, f_down)
 
 
     def test_singleton_classifications(self):
@@ -60,10 +60,10 @@ class Infomorphism_Correctness(unittest.TestCase):
         p = C.Cla(validities=p_vals)
         d = C.Cla(validities=d_vals)
 
-        f_Up = lambda x: 'beta'
-        f_Down = lambda x: 'x'
+        f_up = lambda x: 'beta'
+        f_down = lambda x: 'x'
 
-        self.expect_infomorphism(p, d, f_Down, f_Up, debug=True)
+        self.expect_infomorphism(p, d, f_up, f_down)
 
 
     def test_minNonemptyNotInfomorphic(self):
@@ -71,15 +71,15 @@ class Infomorphism_Correctness(unittest.TestCase):
         v1 = {'x': 'alpha', 'y':'beta'}
         v2 = {'x': 'alpha'}
 
-        c1 = C.Cla(validities=v1)
-        c2 = C.Cla(validities=v2)
+        p = C.Cla(validities=v1)
+        d = C.Cla(validities=v2)
 
-        f_Up = lambda x: 'x'
-        f_Down = lambda x: 'alpha'
+        f_up = lambda x: 'x'
+        f_down = lambda x: 'alpha'
 
         expected_violations = [IP.InfoPair.invalid('y', 'alpha')]
 
-        self.expect_axiom_violation(c1, c2, f_Down, f_Up, expected_violations=expected_violations)
+        self.expect_axiom_violation(p, d, f_up, f_down, expected_violations=expected_violations)
 
 
 if __name__ == '__main__':

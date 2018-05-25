@@ -5,7 +5,7 @@ import InfoPair as I
 
 class Infomorphism:
 
-    def __init__(self, c_Proximal, c_Distal, f_down, f_up, debug=False):
+    def __init__(self, c_Proximal, c_Distal, f_up, f_down):
 
         self.proximal = c_Proximal
         self.distal = c_Distal
@@ -17,7 +17,7 @@ class Infomorphism:
         self.f_up_img = set(self.f_up.values())
 
         try:
-            self.satisfiesInfoAxioms(debug=debug)
+            self.satisfiesInfoAxioms()
 
         except Exception as e:
             raise e
@@ -31,7 +31,7 @@ class Infomorphism:
         return self.proximal.is_valid(x, alpha)
 
 
-    def satisfiesInfoAxioms(self, debug=False):
+    def satisfiesInfoAxioms(self):
             
         if not self.f_down_img.issubset(self.proximal.tok):
             raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.BAD_RANGE_F_UP)

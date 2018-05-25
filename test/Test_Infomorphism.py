@@ -57,7 +57,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('x', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_down, f_up)
+            I.Infomorphism(p, d, f_up, f_down)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError:
@@ -75,7 +75,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('z', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_down, f_up)
+            I.Infomorphism(p, d, f_up, f_down)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError:
@@ -94,7 +94,7 @@ class Infomorphism_Test(unittest.TestCase):
         d.add_validity('x', 'alpha')
 
         try:
-            I.Infomorphism(p, d, f_down, f_up)
+            I.Infomorphism(p, d, f_up, f_down)
             self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
 
         except IE.InfomorphismConstraintError as e:
