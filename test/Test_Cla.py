@@ -165,7 +165,7 @@ class Test_Cla(unittest.TestCase):
             'q': set()
         }
 
-        c = C.Cla(validities=vals)
+        c = C.Cla.from_dictionary(vals)
 
         self.assertValid(c, 'x', 'alpha')
         self.assertValid(c, 'x', 'beta')
@@ -212,6 +212,37 @@ class Test_Cla(unittest.TestCase):
         self.assertEqual(2, len(result))
         self.assertTrue(expect_x in result)
         self.assertTrue(expect_y in result)
+
+
+    def test_from_dictionary_raises_typeerror_on_bad_type(self):
+
+        vals = [('x', 'alpha'), ('y', 'beta')]
+
+        try:
+            result = C.Cla.from_dictionary(vals)
+        except TypeError:
+            pass
+
+
+    def test_from_dictionary_keys_tokens_to_types(self):
+
+        vals = {
+            'x': {'alpha', 'beta'},
+            'y': {'beta', 'gamma'},
+            'z': {'gamma'}
+            }
+
+        result = C.Cla.from_dictionary(vals)
+
+        for tok in vals.keys():
+
+            msg = 'result missing token: ' + repr(tok)
+            self.assertTrue(tok in result.tok, msg=msg)
+
+            for typ in vals[tok]:
+                msg = 'expected ' + repr(tok) + ' has type ' \
+                      + repr(typ)
+                self.assertTrue(result.is_valid(tok, typ), msg=msg)
 
 
 class EquableTestClass:

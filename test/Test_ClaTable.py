@@ -17,7 +17,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         table_types = ct.typ_to_col.keys()
@@ -40,7 +40,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         table_indices_left = sorted(ct.col_to_typ.keys())
@@ -59,7 +59,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         table_types = ct.col_to_typ.values()
@@ -84,7 +84,7 @@ class ClaTable_Test(unittest.TestCase):
 
         c_tokens = c_vals.keys()
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         self.assertEqual(c_tokens, ct.tok_to_row.keys())
@@ -101,7 +101,7 @@ class ClaTable_Test(unittest.TestCase):
 
         c_tokens = set(c_vals.keys())
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         self.assertEqual(set(c_tokens), set(ct.row_to_tok.values()))
@@ -116,7 +116,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         for tok in c_vals.keys():
@@ -137,7 +137,7 @@ class ClaTable_Test(unittest.TestCase):
             'z' : { 'gamma'},
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         for tok in c_vals.keys():
@@ -157,7 +157,7 @@ class ClaTable_Test(unittest.TestCase):
             'y' : {'zeta'},
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         for tok in c_vals.keys():
@@ -177,7 +177,7 @@ class ClaTable_Test(unittest.TestCase):
             'y' : {'zeta', 'theta', 'omega'},
             }
 
-        c = C.Cla(c_vals)
+        c = C.Cla.from_dictionary(c_vals)
         ct = CT.ClaTable.from_classification(c)
 
         judges = {'alpha', 'beta'}

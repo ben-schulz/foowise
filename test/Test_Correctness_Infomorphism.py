@@ -44,8 +44,8 @@ class Infomorphism_Correctness(unittest.TestCase):
             'y':{'beta'}
             }
 
-        p = C.Cla(validities=v1)
-        d = C.Cla(validities=v1)
+        p = C.Cla.from_dictionary(v1)
+        d = C.Cla.from_dictionary(v1)
 
         f_up = lambda x: x
         f_down = lambda x: x

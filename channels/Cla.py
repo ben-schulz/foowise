@@ -17,33 +17,28 @@ class Cla:
         else:
             self.typ = set()
 
-        def unpack_validities(vs):
-
-            unpacked_vs = []
-            for v in vs:
-
-                try:
-                    (x, t) = v
-                    unpacked_vs.append(v)
-
-                except ValueError:
-                    v_typ = vs[v]
-                    for t in v_typ:
-                        unpacked_vs.append((v, t))
-
-            return unpacked_vs
-
-
         self.validities = {}
         if validities:
-            vs = unpack_validities(validities)
-            for v in vs:
 
-                (x, t) = v
+            vs = validities
+            for (x,t) in vs:
 
                 self.tok.add(x)
                 self.typ.add(t)
                 self.add_validity(x, t)
+
+
+    def from_dictionary(vals):
+
+        if not isinstance(vals, dict):
+
+            given_type = vals.__class__
+            msg = "expected arg type 'dict' but got " \
+                  + "'" + repr(given_type) + "'."
+            raise TypeError(msg)
+
+        validities = [(x,t) for x in vals.keys() for t in vals[x]]
+        return Cla(validities=validities)
 
 
     def is_valid(self, tok, typ):
