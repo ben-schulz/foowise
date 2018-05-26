@@ -3,7 +3,7 @@ import unittest
 from test_context import Infomorphism as I
 from test_context import Cla as C
 from test_context import Validity as V
-from test_context import InfomorphismConstraintError as IE
+from test_context import InfomorphismError as IE
 from test_context import InfoPair as IP
 
 class Infomorphism_Test(unittest.TestCase):
@@ -60,9 +60,10 @@ class Infomorphism_Test(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
+            self.assertTrue(False, \
+                            "Expected 'InfomorphismAxiomError'.")
 
-        except IE.InfomorphismConstraintError:
+        except IE.InfomorphismAxiomError:
             pass
 
 
@@ -79,9 +80,9 @@ class Infomorphism_Test(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
+            self.assertTrue(False, "Expected 'InfomorphismAxiomError'.")
 
-        except IE.InfomorphismConstraintError:
+        except IE.InfomorphismAxiomError:
             pass
 
 
@@ -98,14 +99,18 @@ class Infomorphism_Test(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, "Expected 'InfomorphismConstraintError'.")
+            self.assertTrue(False, \
+                            "Expected 'InfomorphismAxiomError'.")
 
-        except IE.InfomorphismConstraintError as e:
+        except IE.InfomorphismAxiomError as e:
+
             inDistal = IP.InfoPair.valid('x', 'alpha')
             notInProximal = IP.InfoPair.invalid('x', 'alpha')
             failureCase = (notInProximal, inDistal)
 
-            message = 'Expected \'' + str(failureCase) + '\' but got: \'' + str(e.violations) + '\''
+            message = 'Expected \'' + str(failureCase) \
+                      + '\' but got: \'' + str(e.violations) + '\''
+
             self.assertTrue(failureCase in e.violations, message)
 
 

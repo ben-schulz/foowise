@@ -9,7 +9,7 @@ sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__), '../ma
 import Cla
 import Validity
 import Infomorphism
-import InfomorphismConstraintError
+import InfomorphismError
 import InfoPair
 import InfoTetrad
 import Theory

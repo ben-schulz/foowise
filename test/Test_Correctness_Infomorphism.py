@@ -3,7 +3,7 @@ import unittest
 from test_context import Infomorphism as I
 from test_context import Cla as C
 from test_context import Validity as V
-from test_context import InfomorphismConstraintError as IE
+from test_context import InfomorphismError as IE
 from test_context import InfoPair as IP
 
 class Infomorphism_Correctness(unittest.TestCase):
@@ -32,7 +32,7 @@ class Infomorphism_Correctness(unittest.TestCase):
             I.Infomorphism(p, d, f_up, f_down)
             self.assertTrue(False, message)
 
-        except IE.InfomorphismConstraintError as e:
+        except IE.InfomorphismAxiomError as e:
             pass
 
 

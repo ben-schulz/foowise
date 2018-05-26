@@ -1,6 +1,6 @@
 import Cla as C
 import Validity as V
-import InfomorphismConstraintError as IE
+import InfomorphismError as IE
 import InfoPair as I
 
 class Infomorphism:
@@ -67,6 +67,6 @@ class Infomorphism:
 
             violationListCount = min(5, violationCount)
 
-            raise IE.InfomorphismConstraintError(IE.InfomorphismErrorReason.INFO_AXIOM_VIOLATED, infoConstraintViolations)
+            raise IE.InfomorphismAxiomError(infoConstraintViolations)
 
         return
