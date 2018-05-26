@@ -18,7 +18,8 @@ class Infomorphism_Correctness(unittest.TestCase):
             raise e
 
 
-    def expect_axiom_violation(self, p, d, f_up, f_down, expected_violations=None):
+    def expect_axiom_violation(self, p, d, f_up, f_down, \
+                               expected_violations=None):
 
         violation_list_message = ''
         
@@ -79,7 +80,8 @@ class Infomorphism_Correctness(unittest.TestCase):
 
         expected_violations = [IP.InfoPair.invalid('y', 'alpha')]
 
-        self.expect_axiom_violation(p, d, f_up, f_down, expected_violations=expected_violations)
+        self.expect_axiom_violation(p, d, f_up, f_down, \
+                            expected_violations=expected_violations)
 
 
 if __name__ == '__main__':

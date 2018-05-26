@@ -80,7 +80,8 @@ class Infomorphism_Test(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, "Expected 'InfomorphismAxiomError'.")
+            self.assertTrue(False, \
+                            "Expected 'InfomorphismAxiomError'.")
 
         except IE.InfomorphismAxiomError:
             pass
