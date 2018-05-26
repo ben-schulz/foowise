@@ -43,32 +43,31 @@ class Infomorphism:
             r_name = "the distal classification's type set"
             raise IE.MorphismRangeError(f_name=f_name,r_name=r_name)
 
-        infoConstraintViolations = []
+        violations = []
         for x in self.distal.tok:
 
-            x_validities = self.proximal.infopairs_by_token(x)
+            x_validities = self.proximal \
+                               .infopairs_by_token(x)
 
             f_down_x = self.f_down[x]
 
             f_x_validities = self.distal \
                                  .infopairs_by_token(f_down_x)
 
-            for inDistal in f_x_validities:
+            for distal_val in f_x_validities:
 
-                t = inDistal.typ
+                t = distal_val.typ
                 f_up_t = self.f_up[t]
+
                 if not self.is_valid_proximal(x, f_up_t):
 
-                    notInProximal = I.InfoPair.invalid(x, f_up_t)
-                    badInfoPair = (notInProximal, inDistal)
+                    not_in_prox = I.InfoPair.invalid(x, f_up_t)
+                    bad_pair = (not_in_prox, distal_val)
 
-                    infoConstraintViolations.append(badInfoPair)
+                    violations.append(bad_pair)
 
-        violationCount = len(infoConstraintViolations)
-        if 0 < violationCount:
+        if violations:
 
-            violationListCount = min(5, violationCount)
-
-            raise IE.InfomorphismAxiomError(infoConstraintViolations)
+            raise IE.InfomorphismAxiomError(violations)
 
         return
