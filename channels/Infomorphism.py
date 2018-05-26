@@ -49,7 +49,9 @@ class Infomorphism:
             x_validities = self.proximal.infopairs_by_token(x)
 
             f_down_x = self.f_down[x]
-            f_x_validities = self.distal.infopairs_by_token(f_down_x)
+
+            f_x_validities = self.distal \
+                                 .infopairs_by_token(f_down_x)
 
             for inDistal in f_x_validities:
 
