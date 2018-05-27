@@ -101,17 +101,10 @@ class Cla:
 
 
 
-    def __init__(self, validities=None, tok=None, typ=None):
+    def __init__(self, validities=None):
 
-        if tok:
-            self.tok = tok
-        else:
-            self.tok = set()
-
-        if typ:
-            self.typ = typ            
-        else:
-            self.typ = set()
+        self.tok = set()
+        self.typ = set()
 
         self.validities = {}
 

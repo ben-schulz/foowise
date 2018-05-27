@@ -8,24 +8,16 @@ from test_context import InfoPair as IP
 
 class Infomorphism_Test(unittest.TestCase):
 
-
-    def test_classification(self):
-        return C.Cla(tok= self.testTokens, typ=self.testTypes)
-
-
-    def setUp(self):
-
-        self.testTokens = {'x', 'y', 'z'}
-        self.testTypes = {'alpha', 'beta', 'gamma'}
-
-
     def test_raiseInvalidInfomorphismErrorOnEmptyDomain(self):
 
         f_down = lambda x : None
         f_up = lambda x : None
 
         p = C.Cla.empty()
-        d = self.test_classification()
+        d = C.Cla.from_dictionary({
+            'x':{'alpha'},
+            'y':{'beta'}
+        })
 
         try:
             I.Infomorphism(p, d, f_down, f_up)
@@ -41,8 +33,14 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : x
 
-        p = self.test_classification()
-        d = self.test_classification()
+        p = C.Cla.from_dictionary({
+            'x':{'alpha','beta'},
+            'y':{'beta'}
+        })
+        d = C.Cla.from_dictionary({
+            'x':{'alpha','beta'},
+            'y':{'beta'}
+        })
 
         result = I.Infomorphism(p, d, f_down, f_up)
 
