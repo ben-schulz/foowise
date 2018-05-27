@@ -4,15 +4,25 @@ import functools as f
 
 class MorphismRangeError(Exception):
 
-    def __init__(self, f_name=None, r_name=None):
+    def __init__(self, f_name=None, r_name=None, img=None, target=None):
 
         if not f_name:
             f_name = 'the given function'
         if not r_name:
             'the expected range'
 
-        self.message = 'The image of ' + f_name \
-                       + ' must be a subset of ' + r_name + '.'
+        message = "The image of '" + f_name \
+                  + "' must be a subset of " + r_name + "."
+
+        if img:
+            message += "\nImage of " + f_name + ": "
+            message += repr(img)
+
+        if target:
+            message += "\nImage of " + r_name + ": "
+            message += repr(target)
+
+        super(MorphismRangeError, self).__init__(message)
 
 
 class InfomorphismAxiomError(Exception):
