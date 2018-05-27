@@ -130,7 +130,6 @@ class Cla:
 
                 self.validities[x].add(t)
 
-
         self.table = Cla.ClaTable(self.validities)
 
 
@@ -207,17 +206,6 @@ class Cla:
                 tokens.append(t)
 
         return tokens
-
-
-    def add_validity(self, tok, typ):
-
-        self.add_token(tok)
-        self.add_type(typ)
-
-        if tok not in self.validities:
-            self.validities[tok] = set()
-
-        self.validities[tok].add(typ)
 
 
     def is_consequent(self, gamma, delta):

@@ -52,9 +52,6 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = self.test_classification()
-        d = self.test_classification()
-
         p = C.Cla.from_dictionary({
             None:{'alpha','gamma'},
             'x':{'beta'},
@@ -68,9 +65,6 @@ class Infomorphism_Test(unittest.TestCase):
             'y':set(),
             'z':set()
             })
-
-        p.add_validity('x', 'beta')
-        d.add_validity('x', 'alpha')
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
@@ -86,11 +80,19 @@ class Infomorphism_Test(unittest.TestCase):
         f_up = lambda x : 'gamma'
         f_down = lambda x : 'z'
 
-        p = self.test_classification()
-        d = self.test_classification()
+        p = C.Cla.from_dictionary({
+            None:{'alpha','gamma'},
+            'x':set(),
+            'y':set(),
+            'z':{'alpha'}
+            })
 
-        p.add_validity('z', 'alpha')
-        d.add_validity('z', 'alpha')
+        d = C.Cla.from_dictionary({
+            None:{'beta', 'gamma'},
+            'x':set(),
+            'y':set(),
+            'z':{'alpha'}
+            })
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
@@ -106,11 +108,19 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = self.test_classification()
-        d = self.test_classification()
+        p = C.Cla.from_dictionary({
+            None:{'alpha','gamma'},
+            'x':{'beta'},
+            'y':set(),
+            'z':set()
+            })
 
-        p.add_validity('x', 'beta')
-        d.add_validity('x', 'alpha')
+        d = C.Cla.from_dictionary({
+            None:{'beta', 'gamma'},
+            'x':{'alpha'},
+            'y':set(),
+            'z':set()
+            })
 
         try:
             I.Infomorphism(p, d, f_up, f_down)

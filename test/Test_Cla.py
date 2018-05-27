@@ -39,61 +39,44 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue('t' in c.typ)
 
 
-    def test_add_validity_causes_is_validToReturnTrue(self):
-
-        c = C.Cla()
-
-        c.add_validity('x', 'alpha')
-
-        result = c.is_valid('x', 'alpha')
-
-        self.assertValid(c, 'x', 'alpha')
-
-
     def test_get_types_returnsAllandOnlyTypesOfGivenToken(self):
 
-        c = C.Cla()
+        c = C.Cla.from_dictionary({
+            'x':{1,2,4}
+            })
 
-        testToken = 'x'
-        testTypeOne = 1
-        testTypeTwo = 2
+        result = c.get_types('x')
 
-        c.add_validity(testToken, testTypeOne)
-        c.add_validity(testToken, testTypeTwo)
-
-        result = c.get_types(testToken)
-
-        self.assertTrue(testTypeOne in result)
-        self.assertTrue(testTypeTwo in result)
-        self.assertEqual(2, len(result))
+        self.assertTrue(1 in result)
+        self.assertTrue(2 in result)
+        self.assertTrue(4 in result)
+        self.assertEqual(3, len(result))
 
 
     def test_getTokens_returnsAllAndOnlyTokensOfType(self):
 
-        c = C.Cla()
+        c = C.Cla.from_dictionary({
+            'x':{1,2,4},
+            'y':{1,3,5},
+            'z':{9}
+            })
 
-        testType = 'x'
-        testTokenOne = 1
-        testTokenTwo = 2
+        result = c.get_tokens(1)
 
-        c.add_validity(testTokenOne, testType)
-        c.add_validity(testTokenTwo, testType)
-
-        result = c.get_tokens(testType)
-
-        self.assertTrue(testTokenOne in result)
-        self.assertTrue(testTokenTwo in result)
+        self.assertTrue('x' in result)
+        self.assertTrue('y' in result)
+        self.assertFalse('z' in result)
         self.assertEqual(2, len(result))
 
 
-    def test_add_validity_independentOfImplementationTypes(self):
-
-        c = C.Cla()
+    def test_validity_works_independent_of_types(self):
 
         testToken = FooClass(1)
         testType = BarClass(2)
 
-        c.add_validity(testToken, testType)
+        c = C.Cla.from_dictionary({
+            testToken:{testType}
+            })
 
         self.assertTrue(c.is_valid(testToken, testType))
 
