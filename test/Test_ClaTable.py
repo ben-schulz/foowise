@@ -15,7 +15,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        ct = C.Cla.from_dictionary(c_vals)
+        ct = C.Cla.from_dictionary(c_vals).table
 
         table_types = ct.typ_to_col.keys()
         table_indices = ct.typ_to_col.values()
@@ -37,7 +37,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        ct = C.Cla.from_dictionary(c_vals)
+        ct = C.Cla.from_dictionary(c_vals).table
 
         table_indices_left = sorted(ct.col_to_typ.keys())
         table_indices_right = sorted(ct.typ_to_col.values())
@@ -55,7 +55,7 @@ class ClaTable_Test(unittest.TestCase):
             'q' : {'alpha', 'gamma', 'zeta'}
             }
 
-        ct = C.Cla.from_dictionary(c_vals)
+        ct = C.Cla.from_dictionary(c_vals).table
 
         table_types = ct.col_to_typ.values()
         table_indices = ct.col_to_typ.keys()
@@ -81,7 +81,7 @@ class ClaTable_Test(unittest.TestCase):
 
         ct = C.Cla.from_dictionary(c_vals)
 
-        self.assertEqual(c_tokens, ct.tok_to_row.keys())
+        self.assertEqual(c_tokens, ct.table.tok_to_row.keys())
 
 
     def test_from_classification_maps_rows_to_tokens(self):
@@ -95,7 +95,7 @@ class ClaTable_Test(unittest.TestCase):
 
         c_tokens = set(c_vals.keys())
 
-        ct = C.Cla.from_dictionary(c_vals)
+        ct = C.Cla.from_dictionary(c_vals).table
 
         self.assertEqual(set(c_tokens), set(ct.row_to_tok.values()))
 
@@ -113,13 +113,13 @@ class ClaTable_Test(unittest.TestCase):
         ct = c.table
 
         for tok in c_vals.keys():
-            row_ix = c.tok_to_row[tok]
+            row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
-                col_ix = c.typ_to_col[typ]
+                col_ix = ct.typ_to_col[typ]
                 if c.is_valid(tok, typ):                    
-                    self.assertEqual(1, ct[row_ix, col_ix])
+                    self.assertEqual(1, ct.matrix[row_ix, col_ix])
                 else:
-                    self.assertEqual(0, ct[row_ix, col_ix])
+                    self.assertEqual(0, ct.matrix[row_ix, col_ix])
 
 
     def test_from_classification_produces_the_table_1(self):
@@ -134,13 +134,13 @@ class ClaTable_Test(unittest.TestCase):
         ct = c.table
 
         for tok in c_vals.keys():
-            row_ix = c.tok_to_row[tok]
+            row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
-                col_ix = c.typ_to_col[typ]
+                col_ix = ct.typ_to_col[typ]
                 if c.is_valid(tok, typ):                    
-                    self.assertEqual(1, ct[row_ix, col_ix])
+                    self.assertEqual(1, ct.matrix[row_ix, col_ix])
                 else:
-                    self.assertEqual(0, ct[row_ix, col_ix])
+                    self.assertEqual(0, ct.matrix[row_ix, col_ix])
 
 
     def test_from_classification_produces_the_table_2(self):
@@ -154,13 +154,13 @@ class ClaTable_Test(unittest.TestCase):
         ct = c.table
 
         for tok in c_vals.keys():
-            row_ix = c.tok_to_row[tok]
+            row_ix = ct.tok_to_row[tok]
             for typ in c.typ:
-                col_ix = c.typ_to_col[typ]
+                col_ix = ct.typ_to_col[typ]
                 if c.is_valid(tok, typ):                    
-                    self.assertEqual(1, ct[row_ix, col_ix])
+                    self.assertEqual(1, ct.matrix[row_ix, col_ix])
                 else:
-                    self.assertEqual(0, ct[row_ix, col_ix])
+                    self.assertEqual(0, ct.matrix[row_ix, col_ix])
 
 
     def test_to_vector_maps_types_to_indices(self):
@@ -176,11 +176,11 @@ class ClaTable_Test(unittest.TestCase):
         judges = {'alpha', 'beta'}
         result = c.to_vector(judges)
 
-        self.assertEqual(1, result[c.typ_to_col['alpha']])
-        self.assertEqual(1, result[c.typ_to_col['beta']])
+        self.assertEqual(1, result[ct.typ_to_col['alpha']])
+        self.assertEqual(1, result[ct.typ_to_col['beta']])
 
         others = [t for t in c.typ if t not in judges]
-        other_ixs = [c.typ_to_col[t] for t in others]
+        other_ixs = [ct.typ_to_col[t] for t in others]
 
         are_zero = [0 == result[i] for i in other_ixs]
 

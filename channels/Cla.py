@@ -1,10 +1,105 @@
+import functools as f
 import InfoPair as I
 import LinAlg as m
 
 class Cla:
 
-    def empty():
-        return Cla()
+    class ClaTable:
+
+        def __init__(self, validities):
+
+            if not isinstance(validities, dict):
+                msg = "Cla.ClaTable() expected 'dict' but got " \
+                      "type: " + repr(validities.__class__) + "."
+                raise TypeError(msg)
+
+            tok = validities.keys()
+            typ = f.reduce(lambda x,y: x.union(y), \
+                           validities.values(), set())
+
+            typ_count = len(typ)
+            typ_to_col = list(zip(typ, range(0, typ_count)))
+
+            self.typ_to_col = dict(typ_to_col)
+            col_to_typ = map(lambda p: (p[1], p[0]), typ_to_col)
+            self.col_to_typ = dict(col_to_typ)
+
+            tok_count = len(tok)
+            tok_to_row = list(zip(tok, range(0, tok_count)))
+
+            self.tok_to_row = dict(tok_to_row)
+            row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
+            self.row_to_tok = dict(row_to_tok)
+
+            self.matrix = m.Matrix(\
+                        [[1 \
+                          if x in validities \
+                          and alpha in validities[x] \
+                          else 0 \
+
+                          for alpha in typ] \
+                        for x in tok])
+
+
+            self.next_tok_key = len(self.tok_to_row)
+            self.next_typ_key = len(self.typ_to_col)
+            
+
+        def __getitem__(self, key):
+
+            (tok, typ) = key
+
+            tok_ix = self.tok_to_row[tok]
+            typ_ix = self.typ_to_col[typ]
+
+            return self.matrix[tok,typ]
+
+
+        def __setitem__(self, key, value):
+
+            (tok, typ) = key
+
+            tok_ix = self.tok_to_row[tok]
+            typ_ix = self.typ_to_col[typ]
+
+            self.matrix[tok_ix][typ_ix] = value
+            
+
+        def add_column(self, typ, vals=None):
+
+            self.typ_to_col[typ] = self.next_typ_key
+            self.col_to_typ[self.next_typ_key] = typ
+
+            self.next_typ_key += 1
+
+            self.matrix.add_column(vals)
+
+
+        def add_row(self, tok, vals=None):
+
+            self.tok_to_row[tok] = self.next_tok_key
+            self.row_to_tok[self.next_tok_key] = tok
+
+            self.next_tok_key += 1
+            
+            self.matrix.add_row(vals)
+            
+
+        def is_valid(self, tok, typ):
+
+            return 1 == self[(tok,typ)]
+
+
+        def set_valid(self, tok, typ):
+
+            self[(tok,typ)] = 1
+
+
+        def set_invalid(self, tok, typ):
+
+            self[(tok,typ)] = 0
+
+
 
     def __init__(self, validities=None, tok=None, typ=None):
 
@@ -19,49 +114,20 @@ class Cla:
             self.typ = set()
 
         self.validities = {}
-        if validities:
 
-            vs = validities
-            for (x,t) in vs:
+        if validities:
+            for (x,t) in validities:
 
                 self.tok.add(x)
                 self.typ.add(t)
-                self.add_validity(x, t)
 
-        typ_count = len(self.typ)
-        typ_to_col = list(zip(self.typ, range(0, typ_count)))
+                if not x in self.validities:
+                    self.validities[x] = set()
 
-        tok_count = len(self.tok)
-        tok_to_row  = list(zip(self.tok, range(0, tok_count)))
-
-        self.typ_to_col = dict(typ_to_col)
-        col_to_typ = map(lambda p: (p[1], p[0]), typ_to_col)
-        self.col_to_typ = dict(col_to_typ)
-
-        self.tok_to_row = dict(tok_to_row)
-        row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
-        self.row_to_tok = dict(row_to_tok)
-
-        def validity_to_int(tok, typ):
-            if self.is_valid(tok,typ):
-                return 1
-            else:
-                return 0
+                self.validities[x].add(t)
 
 
-        rows = [[validity_to_int(tok,typ) \
-                for typ in self.typ] \
-                for tok in self.tok]
-
-        if not rows:
-            self.mat = m.Matrix([])
-
-        else:
-            self.mat = m.Matrix(rows)
-
-        self.table = self.to_table()
-
-
+        self.table = Cla.ClaTable(self.validities)
 
 
     def from_dictionary(vals):
@@ -78,7 +144,9 @@ class Cla:
 
 
     def is_valid(self, tok, typ):
-        return typ in self.get_types(tok)
+
+        return tok in self.validities \
+            and typ in self.validities[tok]
 
 
     def infopairs_by_token(self, tok):
@@ -104,12 +172,18 @@ class Cla:
         return pairs
 
 
-    def add_token(self, newToken):
-        self.tok.add(newToken)
+    def add_token(self, tok):
+
+        if tok not in self.tok:
+            self.table.add_row(tok)
+            self.tok.add(tok)
 
 
-    def add_type(self, newType):
-        self.typ.add(newType)
+    def add_type(self, typ):
+
+        if typ not in self.typ:            
+            self.table.add_column(typ)
+            self.typ.add(typ)
 
 
     def get_types(self, theToken):
@@ -120,47 +194,25 @@ class Cla:
         return set()
 
 
-    def get_tokens(self, theType):
+    def get_tokens(self, typ):
 
         tokens = []
         for t in self.validities.keys():
-            if self.is_valid(t, theType):
+            if self.is_valid(t, typ):
                 tokens.append(t)
 
         return tokens
 
 
-    def add_validity(self, theToken, theType):
+    def add_validity(self, tok, typ):
 
-        self.tok.add(theToken)
-        self.typ.add(theType)
+        self.add_token(tok)
+        self.add_type(typ)
 
-        if theToken not in self.validities:
-            self.validities[theToken] = set()
+        if tok not in self.validities:
+            self.validities[tok] = set()
 
-        self.validities[theToken].add(theType)
-
-
-    def to_table(self):
-
-        typ_count = len(self.typ)
-        typ_to_col = list(zip(self.typ, range(0, typ_count)))
-
-        tok_count = len(self.tok)
-        tok_to_row = list(zip(self.tok, range(0, tok_count)))
-
-        def validity_to_int(tok, typ):
-            if self.is_valid(tok,typ):
-                return 1
-            else:
-                return 0
-
-        rows = [[validity_to_int(tok,typ) \
-                for typ in self.typ] \
-                for tok in self.tok]
-
-        return m.Matrix(rows)
-
+        self.validities[tok].add(typ)
 
 
     def is_consequent(self, gamma, delta):
@@ -170,7 +222,7 @@ class Cla:
             self.to_vector(delta)
         ])
 
-        cases = m.Matrix.dot(self.table, seq.transpose())
+        cases = m.Matrix.dot(self.table.matrix, seq.transpose())
 
         not_all_gammas = cases.column(0) < len(gamma)
         at_least_one_delta = cases.column(1) > 0
@@ -183,10 +235,14 @@ class Cla:
 
     def to_vector(self, judges):
 
-        v = m.Matrix.zeros(len(self.typ_to_col))
+        v = m.Matrix.zeros(len(self.table.typ_to_col))
 
         for x in judges:
-            ix = self.typ_to_col[x]
+            ix = self.table.typ_to_col[x]
             v[ix] = 1
 
         return v
+
+
+    def empty():
+        return Cla()

@@ -6,6 +6,14 @@ class Matrix:
         self.matrix = np.matrix(m, copy=True)
 
 
+    def rows(self):
+        return self.matrix.shape[0]
+
+
+    def cols(self):
+        return self.matrix.shape[1]
+
+
     def __getitem__(self, key):
         return self.matrix.__getitem__(key)
 
@@ -48,6 +56,24 @@ class Matrix:
 
     def row(self, n):
         return Matrix(self.matrix[n,:])
+
+
+    def add_column(self, vals=None):
+
+        if not vals:
+            row_count = self.matrix.shape[0]
+            vals = np.matrix(np.zeros((row_count,1)))
+
+        self.matrix = np.append(self.matrix, vals, axis=1)
+
+
+    def add_row(self, vals=None):
+
+        if not vals:
+            col_count = self.matrix.shape[1]
+            vals = np.matrix(np.zeros(col_count))
+
+        self.matrix = np.append(self.matrix, vals, axis=0)
 
 
     def zeros(dims):
