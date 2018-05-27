@@ -153,12 +153,8 @@ class Cla:
 
     def get_tokens(self, typ):
 
-        tokens = []
-        for t in self.validities.keys():
-            if self.is_valid(t, typ):
-                tokens.append(t)
-
-        return tokens
+        return {x for x in self.validities.keys() \
+                if self.is_valid(x, typ)}
 
 
     def is_consequent(self, gamma, delta):
