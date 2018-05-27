@@ -250,6 +250,82 @@ class Test_Cla(unittest.TestCase):
         for tok in result.tok:
             self.assertNotValid(result, tok, 'omega')
 
+    def test_sum_includes_all_tokens_and_all_types(self):
+
+        c_left = C.Cla({
+            'x': {1,2,3},
+            'y': {2,5},
+            'z': {1}
+            })
+
+        c_right = C.Cla({
+            'a': {'alpha', 'beta', 'gamma'},
+            'b': {'beta'},
+            'c': {'gamma'}
+            })
+
+        result = C.Cla.sum(c_left, c_right)
+
+        self.assertTrue(isinstance(result, C.Cla))
+
+        expect_tok = {(x,y) for x in c_left.tok \
+                      for y in c_right.tok}
+
+        expect_typ = {(0,t) for t in c_left.typ} \
+                     .union({(1,t) for t in c_right.typ})
+
+        mismatched_tok_msg = "Result tokens do not match expected."\
+                             "\nExpected: " + repr(expect_tok) \
+                             + "\nActual: " + repr(result.tok)
+
+        self.assertEqual(expect_tok, result.tok, \
+                         msg=mismatched_tok_msg)
+
+        mismatched_typ_msg = "Result types do not matched expected."
+        self.assertEqual(expect_typ, result.typ, \
+                         msg=mismatched_typ_msg)
+
+
+    def test_sum_produces_correct_validities(self):
+
+        c_left = C.Cla({
+            'x': {1,2,3},
+            'y': {2,5},
+            'z': {1}
+            })
+
+        c_right = C.Cla({
+            'a': {'alpha', 'beta', 'gamma'},
+            'b': {'beta'},
+            'c': {'gamma'}
+            })
+
+        result = C.Cla.sum(c_left, c_right)
+
+        for (x,y) in result.tok:
+
+            for(i, t) in result.typ:
+
+                valid_result = result.is_valid((x,y), (i,t))
+                if 0 == i:
+                    valid_part = c_left.is_valid(x, t)
+                    msg = "c_left.is_valid" \
+                          + repr((x,t)) + " = " + repr(valid_part)
+
+                elif 1 == i:
+                    valid_part = c_right.is_valid(y, t)
+                    msg = "c_right.is_valid" \
+                          + repr((x,t)) + " = " + repr(valid_part)
+
+                else:
+                    msg = "Unexpected type index: " + repr(i)
+                    raise ValueError(msg)
+
+                msg += " but sum.is_valid" + repr(((x,y),(i,t))) \
+                       + " = " + repr(valid_result)
+
+                self.assertEqual(valid_part, valid_result, msg=msg)
+
 
 class EquableTestClass:
 

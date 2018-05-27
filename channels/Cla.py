@@ -120,6 +120,17 @@ class Cla:
         return self.table.is_valid(tok, typ)
 
 
+    def sum(c_left, c_right):
+
+        tok = {(x,y) for x in c_left.tok for y in c_right.tok}
+        vals = {x:set() for x in tok}
+
+        for (x,y) in vals.keys():
+            vals[(x,y)] = {(0,t) for t in c_left.get_types(x)} \
+                      .union({(1,t) for t in c_right.get_types(y)})
+
+        return Cla(vals)
+
     def infopairs_by_token(self, tok):
 
         pairs = set()
