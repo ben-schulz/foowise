@@ -118,8 +118,12 @@ class Cla:
         if validities:
             for (x,t) in validities:
 
-                self.tok.add(x)
                 self.typ.add(t)
+
+                if not x:
+                    continue
+
+                self.tok.add(x)
 
                 if not x in self.validities:
                     self.validities[x] = set()
@@ -140,6 +144,7 @@ class Cla:
             raise TypeError(msg)
 
         validities = [(x,t) for x in vals.keys() for t in vals[x]]
+
         return Cla(validities=validities)
 
 

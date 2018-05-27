@@ -245,6 +245,23 @@ class Test_Cla(unittest.TestCase):
                 self.assertTrue(result.is_valid(tok, typ), msg=msg)
 
 
+    def test_from_dictionary_handles_token_None(self):
+        vals = {
+            None:{'omega'},
+            'x': {'alpha', 'beta'},
+            'y': {'beta', 'gamma'},
+            'z': {'gamma'}
+            }
+
+        result = C.Cla.from_dictionary(vals)
+
+        self.assertFalse(None in result.tok)
+        self.assertTrue('omega' in result.typ)
+
+        for tok in result.tok:
+            self.assertNotValid(result, tok, 'omega')
+
+
 class EquableTestClass:
 
     def __init__(self, primitiveValuedId):

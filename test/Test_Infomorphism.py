@@ -55,6 +55,20 @@ class Infomorphism_Test(unittest.TestCase):
         p = self.test_classification()
         d = self.test_classification()
 
+        p = C.Cla.from_dictionary({
+            None:{'alpha','gamma'},
+            'x':{'beta'},
+            'y':set(),
+            'z':set()
+            })
+
+        d = C.Cla.from_dictionary({
+            None:{'beta', 'gamma'},
+            'x':{'alpha'},
+            'y':set(),
+            'z':set()
+            })
+
         p.add_validity('x', 'beta')
         d.add_validity('x', 'alpha')
 
