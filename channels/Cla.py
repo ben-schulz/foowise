@@ -49,10 +49,16 @@ class Cla:
 
             (tok, typ) = key
 
+            if tok not in self.tok_to_row:
+                return None
+
+            if typ not in self.typ_to_col:
+                return None
+
             tok_ix = self.tok_to_row[tok]
             typ_ix = self.typ_to_col[typ]
 
-            return self.matrix[tok,typ]
+            return self.matrix[tok_ix,typ_ix]
 
 
         def __setitem__(self, key, value):
@@ -63,31 +69,16 @@ class Cla:
             typ_ix = self.typ_to_col[typ]
 
             self.matrix[tok_ix][typ_ix] = value
-            
 
-        def add_column(self, typ, vals=None):
-
-            self.typ_to_col[typ] = self.next_typ_key
-            self.col_to_typ[self.next_typ_key] = typ
-
-            self.next_typ_key += 1
-
-            self.matrix.add_column(vals)
-
-
-        def add_row(self, tok, vals=None):
-
-            self.tok_to_row[tok] = self.next_tok_key
-            self.row_to_tok[self.next_tok_key] = tok
-
-            self.next_tok_key += 1
-            
-            self.matrix.add_row(vals)
-            
 
         def is_valid(self, tok, typ):
 
             return 1 == self[(tok,typ)]
+
+
+        def is_invalid(self, tok, typ):
+
+            return not self.is_valid(self, tok, typ)
 
 
         def set_valid(self, tok, typ):
@@ -101,49 +92,32 @@ class Cla:
 
 
 
-    def __init__(self, validities=None):
+    def __init__(self, validities):
 
-        self.tok = set()
-        self.typ = set()
+        if not isinstance(validities, dict):
 
-        self.validities = {}
-
-        if validities:
-            for (x,t) in validities:
-
-                self.typ.add(t)
-
-                if not x:
-                    continue
-
-                self.tok.add(x)
-
-                if not x in self.validities:
-                    self.validities[x] = set()
-
-                self.validities[x].add(t)
-
-        self.table = Cla.ClaTable(self.validities)
-
-
-    def from_dictionary(vals):
-
-        if not isinstance(vals, dict):
-
-            given_type = vals.__class__
+            given_type = validities.__class__
             msg = "expected arg type 'dict' but got " \
                   + "'" + repr(given_type) + "'."
             raise TypeError(msg)
 
-        validities = [(x,t) for x in vals.keys() for t in vals[x]]
+        self.tok = set()
+        self.typ = set()
 
-        return Cla(validities=validities)
+        for x in validities.keys():
+
+            if x:
+                self.tok.add(x)
+
+            for t in validities[x]:
+                self.typ.add(t)
+
+        self.validities = validities
+        self.table = Cla.ClaTable(self.validities)
 
 
     def is_valid(self, tok, typ):
-
-        return tok in self.validities \
-            and typ in self.validities[tok]
+        return self.table.is_valid(tok, typ)
 
 
     def infopairs_by_token(self, tok):
@@ -169,24 +143,10 @@ class Cla:
         return pairs
 
 
-    def add_token(self, tok):
+    def get_types(self, tok):
 
-        if tok not in self.tok:
-            self.table.add_row(tok)
-            self.tok.add(tok)
-
-
-    def add_type(self, typ):
-
-        if typ not in self.typ:            
-            self.table.add_column(typ)
-            self.typ.add(typ)
-
-
-    def get_types(self, theToken):
-
-        if theToken in self.validities:
-            return self.validities[theToken]
+        if tok in self.validities:
+            return self.validities[tok]
 
         return set()
 
@@ -231,4 +191,4 @@ class Cla:
 
 
     def empty():
-        return Cla()
+        return Cla({})

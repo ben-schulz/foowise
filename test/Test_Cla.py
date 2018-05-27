@@ -18,30 +18,33 @@ class Test_Cla(unittest.TestCase):
 
 
     def test_is_valid_returnsInvalidIfTokenDoesNotHaveType(self):
-        c = C.Cla()
+
+        c = C.Cla({})
 
         self.assertNotValid(c, 'x', None)
 
 
-    def test_add_token_addsNewTokenToTokenSet(self):
-        c = C.Cla()
+    def test_add_token_adds_to_token_set(self):
 
-        c.add_token('t')
+        c = C.Cla({
+            'x':set()
+        })
 
-        self.assertTrue('t' in c.tok)
+        self.assertTrue('x' in c.tok)
 
 
     def test_add_type_addsNewTypeToTypeSet(self):
-        c = C.Cla()
 
-        c.add_type('t')
+        c = C.Cla({
+            None:{'t'}
+        })
 
         self.assertTrue('t' in c.typ)
 
 
     def test_get_types_returnsAllandOnlyTypesOfGivenToken(self):
 
-        c = C.Cla.from_dictionary({
+        c = C.Cla({
             'x':{1,2,4}
             })
 
@@ -55,7 +58,7 @@ class Test_Cla(unittest.TestCase):
 
     def test_getTokens_returnsAllAndOnlyTokensOfType(self):
 
-        c = C.Cla.from_dictionary({
+        c = C.Cla({
             'x':{1,2,4},
             'y':{1,3,5},
             'z':{9}
@@ -74,7 +77,7 @@ class Test_Cla(unittest.TestCase):
         testToken = FooClass(1)
         testType = BarClass(2)
 
-        c = C.Cla.from_dictionary({
+        c = C.Cla({
             testToken:{testType}
             })
 
@@ -93,13 +96,12 @@ class Test_Cla(unittest.TestCase):
     def test_constructor_populatesValiditiesGivenSet(self):
 
         vals = {
-            ('x', 'alpha'),
-            ('x', 'beta'),
-            ('y', 'beta'),
-            ('z', 'gamma')
+            'x':{'alpha','beta'},
+            'y':{'beta'},
+            'z':{'gamma'}
         }
 
-        c = C.Cla(validities=vals)
+        c = C.Cla(vals)
 
         self.assertValid(c, 'x', 'alpha')
         self.assertValid(c, 'x', 'beta')
@@ -125,13 +127,12 @@ class Test_Cla(unittest.TestCase):
     def test_constructor_populatesValiditiesGivenSet(self):
 
         vals = {
-            ('x', 'alpha'),
-            ('x', 'beta'),
-            ('y', 'beta'),
-            ('z', 'gamma')
-        }
+            'x':{'alpha','beta'},
+            'y':{'beta'},
+            'z':{'gamma'}
+            }
 
-        c = C.Cla(validities=vals)
+        c = C.Cla(vals)
 
         self.assertValid(c, 'x', 'alpha')
         self.assertValid(c, 'x', 'beta')
@@ -148,7 +149,7 @@ class Test_Cla(unittest.TestCase):
             'q': set()
         }
 
-        c = C.Cla.from_dictionary(vals)
+        c = C.Cla(vals)
 
         self.assertValid(c, 'x', 'alpha')
         self.assertValid(c, 'x', 'beta')
@@ -164,7 +165,13 @@ class Test_Cla(unittest.TestCase):
             ('x', 'beta'),
         }
 
-        c = C.Cla(validities=vals)
+        vals = {
+            'x':{'alpha', 'beta'},
+            'y':{'beta'},
+            'z':{'gamma'}
+            }
+
+        c = C.Cla(vals)
 
         result = c.infopairs_by_token('x')
 
@@ -179,13 +186,12 @@ class Test_Cla(unittest.TestCase):
     def test_infoPairsByType_ReturnsEachValidToken(self):
 
         vals = {
-            ('y', 'beta'),
-            ('x', 'alpha'),
-            ('z', 'gamma'),
-            ('x', 'beta'),
-        }
+            'x':{'alpha', 'beta'},
+            'y':{'beta'},
+            'z':{'gamma'}
+            }
 
-        c = C.Cla(validities=vals)
+        c = C.Cla(vals)
 
         result = c.infopairs_by_type('beta')
 
@@ -202,7 +208,7 @@ class Test_Cla(unittest.TestCase):
         vals = [('x', 'alpha'), ('y', 'beta')]
 
         try:
-            result = C.Cla.from_dictionary(vals)
+            result = C.Cla(vals)
         except TypeError:
             pass
 
@@ -215,7 +221,7 @@ class Test_Cla(unittest.TestCase):
             'z': {'gamma'}
             }
 
-        result = C.Cla.from_dictionary(vals)
+        result = C.Cla(vals)
 
         for tok in vals.keys():
 
@@ -236,7 +242,7 @@ class Test_Cla(unittest.TestCase):
             'z': {'gamma'}
             }
 
-        result = C.Cla.from_dictionary(vals)
+        result = C.Cla(vals)
 
         self.assertFalse(None in result.tok)
         self.assertTrue('omega' in result.typ)

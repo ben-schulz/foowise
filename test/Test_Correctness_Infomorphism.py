@@ -44,8 +44,8 @@ class Infomorphism_Correctness(unittest.TestCase):
             'y':{'beta'}
             }
 
-        p = C.Cla.from_dictionary(v1)
-        d = C.Cla.from_dictionary(v1)
+        p = C.Cla(v1)
+        d = C.Cla(v1)
 
         f_up = lambda x: x
         f_down = lambda x: x
@@ -55,11 +55,11 @@ class Infomorphism_Correctness(unittest.TestCase):
 
     def test_singleton_classifications(self):
 
-        p_vals = [('x', 'alpha')]
-        d_vals = [('y', 'beta')]
+        p_vals = {'x':{'alpha'}}
+        d_vals = {'y':{'beta'}}
 
-        p = C.Cla(validities=p_vals)
-        d = C.Cla(validities=d_vals)
+        p = C.Cla(p_vals)
+        d = C.Cla(d_vals)
 
         f_up = lambda x: 'beta'
         f_down = lambda x: 'x'
@@ -69,11 +69,13 @@ class Infomorphism_Correctness(unittest.TestCase):
 
     def test_minNonemptyNotInfomorphic(self):
 
-        v1 = [('x', 'alpha')]
-        v2 = [('x','alpha'), ('y', 'beta')]
+        v1 = {'x':{'alpha'}}
 
-        p = C.Cla(validities=v1)
-        d = C.Cla(validities=v2)
+        v2 = {'x':{'alpha'},
+              'y':{'beta'}}
+
+        p = C.Cla(v1)
+        d = C.Cla(v2)
 
         f_up = lambda x: 'alpha'
         f_down = lambda x: 'x'

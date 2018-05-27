@@ -27,7 +27,7 @@ class Theory_Test(unittest.TestCase):
 
 
     def test_from_classification_returnsCorrectEntailment(self):
-        cla = C.Cla.from_dictionary({
+        cla = C.Cla({
             'x' : {'1', '3'},
             'y' : {'2', '3'},
             'z' : {'1', '2'},

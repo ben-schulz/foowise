@@ -14,7 +14,7 @@ class Infomorphism_Test(unittest.TestCase):
         f_up = lambda x : None
 
         p = C.Cla.empty()
-        d = C.Cla.from_dictionary({
+        d = C.Cla({
             'x':{'alpha'},
             'y':{'beta'}
         })
@@ -33,11 +33,11 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : x
 
-        p = C.Cla.from_dictionary({
+        p = C.Cla({
             'x':{'alpha','beta'},
             'y':{'beta'}
         })
-        d = C.Cla.from_dictionary({
+        d = C.Cla({
             'x':{'alpha','beta'},
             'y':{'beta'}
         })
@@ -50,14 +50,14 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = C.Cla.from_dictionary({
+        p = C.Cla({
             None:{'alpha','gamma'},
             'x':{'beta'},
             'y':set(),
             'z':set()
             })
 
-        d = C.Cla.from_dictionary({
+        d = C.Cla({
             None:{'beta', 'gamma'},
             'x':{'alpha'},
             'y':set(),
@@ -78,14 +78,14 @@ class Infomorphism_Test(unittest.TestCase):
         f_up = lambda x : 'gamma'
         f_down = lambda x : 'z'
 
-        p = C.Cla.from_dictionary({
+        p = C.Cla({
             None:{'alpha','gamma'},
             'x':set(),
             'y':set(),
             'z':{'alpha'}
             })
 
-        d = C.Cla.from_dictionary({
+        d = C.Cla({
             None:{'beta', 'gamma'},
             'x':set(),
             'y':set(),
@@ -106,14 +106,14 @@ class Infomorphism_Test(unittest.TestCase):
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
 
-        p = C.Cla.from_dictionary({
+        p = C.Cla({
             None:{'alpha','gamma'},
             'x':{'beta'},
             'y':set(),
             'z':set()
             })
 
-        d = C.Cla.from_dictionary({
+        d = C.Cla({
             None:{'beta', 'gamma'},
             'x':{'alpha'},
             'y':set(),
