@@ -1,4 +1,4 @@
-import numpy as np
+import LinAlg as m
 
 class ClaTable:
 
@@ -22,30 +22,29 @@ class ClaTable:
             self.row_to_tok = dict(row_to_tok)
 
         if not rows:
-            self.mat = np.matrix([])
+            self.mat = m.Matrix([])
         else:
-            self.mat = np.matrix(rows)
+            self.mat = m.Matrix(rows)
 
 
     def is_consequent(self, gamma, delta):
 
-        seq = np.matrix([
+        seq = m.Matrix([
             self.to_vector(gamma),
             self.to_vector(delta)
         ])
 
-        cases = np.dot(self.mat, seq.transpose())
+        cases = m.Matrix.dot(self.mat, seq.transpose())
 
-        not_all_gammas = cases[:,0] < len(gamma)
-        at_least_one_delta = cases[:,1] > 0
+        not_all_gammas = cases.column(0) < len(gamma)
+        at_least_one_delta = cases.column(1) > 0
 
-        return np.logical_or(not_all_gammas, at_least_one_delta) \
-                 .all()
+        return not_all_gammas.logical_or(at_least_one_delta).all()
 
 
     def to_vector(self, judges):
 
-        v = np.zeros(len(self.typ_to_col))
+        v = m.Matrix.zeros(len(self.typ_to_col))
 
         for x in judges:
             ix = self.typ_to_col[x]

@@ -1,5 +1,4 @@
 import unittest
-import numpy as np
 
 from test_context import Validity as V
 from test_context import Cla as C

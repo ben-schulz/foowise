@@ -5,6 +5,8 @@ sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__), '../ch
 
 sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__), '../matrices')))
 
+sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__), '../math')))
+
 
 import Cla
 import Validity
@@ -15,5 +17,7 @@ import InfoTetrad
 import Theory
 import JudgeSet
 import Sequent
+
+import LinAlg
 
 import ClaTable
