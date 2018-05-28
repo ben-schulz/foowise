@@ -78,7 +78,7 @@ class Cla:
 
         def is_invalid(self, tok, typ):
 
-            return not self.is_valid(self, tok, typ)
+            return 0 == self[(tok,typ)]
 
 
         def set_valid(self, tok, typ):
