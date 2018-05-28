@@ -4,7 +4,7 @@ Infomorphic channels ([Barwise and Seligman, 1997][blue book]) rigorously formal
 
 The purpose this repository to is to mechanize the underlying theory, and to demonstrate a few interesting applications.
 
-The relevant literature is somewhat obscure, and often hard to follow, and so I've begun to compile a reference in [the documentation folder][glossary].
+The relevant literature is somewhat obscure, and often hard to follow, and so I've begun to compile a reference in [the documentation folder](docs/glossary.md).
 
 (2018.05.28)
 
