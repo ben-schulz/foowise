@@ -15,3 +15,21 @@ A _classification_ `A := < tok(A), typ(A), |=  >` consists of:
 
 The relation `x |= alpha` reads _x has type alpha_ or _alpha is valid for x_. The inverse relation `x |!= alpha` reads _x does not have type alpha_ or _alpha is invalid for x_.
 
+
+## Infomorphism
+
+Given two classifications:
+
+- `A := < tok(A), typ(A), |=_A >`
+- `C := < tok(C), typ(C), |=_C >`
+
+an _infomorphism_ is a pair of functions `< f_up, f_down >` satisfying:
+
+- `f_up : typ(A) -> typ(C)`
+- `f_down : typ(C) -> typ(A)`
+
+and the _Fundamental Infomorphism Axiom_: for all `c in tok(C)` and `alpha in typ(A)`:
+
+```
+f_down(c) |=_A alpha  <if and only if>  c |=_C f_up(alpha)
+```
