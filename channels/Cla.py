@@ -1,6 +1,7 @@
 import functools as f
+import Set as S
 import InfoPair as I
-import LinAlg as m
+import LinAlg as Alg
 
 class Cla:
 
@@ -31,7 +32,7 @@ class Cla:
             row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
             self.row_to_tok = dict(row_to_tok)
 
-            self.matrix = m.Matrix(\
+            self.matrix = Alg.Matrix(\
                         [[1 \
                           if x in validities \
                           and alpha in validities[x] \
@@ -120,16 +121,24 @@ class Cla:
         return self.table.is_valid(tok, typ)
 
 
-    def sum(c_left, c_right):
+    def sum(*cla):
 
-        tok = {(x,y) for x in c_left.tok for y in c_right.tok}
+        if 0 == len(cla):
+            return Cla.empty()
+
+        tok = S.Set.product(*map(lambda c: c.tok, cla))
+
         vals = {x:set() for x in tok}
 
-        for (x,y) in vals.keys():
-            vals[(x,y)] = {(0,t) for t in c_left.get_types(x)} \
-                      .union({(1,t) for t in c_right.get_types(y)})
+        for v in vals.keys():
+            
+            ix_typs = [{(i,t) for t in cla[i].get_types(v[i])} \
+                       for i in range(0,len(cla))]
+
+            vals[v] = S.Set.union(*ix_typs)
 
         return Cla(vals)
+
 
     def infopairs_by_token(self, tok):
 

@@ -156,14 +156,8 @@ class Test_Cla(unittest.TestCase):
         self.assertValid(c, 'y', 'beta')
         self.assertValid(c, 'z', 'gamma')
 
-    def test_infoPairsByToken_ReturnsEachValidType(self):
 
-        vals = {
-            ('y', 'beta'),
-            ('x', 'alpha'),
-            ('z', 'gamma'),
-            ('x', 'beta'),
-        }
+    def test_infoPairsByToken_ReturnsEachValidType(self):
 
         vals = {
             'x':{'alpha', 'beta'},
@@ -322,6 +316,43 @@ class Test_Cla(unittest.TestCase):
                     raise ValueError(msg)
 
                 msg += " but sum.is_valid" + repr(((x,y),(i,t))) \
+                       + " = " + repr(valid_result)
+
+                self.assertEqual(valid_part, valid_result, msg=msg)
+
+
+    def test_sum_returns_empty_on_no_args(self):
+
+        result = C.Cla.sum()
+
+        self.assertTrue(isinstance(result, C.Cla))
+        self.assertEqual(0, len(result.tok))
+        self.assertEqual(0, len(result.typ))
+        self.assertEqual(0, len(result.validities))
+
+    
+    def test_sum_returns_infomorphic_on_single_input(self):
+
+        c_left = C.Cla({
+            'x': {1,2,3},
+            'y': {2,5},
+            'z': {1}
+            })
+
+        result = C.Cla.sum(c_left)
+
+        for x in result.tok:
+
+            for(i, t) in result.typ:
+
+                self.assertEqual(0, i)
+                valid_result = result.is_valid(x, (i,t))
+
+                valid_part = c_left.is_valid(x[0], t)
+                msg = "c_left.is_valid" \
+                      + repr((x,t)) + " = " + repr(valid_part)
+
+                msg += " but sum.is_valid" + repr((x,(i,t))) \
                        + " = " + repr(valid_result)
 
                 self.assertEqual(valid_part, valid_result, msg=msg)
