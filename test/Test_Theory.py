@@ -47,5 +47,30 @@ class Theory_Test(unittest.TestCase):
         self.assertTrue(theory.isconsequent(_1_2_and_3, _4))
 
 
+    def test_to_vector_maps_types_to_indices(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'zeta', 'theta', 'omega'},
+            }
+
+        c = C.Cla(c_vals)
+        ct = c.table
+        theory = T.Theory.from_classification(c)
+
+        judges = {'alpha', 'beta'}
+        result = theory.to_vector(judges)
+
+        self.assertEqual(1, result[ct.typ_to_col['alpha']])
+        self.assertEqual(1, result[ct.typ_to_col['beta']])
+
+        others = [t for t in c.typ if t not in judges]
+        other_ixs = [ct.typ_to_col[t] for t in others]
+
+        are_zero = [0 == result[i] for i in other_ixs]
+
+        self.assertTrue(all(are_zero))
+
+
 if __name__ == '__main__':
     unittest.main()
