@@ -4,8 +4,13 @@ Infomorphic channels ([Barwise and Seligman, 1997][blue book]) rigorously formal
 
 The purpose this repository to is to mechanize the underlying theory, and to demonstrate a few interesting applications.
 
-Updates to follow. (2018.04.29)
+The relevant literature is somewhat obscure, and often hard to follow, and so I've begun to compile a reference in [the documentation folder][glossary].
+
+(2018.05.28)
 
 -----
 
 [blue book]: https://books.google.com/books?id=Mawadg55eg4C&printsec=front_cover&hl=en
+
+[glossary]:
+https://github.com/ben-schulz/foowise/blob/master/docs/glossary.md
