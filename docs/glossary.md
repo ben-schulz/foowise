@@ -1,11 +1,12 @@
 # Glossary of Theoretical Terms
 
-All definitions based on the exposition in:
+All definitions and section/page numbers are taken from:
 
 _Information Flow: The Logic of Distributed Systems_. Jon Barwise and Jerry Seligman. Cambridge University Press, 1997.
 
 
 ## Classification
+###### (Section 2.1, Page 28)
 
 A _classification_ `A := < tok(A), typ(A), |=  >` consists of:
 
@@ -17,6 +18,7 @@ The relation `x |= alpha` reads _x has type alpha_ or _alpha is valid for x_. Th
 
 
 ## Infomorphism
+###### (Section 2.1, Page 32)
 
 Given two classifications:
 
