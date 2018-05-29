@@ -27,7 +27,7 @@ Given two [classifications](#classification):
 - `A := < tok(A), typ(A), |=_A >`
 - `C := < tok(C), typ(C), |=_C >`
 
-an _infomorphism_ is a pair of functions `< f_up, f_down >` satisfying:
+an _infomorphism_ between `A` and `C` is a pair of functions `f := < f_up, f_down >` satisfying:
 
 - `f_up : typ(A) -> typ(C)`
 - `f_down : typ(C) -> typ(A)`
@@ -37,6 +37,14 @@ and the _Fundamental Infomorphism Axiom_: for all `c in tok(C)` and `alpha in ty
 ```
 f_down(c) |=_A alpha  <if and only if>  c |=_C f_up(alpha)
 ```
+Here, an infomorphism between `A` and `C` is denoted `A <--> C`.
+
+
+## Channel
+###### (Section 4.3, Page 76)
+
+A _channel_ is a set of [infomorphisms](#infomorphism) `{f_i : A_i <--> C}` that all share a common codomain `C`. The [classification](#classification) `C` is the _core_ of the channel.
+
 
 ## Sum
 ###### (Section 5.1, Page 81)
