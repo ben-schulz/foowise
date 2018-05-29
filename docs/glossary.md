@@ -7,6 +7,7 @@ _Information Flow: The Logic of Distributed Systems_. Jon Barwise and Jerry Seli
 
 ## Classification
 ###### (Section 2.1, Page 28)
+###### (Section 4.1, Page 69)
 
 A _classification_ `A := < tok(A), typ(A), |=  >` consists of:
 
@@ -19,6 +20,7 @@ The relation `x |= alpha` reads _x has type alpha_ or _alpha is valid for x_. Th
 
 ## Infomorphism
 ###### (Section 2.1, Page 32)
+###### (Section 4.2, Page 72)
 
 Given two classifications:
 
@@ -34,4 +36,20 @@ and the _Fundamental Infomorphism Axiom_: for all `c in tok(C)` and `alpha in ty
 
 ```
 f_down(c) |=_A alpha  <if and only if>  c |=_C f_up(alpha)
+```
+
+## Sum
+###### (Section 5.1, Page 81)
+
+Given two classifications `A` and `B`, the sum `A + B` is the classification such that:
+
+- `tok(A + B)` is the Cartesian product `tok(A) X tok(B)`;
+- `typ(A + B)` is the disjoint union of:
+  - `{(0, alpha) for alpha in typ(A)}`
+  - `{(1, beta) for beta in typ(B)}`.
+- The validity relation `|=_[A+B]` is given by:
+
+```
+(a,b) |=_[A+B] (0,alpha)  <if and only if>  a |=_A alpha
+(a,b) |=_[A+B] (1,beta)   <if and only if>  b |=_B beta
 ```
