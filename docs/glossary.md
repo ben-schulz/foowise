@@ -22,7 +22,7 @@ The relation `x |= alpha` reads _x has type alpha_ or _alpha is valid for x_. Th
 ###### (Section 2.1, Page 32)
 ###### (Section 4.2, Page 72)
 
-Given two classifications:
+Given two [classifications](docs/glossary.d#classification):
 
 - `A := < tok(A), typ(A), |=_A >`
 - `C := < tok(C), typ(C), |=_C >`
@@ -41,7 +41,7 @@ f_down(c) |=_A alpha  <if and only if>  c |=_C f_up(alpha)
 ## Sum
 ###### (Section 5.1, Page 81)
 
-Given two classifications `A` and `B`, the sum `A + B` is the classification such that:
+Given two [classifications](docs/glossary.d#classification) `A` and `B`, the sum `A + B` is the classification such that:
 
 - `tok(A + B)` is the Cartesian product `tok(A) X tok(B)`;
 - `typ(A + B)` is the disjoint union of:
