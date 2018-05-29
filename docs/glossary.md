@@ -53,3 +53,13 @@ Given two [classifications](#classification) `A` and `B`, the sum `A + B` is the
 (a,b) |=_[A+B] (0,alpha)  <if and only if>  a |=_A alpha
 (a,b) |=_[A+B] (1,beta)   <if and only if>  b |=_B beta
 ```
+
+## Invariant
+###### (Section 5.2, Page 84)
+
+Given a [classification](#classification) `A`, an invariant `I := < Sigma, ~ >` consists of a subset of `typ(A)`, denoted `Sigma`, and a binary relation `~` on `tok(A)` defined by:
+
+```
+a ~ b  <implies>  <for all> alpha in Sigma, a |= alpha  <if and only if>  b |= alpha
+```
+That is, `a ~ b` if and only if `a` and `b` agree on all types in `Sigma`.
