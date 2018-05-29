@@ -63,3 +63,15 @@ Given a [classification](#classification) `A`, an invariant `I := < Sigma, ~ >` 
 a ~ b  <implies>  <for all> alpha in Sigma, a |= alpha  <if and only if>  b |= alpha
 ```
 That is, `a ~ b` if and only if `a` and `b` agree on all types in `Sigma`.
+
+
+## Quotient
+###### (Section 5.2, Page 84)
+
+Given a [classification](#classification) `A` and an [invariant](#invariant) `I := < Sigma, ~ >`. The _quotient_ of `A` by `I`, denoted `A/I`, is the classification given by:
+
+- `typ(A/I)` is `Sigma`;
+- `tok(A/I)` is the set of equivalence classes of `~`;
+- `[a] |=_[A/I] alpha` if and only if `a |=_[A] alpha`, where `[a]` is the equivalence class of `a` under `~`.
+
+More concisely, `A/I` is the classification obtained by restricting the types to `Sigma` and grouping together tokens by `~`.
