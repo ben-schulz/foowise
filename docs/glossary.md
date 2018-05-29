@@ -74,4 +74,4 @@ Given a [classification](#classification) `A` and an [invariant](#invariant) `I 
 - `tok(A/I)` is the set of equivalence classes of `~`;
 - `[a] |=_[A/I] alpha` if and only if `a |=_[A] alpha`, where `[a]` is the equivalence class of `a` under `~`.
 
-More concisely, `A/I` is the classification obtained by restricting the types to `Sigma` and grouping together tokens by `~`.
+More concisely, `A/I` is the classification obtained by restricting the types to `Sigma` and grouping together tokens by `~`. As the name suggests, taking a non-trivial quotient generally results in a smaller classification.
