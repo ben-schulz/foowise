@@ -23,5 +23,19 @@ class Test_Set(unittest.TestCase):
         self.assertTrue(all(map(lambda z: z in result, y)))
 
 
+    def test_union_produces_no_duplicate_elements(self):
+
+        x = {1, 2, 3, 4, 5, 7}
+        y = {2, 4, 6, 8}
+        z = {3, 6, 9}
+
+        result = S.Set.union(x,y,z)
+
+        self.assertTrue(all(map(lambda n: n in result, x)))
+        self.assertTrue(all(map(lambda n: n in result, y)))
+        self.assertTrue(all(map(lambda n: n in result, z)))
+        self.assertEqual(9, len(result))
+
+
 if __name__ == '__main__':
     unittest.main()
