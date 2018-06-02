@@ -49,3 +49,34 @@ class Relation:
          for a in self.left
          for b in self.right
          if self.holds(a,b)}
+
+
+class EqRelation(Relation):
+
+    def __init__(self, sigma, parts):
+
+        _parts = list(parts)
+        while(_parts):
+
+            p = _parts.pop()
+            are_disj = map(lambda x: p.isdisjoint(x), _parts)
+
+            if not all(are_disj):
+                msg = "'EqRelation' must be generated from "\
+                      "a disjoint partition."
+                raise ValueError(msg)
+
+        _union_parts = S.Set.union(*parts)
+        if not _union_parts.issubset(sigma) \
+           or not sigma.issubset(_union_parts):
+            msg = "'EqRelation' must be generated from "\
+                  "a disjoint partition."
+            raise ValueError(msg)
+
+        r_dict = {}
+        for p in parts:
+            for x in p:
+                if not x in r_dict:
+                    r_dict[x] = p
+        
+        Relation.__init__(self, r_dict)

@@ -47,6 +47,67 @@ class Test_Relation(unittest.TestCase):
             self.assertFalse(all(holds_is_false))
             self.assertTrue(all(not_holds_is_true))
 
+
+    def test_all_pairs_returns_all_true_relations(self):
+
+        r_dict = {
+            'x': {'y', 'z'},
+            'y': {'x', 'z'},
+            'z': {'q'}
+            }
+
+        rel = R.Relation(r_dict)
+        result = rel.all_pairs()
+
+        self.assertEqual(5, len(result))
+
+        for x in r_dict.keys():
+            for v in r_dict[x]:
+                self.assertTrue((x,v) in result)
+
+
+    def test_EqRelation_generates_from_a_partition(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {2,4,8}, {3,6,9}, {5,7}]
+
+        rel = R.EqRelation(sigma, parts)
+
+        for p in parts:
+            holds = [rel.holds(a,b) for a in p for b in p]
+            self.assertTrue(all(holds))
+
+
+    def test_EqRelation_raises_valueerror_on_not_disjoint(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {1,2,4,8}, {3,6,9}, {5,7}]
+
+        try:
+
+            rel = R.EqRelation(sigma, parts)
+            msg = "Expected 'ValueError' raised."
+            self.assertTrue(False, msg=msg)
+
+        except ValueError:
+            pass
+
+
+    def test_EqRelation_raises_valueerror_on_not_cover(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {4,8}, {3,9}, {5,7}]
+
+        try:
+            rel = R.EqRelation(sigma, parts)
+            msg = "Expected 'ValueError' raised."
+            self.assertTrue(False, msg=msg)
+
+        except ValueError:
+            pass
+
+        
+
             
 if __name__ == '__main__':
     unittest.main()
