@@ -5,11 +5,15 @@ class Relation:
 
     def __init__(self, r_dict):
 
-        left = set(r_dict.keys())
-        right = S.Set.union(*(r_dict[x] for x in r_dict.keys()))
+        self.left = set(r_dict.keys())
+        self.right = S.Set.union(*(r_dict[x] \
+                                   for x in r_dict.keys()))
 
-        self.table_map_left = dict(zip(left,range(0, len(left))))
-        self.table_map_right = dict(zip(right,range(0, len(right))))
+        self.table_map_left = dict(zip(self.left, \
+                                       range(0, len(self.left))))
+
+        self.table_map_right = dict(zip(self.right, \
+                                        range(0, len(self.right))))
 
         self.r_dict = r_dict
         self.table = A.Matrix(\
@@ -18,8 +22,8 @@ class Relation:
                                 and b in r_dict[a] \
                                 else 0
 
-                                for b in right]
-                               for a in left]
+                                for b in self.right]
+                               for a in self.left]
                               )
 
 
@@ -37,3 +41,11 @@ class Relation:
         ix_b = self.table_map_right[b]
 
         return 0 == self.table[ix_a, ix_b]
+
+
+    def all_pairs(self):
+
+        return {(a,b) \
+         for a in self.left
+         for b in self.right
+         if self.holds(a,b)}
