@@ -16,14 +16,15 @@ class Assert:
         missing_left = [str(l) for l in left if l not in right]
         missing_right = [str(r) for r in right if r not in left]
 
-        msg = '\nSets expected equal were unequal;\n'
+        msg = '\nSets expected equal were unequal;' \
+              + '\n\nleft=' + str(left) + '\n\nright=' + str(right)
 
         if missing_left:
 
             formatted_left = f.reduce(lambda x,y: x + y, \
                                       missing_left, '')
 
-            msg += 'In the left but missing on the right: ' \
+            msg += '\n\nIn the left but missing on the right: ' \
                    + formatted_left
 
         if missing_right:
