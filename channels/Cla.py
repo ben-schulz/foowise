@@ -163,12 +163,29 @@ class Cla:
         return pairs
 
 
-    def get_types(self, tok):
+    def get_types(self, tok, subset=None):
 
-        if tok in self.validities:
+        if not tok in self.validities:
+            return set()
+
+        if not subset:
             return self.validities[tok]
 
-        return set()
+        return {t for t in self.validities[tok] if t in subset}
+
+
+    def agree_all(self, x, y, sigma):
+
+        if not x in self.tok:
+            raise ValueError(str(x) + "is not a token.")
+
+        if not y in self.tok:
+            raise ValueError(str(y) + "is not a token.")
+
+        typ_x = self.get_types(x, subset=sigma)
+        typ_y = self.get_types(y, subset=sigma)
+
+        return S.Set.are_equal(typ_x, typ_y)
 
 
     def get_tokens(self, typ):

@@ -25,18 +25,22 @@ class Test_Invariant(unittest.TestCase):
         })
         sigma = {2,4}
 
+        inv = I.Invariant(cla, sigma)
+        inv_pairs = inv.all_pairs()
+
+        self.assertTrue(('x','y') in inv_pairs)
+
+    def test_holds_defines_partition_of_cla_tok(self):
+
+        cla = C.Cla({
+            'x':{1,2,3,4,5,6,7},
+            'y':{2,4,6,8,10,12},
+            'z':{3,6,9,12},
+            'q':{2,4,8,16}
+        })
+        sigma = {2,4}
+
         result = I.Invariant(cla, sigma)
-
-        for x in sigma:
-            toks_x = cla.get_tokens(x)
-
-            all_having_x = {(a,b) for a in toks_x for b in toks_x}
-
-            all_in_inv_x = {(a,b) for (a,b) in result.all_pairs() \
-                            if (a,b) in all_having_x}
-
-            A.Assert.sets_equal(all_having_x, all_in_inv_x)
-
 
 
 if __name__ == '__main__':

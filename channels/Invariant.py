@@ -1,23 +1,25 @@
+import Set as S
 import Relation as R
 
-class Invariant(R.Relation):
+class Invariant(R.EqRelation):
 
     def __init__(self, cla, sigma):
 
-        r_dict = {}
+        parts = []
+        toks = list(cla.tok)
+        while toks:
+            x = toks.pop()
+            typs_x = cla.get_types(x, subset=sigma)
 
-        for x in cla.tok:
-            r_dict[x] = set()
-            for y in cla.tok:
-                typ_x = {t for t in cla.get_types(x) if t in sigma}
-                typ_y = {t for t in cla.get_types(y) if t in sigma}
+            part = {y for y in toks if cla.agree_all(x, y, sigma)}
 
-                if typ_x.issubset(typ_y) \
-                   and typ_y.issubset(typ_x):
-                    r_dict[x].add(y)
+            for y in part:
+                toks.remove(y)
 
+            part.add(x)
+            parts.append(part)
 
-        R.Relation.__init__(self, r_dict)
+        R.EqRelation.__init__(self, cla.tok, parts)
 
         self.cla = cla
         self.sigma = sigma

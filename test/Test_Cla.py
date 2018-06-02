@@ -42,7 +42,7 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue('t' in c.typ)
 
 
-    def test_get_types_returnsAllandOnlyTypesOfGivenToken(self):
+    def test_get_types_returns_all_and_only_types_of_x(self):
 
         c = C.Cla({
             'x':{1,2,4}
@@ -56,7 +56,33 @@ class Test_Cla(unittest.TestCase):
         self.assertEqual(3, len(result))
 
 
-    def test_getTokens_returnsAllAndOnlyTokensOfType(self):
+    def test_get_types_restricts_to_subset_if_given(self):
+
+        c = C.Cla({
+            'x':{1,2,4,5,6,7,8}
+            })
+
+        result = c.get_types('x', subset={5,7,103,22})
+
+        self.assertEqual(2, len(result))
+        self.assertTrue({5,7}.issubset(result))
+
+
+    def test_agree_all_returns_true_if_x_and_y_match_in_sigma(self):
+
+        c = C.Cla({
+            'x':{2,3,5},
+            'y':{2,3,5},
+            'z':{2,5},
+            'z':{2,3},
+            'q':{2,3,5,7}
+            })
+        
+        sigma = {2,3,5}
+        self.assertTrue(c.agree_all('x', 'y', sigma))
+        
+
+    def test_get_tokens_returns_all_and_only_tokens_of_type(self):
 
         c = C.Cla({
             'x':{1,2,4},

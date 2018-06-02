@@ -37,5 +37,61 @@ class Test_Set(unittest.TestCase):
         self.assertEqual(9, len(result))
 
 
+    def test_is_partition_returns_true_on_disjoint_cover(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {3,5,7}, {2,4,8}, {6,9}]
+
+        self.assertTrue(S.Set.is_partition(sigma, parts))
+
+
+    def test_is_partition_returns_true_on_disjoint_cover_0(self):
+
+        sigma = {'q', 'x', 'y', 'z'}
+        parts = [{'x', 'y', 'q'}, {'z'}]
+
+        self.assertTrue(S.Set.is_partition(sigma, parts))
+
+
+    def test_is_partition_returns_false_on_nondisjoint_cover(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {3,2,5,7}, {2,4,8}, {6,9}]
+
+        self.assertFalse(S.Set.is_partition(sigma, parts))
+
+
+    def test_is_partition_returns_false_on_disjoint_noncover(self):
+
+        sigma = {1,2,3,4,5,6,7,8,9}
+        parts = [{1}, {5,7}, {2,4,8}, {6,9}]
+
+        self.assertFalse(S.Set.is_partition(sigma, parts))
+
+
+    def test_are_equal_returns_true_for_identical(self):
+
+        left = {1,2,3,4,5}
+        right = {5,4,2,1,3}
+
+        self.assertTrue(S.Set.are_equal(left, right))
+
+
+    def test_are_equal_returns_false_for_proper_subset(self):
+
+        left = {1,2,4,5}
+        right = {5,4,2,1,3}
+
+        self.assertFalse(S.Set.are_equal(left, right))
+
+
+    def test_are_equal_returns_false_for_nonshared_element(self):
+
+        left = {1,2,4,5,103}
+        right = {5,4,2,1,3}
+
+        self.assertFalse(S.Set.are_equal(left, right))
+
+
 if __name__ == '__main__':
     unittest.main()
