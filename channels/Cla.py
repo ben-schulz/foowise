@@ -82,6 +82,16 @@ class Cla:
             return 0 == self[(tok,typ)]
 
 
+        def row_values(self, tok):
+
+            tok_ix = self.tok_to_row[tok]
+
+            row = self.matrix[tok_ix, :]
+
+            return { self.col_to_typ[ix] : row[0,ix] \
+                       for ix in self.col_to_typ.keys() }
+
+
     def __init__(self, validities):
 
         if not isinstance(validities, dict):
@@ -154,13 +164,18 @@ class Cla:
 
     def get_types(self, tok, subset=None):
 
-        if not tok in self.validities:
+        if not tok in self.tok:
             return set()
 
-        if not subset:
-            return self.validities[tok]
+        row = self.table.row_values(tok)
 
-        return {t for t in self.validities[tok] if t in subset}
+        if not subset:
+            return {t for t in row.keys()
+                    if 1 == row[t] }
+
+        return {t for t in row.keys()
+                if 1 == row[t] \
+                and t in subset}
 
 
     def agree_all(self, x, y, sigma):

@@ -162,6 +162,27 @@ class ClaTable_Test(unittest.TestCase):
                 else:
                     self.assertEqual(0, ct.matrix[row_ix, col_ix])
 
+    def test_get_row_produces_all_valid_types(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'alpha', 'beta', 'zeta'},
+            'z' : {'beta', 'gamma', 'zeta'},
+            'q' : {'alpha', 'gamma', 'zeta'}            
+            }
+
+        c = C.Cla(c_vals)
+        ct = c.table
+
+        result = ct.row_values('x')
+
+        for t in c_vals['x']:
+            self.assertEqual(1, result[t])
+
+        for t in c.typ:
+            if t not in c_vals['x']:
+                self.assertEqual(0, result[t])
+
 
 if __name__ == '__main__':
     unittest.main()
