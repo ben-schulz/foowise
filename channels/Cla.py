@@ -82,17 +82,6 @@ class Cla:
             return 0 == self[(tok,typ)]
 
 
-        def set_valid(self, tok, typ):
-
-            self[(tok,typ)] = 1
-
-
-        def set_invalid(self, tok, typ):
-
-            self[(tok,typ)] = 0
-
-
-
     def __init__(self, validities):
 
         if not isinstance(validities, dict):
