@@ -65,21 +65,43 @@ Given two [classifications](#classification) `A` and `B`, the sum `A + B` is the
 ## Invariant
 ###### (Section 5.2, Page 84)
 
-Given a [classification](#classification) `A`, an invariant `I := < Sigma, ~ >` consists of a subset of `typ(A)`, denoted `Sigma`, and a binary relation `~` on `tok(A)` defined by:
+### By Type
+
+Given a [classification](#classification) `A`, an _invariant_ `I := < Sigma, ~ >` consists of a subset of `typ(A)`, denoted `Sigma`, and a binary relation `~` on `tok(A)` defined by:
 
 ```
 a ~ b  <implies>  <for all> alpha in Sigma, a |= alpha  <if and only if>  b |= alpha
 ```
 That is, `a ~ b` if and only if `a` and `b` agree on all types in `Sigma`.
 
+### By Token (Dual)
+###### (Section 5.2, Page 87)
+
+Given a [classification](#classification) `A`, the _dual invariant_ `J := <Sigma, ~>` consists of a subset of `tok(A)`, denoted `Sigma`, and a binary relation `~` on `typ(A)` defined by:
+
+```
+alpha ~ beta  <implies>  <for all>  a in Sigma, a |= alpha  <if and only if> a |= beta
+```
+That is, `alpha ~ beta` if and only if `alpha` and `beta` are valid on exactly the same tokens in `Sigma`.
 
 ## Quotient
 ###### (Section 5.2, Page 84)
 
-Given a [classification](#classification) `A` and an [invariant](#invariant) `I := < Sigma, ~ >`. The _quotient_ of `A` by `I`, denoted `A/I`, is the classification given by:
+### By Type Invariant
+
+Given a [classification](#classification) `A` and an [invariant](#invariant) `I := < Sigma, ~ >`, the _quotient_ of `A` by `I`, denoted `A/I`, is the classification given by:
 
 - `typ(A/I)` is `Sigma`;
 - `tok(A/I)` is the set of equivalence classes of `~`;
 - `[a] |=_[A/I] alpha` if and only if `a |=_[A] alpha`, where `[a]` is the equivalence class of `a` under `~`.
 
-More concisely, `A/I` is the classification obtained by restricting the types to `Sigma` and grouping together tokens by `~`. As the name suggests, taking a non-trivial quotient generally results in a smaller classification.
+### By Token Invariant (Dual)
+###### (Section 5.2, Page 87)
+
+Given a [classification](#classification) `A` and a [dual (token) invariant](#invariant) `J := < Sigma, ~ >`, the _dual quotient_ of `A` by `J`, denoted `A/J` is the classification given by:
+
+- `typ(A/J)` is the set of equivalence classes under `~`;
+- `tok(A/J)` is `Sigma`;
+- `a |=_[A/J] [alpha]` if and only if `a |=_[A] alpha`, where `[alpha]` is the equivalence class of `alpha` under `~`.
+
+More concisely, `A/I` (or `A/J`) is the classification obtained by restricting the types to `Sigma` and grouping together tokens by `~`. As the name suggests, taking a non-trivial quotient generally results in a smaller classification.
