@@ -184,6 +184,27 @@ class ClaTable_Test(unittest.TestCase):
                 self.assertEqual(0, result[t])
 
 
+    def test_get_col_produces_all_valid_tokens(self):
+
+        c_vals = {
+            'x' : {'alpha', 'beta', 'gamma'},
+            'y' : {'alpha', 'beta', 'zeta'},
+            'z' : {'beta', 'gamma', 'zeta'},
+            'q' : {'alpha', 'gamma', 'zeta'}            
+            }
+
+        c = C.Cla(c_vals)
+        ct = c.table
+
+        result = ct.col_values('alpha')
+
+        for x in c.tok:
+            if 'alpha' in c_vals[x]:
+                self.assertEqual(1, result[x])
+            else:
+                self.assertEqual(0, result[x])
+
+
 if __name__ == '__main__':
     unittest.main()
 

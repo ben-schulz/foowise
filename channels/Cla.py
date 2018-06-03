@@ -91,6 +91,15 @@ class Cla:
             return { self.col_to_typ[ix] : row[0,ix] \
                        for ix in self.col_to_typ.keys() }
 
+        def col_values(self, typ):
+
+            typ_ix = self.typ_to_col[typ]
+
+            col = self.matrix[:, typ_ix]
+            
+            return { self.row_to_tok[ix] : col[ix,0] \
+                     for ix in self.row_to_tok.keys() }
+
 
     def __init__(self, validities):
 
@@ -173,9 +182,9 @@ class Cla:
             return {t for t in row.keys()
                     if 1 == row[t] }
 
-        return {t for t in row.keys()
-                if 1 == row[t] \
-                and t in subset}
+        return { t for t in row.keys()
+                 if 1 == row[t] 
+                 and t in subset }
 
 
     def agree_all(self, x, y, sigma):
@@ -194,9 +203,14 @@ class Cla:
 
     def get_tokens(self, typ):
 
-        return {x for x in self.validities.keys() \
-                if self.is_valid(x, typ)}
+        if not typ in self.typ:
+            return set()
 
+        col = self.table.col_values(typ)
+
+        return { x for x in col.keys()
+                if 1 == col[x] }
+    
 
     def empty():
         return Cla({})
