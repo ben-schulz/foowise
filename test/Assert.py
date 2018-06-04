@@ -21,15 +21,15 @@ class Assert:
 
         if missing_left:
 
-            formatted_left = f.reduce(lambda x,y: x + y, \
-                                      missing_left, '')
+            formatted_left = f.reduce(lambda x,y: y + ', ' + x,
+                                      missing_left, '\n')
 
             msg += '\n\nIn the left but missing on the right: ' \
                    + formatted_left
 
         if missing_right:
 
-            formatted_right = f.reduce(lambda x,y: x + y, \
+            formatted_right = f.reduce(lambda x,y: y + ', ' + x,
                                        missing_right, '\n')
             msg += 'In the right but not expected: ' \
                    + formatted_right
