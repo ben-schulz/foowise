@@ -12,10 +12,11 @@ class Test_Dual(unittest.TestCase):
         class Foo:
             pass
 
-        def __init__(self, a, b):
+        def __init__(self, a, b, non_dual='non_dual'):
             self.a = a
             self.b = b
             self.foo = Test_Dual.Example.Foo()
+            self.non_dual = non_dual
 
 
         def call_a(self):
@@ -24,6 +25,14 @@ class Test_Dual(unittest.TestCase):
 
         def call_b(self):
             return 'call_b'
+
+
+        def call_non_dual(self, x):
+            return 'call_' + x
+
+        def call_non_instance_non_dual(x):
+
+            return 'non_instance_' + x
 
 
     def test_dual_respects_existing_members(self):
@@ -83,6 +92,21 @@ class Test_Dual(unittest.TestCase):
         example = Test_Dual.Example('a', 'b')
 
         self.assertNotEqual(None, example.foo)
+
+
+    def test_dual_preserves_nondual_members(self):
+
+        example = Test_Dual.Example('a', 'b', 'non_dual_x')
+
+        self.assertEqual('call_x', example.call_non_dual('x'))
+
+        self.assertEqual('non_dual_x', example.non_dual)
+
+        non_instance_result = (Test_Dual.Example.
+                               call_non_instance_non_dual('x'))
+
+        self.assertEqual('non_instance_x', non_instance_result)
+
 
 if __name__ == '__main__':
     unittest.main()

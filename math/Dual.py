@@ -40,7 +40,14 @@ def dualizable(duals=[]):
         _vars = vars(cls)
         for v in _vars.keys():
             x = getattr(cls, v)
+
             if inspect.isclass(x):
+                setattr(Dual, v, _vars[v])
+
+            elif inspect.ismethod(x):
+                setattr(Dual, v, _vars[v])
+
+            elif inspect.isfunction(x) and not '__' == v[0:2]:
                 setattr(Dual, v, _vars[v])
 
 
