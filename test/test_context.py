@@ -21,3 +21,4 @@ import Sequent
 import LinAlg
 import Set
 import Relation
+import Dual
