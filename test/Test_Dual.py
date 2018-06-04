@@ -9,9 +9,13 @@ class Test_Dual(unittest.TestCase):
         ('call_a', 'call_b')])
     class Example:
 
+        class Foo:
+            pass
+
         def __init__(self, a, b):
             self.a = a
             self.b = b
+            self.foo = Test_Dual.Example.Foo()
 
 
         def call_a(self):
@@ -73,6 +77,12 @@ class Test_Dual(unittest.TestCase):
         self.assertEqual('b', dual.a)
         self.assertEqual('a', dual.b)
 
+
+    def test_dual_allows_internal_classes(self):
+
+        example = Test_Dual.Example('a', 'b')
+
+        self.assertNotEqual(None, example.foo)
 
 if __name__ == '__main__':
     unittest.main()

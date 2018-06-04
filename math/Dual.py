@@ -1,3 +1,4 @@
+import inspect
 
 def dualizable(duals=[]):
 
@@ -22,8 +23,8 @@ def dualizable(duals=[]):
 
                 self.instance = cls(*args, **kwargs)
 
-                dual_map = dict(duals +
-                                     [(d[1], d[0]) for d in duals])
+                dual_map = dict(duals
+                                + [(d[1], d[0]) for d in duals])
 
                 self.trans = Dual._Trans(self.instance, dual_map)
 
@@ -34,6 +35,13 @@ def dualizable(duals=[]):
                     return self.trans
 
                 return getattr(self.instance, name)
+
+
+        _vars = vars(cls)
+        for v in _vars.keys():
+            x = getattr(cls, v)
+            if inspect.isclass(x):
+                setattr(Dual, v, _vars[v])
 
 
         return Dual
