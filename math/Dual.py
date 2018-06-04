@@ -15,8 +15,8 @@ def dualizable(duals=[]):
 
                 def __getattr__(self, name):
 
-                    return getattr(self.instance,
-                                   self.dual_map[name])
+                    _name = self.dual_map.get(name, name)
+                    return getattr(self.instance, _name)
 
                     
             def __init__(self, *args, **kwargs):

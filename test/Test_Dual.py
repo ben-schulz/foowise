@@ -108,5 +108,12 @@ class Test_Dual(unittest.TestCase):
         self.assertEqual('non_instance_x', non_instance_result)
 
 
+    def test_dual_is_nop_if_no_dual_declared(self):
+
+        example = Test_Dual.Example('a', 'b', 'non_dual_x')
+
+        self.assertEqual('non_dual_x', example.co.non_dual)
+
+
 if __name__ == '__main__':
     unittest.main()
