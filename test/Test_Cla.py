@@ -1,5 +1,7 @@
 import unittest
 
+import Assert as A
+
 from test_context import Cla as C
 from test_context import InfoPair as I
 
@@ -383,6 +385,21 @@ class Test_Cla(unittest.TestCase):
 
                 self.assertEqual(valid_part, valid_result, msg=msg)
 
+
+    def test_tok_typ_are_duals(self):
+
+        c = C.Cla({
+            'x' : {1,2,3,4,5,6,7,8},
+            'y' : {2,4,8,12},
+            'z' : {3,6,9,12}
+            })
+
+        A.Assert.sets_equal(c.tok, c.co.typ)
+        A.Assert.sets_equal(c.typ, c.co.tok)
+
+        A.Assert.sets_equal(c.get_types('x'), c.co.get_tokens('x'))
+        A.Assert.sets_equal(c.get_tokens(2), c.co.get_types(2))
+        
 
 class EquableTestClass:
 

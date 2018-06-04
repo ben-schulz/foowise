@@ -1,8 +1,14 @@
 import functools as f
+
 import Set as S
 import InfoPair as I
 import LinAlg as Alg
+import Dual as D
 
+
+@D.dualizable(duals=[
+    ('tok', 'typ'),
+    ('get_tokens', 'get_types')])
 class Cla:
 
     class ClaTable:
