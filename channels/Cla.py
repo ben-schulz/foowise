@@ -136,6 +136,10 @@ class Cla:
         return self.table.is_valid(tok, typ)
 
 
+    def is_invalid(self, tok, typ):
+        return self.table.is_invalid(tok, typ)
+
+
     def sum(*cla):
 
         if 0 == len(cla):

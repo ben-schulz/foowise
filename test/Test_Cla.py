@@ -1,29 +1,40 @@
 import unittest
 
 import Assert as A
-
 from test_context import Cla as C
 from test_context import InfoPair as I
+
 
 class Test_Cla(unittest.TestCase):
 
     def assertValid(self, c, tok, typ):
-        result = c.is_valid(tok, typ)
-        message = 'Expected ' + str(tok) + " |= " + str(typ)
-        self.assertTrue(result, message)
+
+        message = str(tok) + " |= " + str(typ)
+
+        self.assertTrue(c.is_valid(tok, typ),
+                        'Expected ' + message)
+
+        self.assertFalse(c.is_invalid(tok, typ),
+                         'Expected NOT ' + message)
 
 
     def assertNotValid(self, c, tok, typ):
-        result = c.is_valid(tok, typ)
-        message = 'Expected ' + str(tok) + " !|= " + str(typ)
-        self.assertFalse(result, message)
+
+        message = str(tok) + " |!= " + str(typ)
+
+        self.assertFalse(c.is_valid(tok, typ),
+                         'Expected ' + message)
+
+        self.assertTrue(c.is_invalid(tok, typ),
+                        'Expected NOT ' + message)
 
 
-    def test_is_valid_invalid_if_token_does_not_have_type(self):
+    def test_is_valid_and_is_not_valid_false_for_NoneType(self):
 
         c = C.Cla({})
 
-        self.assertNotValid(c, 'x', None)
+        self.assertFalse(c.is_valid('x', None))
+        self.assertFalse(c.is_invalid('x', None))
 
 
     def test_add_token_adds_to_token_set(self):
@@ -35,7 +46,7 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue('x' in c.tok)
 
 
-    def test_add_type_addsNewTypeToTypeSet(self):
+    def test_add_type_adds_type_to_typ(self):
 
         c = C.Cla({
             None:{'t'}
