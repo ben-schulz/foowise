@@ -8,7 +8,8 @@ import Dual as D
 
 @D.dualizable(duals=[
     ('tok', 'typ'),
-    ('get_tokens', 'get_types')])
+    ('get_tokens', 'get_types'),
+    ('tokens_agree', 'types_agree')])
 class Cla:
 
     class ClaTable:

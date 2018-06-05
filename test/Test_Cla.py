@@ -427,6 +427,27 @@ class Test_Cla(unittest.TestCase):
 
         A.Assert.sets_equal(c.get_types('x'), c.co.get_tokens('x'))
         A.Assert.sets_equal(c.get_tokens(2), c.co.get_types(2))
+
+
+    def test_agree_funcs_are_dual(self):
+
+        c = C.Cla({
+            'x':{2,3,5},
+            'y':{2,3,5},
+            'z':{2,5},
+            'u':{2,3},
+            'q':{3,5,7}
+            })
+        
+        sigma_typ = {2, 5}
+        sigma_tok = {'x', 'y', 'z'}
+
+        self.assertTrue(c.types_agree('x', 'y', sigma_typ),
+                        c.co.tokens_agree('x', 'y', sigma_typ))
+
+        self.assertTrue(c.tokens_agree(2, 5, sigma_tok),
+                        c.co.types_agree(2, 5, sigma_tok))
+        
         
 
 class EquableTestClass:
