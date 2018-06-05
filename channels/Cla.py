@@ -9,7 +9,9 @@ import Dual as D
 @D.dualizable(duals=[
     ('tok', 'typ'),
     ('get_tokens', 'get_types'),
-    ('tokens_agree', 'types_agree')])
+    ('tokens_agree', 'types_agree'),
+    ('is_valid', 'is_valid_dual'),
+    ('is_invalid', 'is_invalid_dual')])
 class Cla:
 
     class ClaTable:
@@ -136,7 +138,15 @@ class Cla:
         return self.table.is_valid(tok, typ)
 
 
+    def is_valid_dual(self, typ, tok):
+        return self.table.is_valid(tok, typ)
+
+
     def is_invalid(self, tok, typ):
+        return self.table.is_invalid(tok, typ)
+
+
+    def is_invalid_dual(self, typ, tok):
         return self.table.is_invalid(tok, typ)
 
 

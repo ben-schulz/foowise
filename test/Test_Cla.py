@@ -469,7 +469,20 @@ class Test_Cla(unittest.TestCase):
 
         self.assertTrue(c.tokens_agree(2, 5, sigma_tok),
                         c.dual.types_agree(2, 5, sigma_tok))
-        
+
+
+    def test_dual_reverses_validity_relation(self):
+
+        c = C.Cla({
+            'x':{1,2},
+            'y':{1}
+            })
+
+        self.assertTrue(c.dual.is_valid(1, 'x'))
+        self.assertTrue(c.dual.is_valid(2, 'x'))
+
+        self.assertTrue(c.dual.is_valid(1, 'y'))
+        self.assertTrue(c.dual.is_invalid(2, 'y'))
         
 
 class EquableTestClass:

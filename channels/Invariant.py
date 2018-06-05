@@ -1,3 +1,5 @@
+import Cla as C
+
 import Set as S
 import Relation as R
 
@@ -27,4 +29,20 @@ class Invariant(R.EqRelation):
 
         self.cla = cla
         self.sigma = sigma
+        self.isdual = dual
 
+
+    def quotient(self):
+
+        c_dict = { }
+
+        for p in self.parts:
+            x = next(iter(p))
+            c_dict[x] = self.cla.get_types(x, subset=self.sigma)
+
+        cla = C.Cla(c_dict)
+
+        if self.isdual:
+            return cla.dual
+
+        return cla
