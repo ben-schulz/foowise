@@ -193,7 +193,7 @@ class Cla:
                  and t in subset }
 
 
-    def agree_all(self, x, y, sigma):
+    def types_agree(self, x, y, sigma):
 
         if not x in self.tok:
             raise ValueError(str(x) + "is not a token.")

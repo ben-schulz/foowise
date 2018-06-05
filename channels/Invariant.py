@@ -11,7 +11,7 @@ class Invariant(R.EqRelation):
             x = toks.pop()
             typs_x = cla.get_types(x, subset=sigma)
 
-            part = {y for y in toks if cla.agree_all(x, y, sigma)}
+            part = {y for y in toks if cla.types_agree(x, y, sigma)}
 
             for y in part:
                 toks.remove(y)

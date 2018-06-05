@@ -19,7 +19,7 @@ class Test_Cla(unittest.TestCase):
         self.assertFalse(result, message)
 
 
-    def test_is_valid_returnsInvalidIfTokenDoesNotHaveType(self):
+    def test_is_valid_invalid_if_token_does_not_have_type(self):
 
         c = C.Cla({})
 
@@ -81,7 +81,7 @@ class Test_Cla(unittest.TestCase):
             })
         
         sigma = {2,3,5}
-        self.assertTrue(c.agree_all('x', 'y', sigma))
+        self.assertTrue(c.types_agree('x', 'y', sigma))
         
 
     def test_get_tokens_returns_all_and_only_tokens_of_type(self):
