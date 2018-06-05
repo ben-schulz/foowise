@@ -196,10 +196,10 @@ class Cla:
     def types_agree(self, x, y, sigma):
 
         if not x in self.tok:
-            raise ValueError(str(x) + "is not a token.")
+            raise ValueError(str(x) + " is not a token.")
 
         if not y in self.tok:
-            raise ValueError(str(y) + "is not a token.")
+            raise ValueError(str(y) + " is not a token.")
 
         typ_x = self.get_types(x, subset=sigma)
         typ_y = self.get_types(y, subset=sigma)
@@ -207,15 +207,33 @@ class Cla:
         return S.Set.are_equal(typ_x, typ_y)
 
 
-    def get_tokens(self, typ):
+    def tokens_agree(self, alpha, beta, sigma):
+
+        if not alpha in self.typ:
+            raise ValueError(str(alpha) + " is not a type.")
+
+        if not beta in self.typ:
+            raise ValueError(str(beta) + " is not a type.")
+
+        tok_x = self.get_tokens(alpha, subset=sigma)
+        tok_y = self.get_tokens(beta, subset=sigma)
+
+        return S.Set.are_equal(tok_x, tok_y)
+
+
+    def get_tokens(self, typ, subset=None):
 
         if not typ in self.typ:
             return set()
 
         col = self.table.col_values(typ)
 
+        if not subset:
+            return { x for x in col.keys()
+                     if 1 == col[x] }
+
         return { x for x in col.keys()
-                if 1 == col[x] }
+                 if 1 == col[x] and x in subset }
     
 
     def empty():

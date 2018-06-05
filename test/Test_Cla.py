@@ -70,7 +70,7 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue({5,7}.issubset(result))
 
 
-    def test_agree_all_returns_true_if_x_and_y_match_in_sigma(self):
+    def test_types_agree_returns_true_if_x_and_y_match(self):
 
         c = C.Cla({
             'x':{2,3,5},
@@ -98,6 +98,34 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue('y' in result)
         self.assertFalse('z' in result)
         self.assertEqual(2, len(result))
+
+
+    def test_tokens_agree_returns_true_if_x_and_y_match(self):
+
+        c = C.Cla({
+            'x':{2,3,5},
+            'y':{2,3,5},
+            'z':{2,5},
+            'u':{2,3},
+            'q':{3,5,7}
+            })
+        
+        sigma = {'x', 'y', 'z'}
+        self.assertTrue(c.tokens_agree(2, 5, sigma))
+
+
+    def test_tokens_agree_returns_false_if_diff_token_exists(self):
+
+        c = C.Cla({
+            'x':{2,3,5},
+            'y':{2,3,5},
+            'z':{2,5},
+            'u':{2,3},
+            'q':{3,5,7}
+            })
+        
+        sigma = {'x', 'y', 'z', 'u'}
+        self.assertFalse(c.tokens_agree(2, 5, sigma))
 
 
     def test_validity_works_independent_of_types(self):
