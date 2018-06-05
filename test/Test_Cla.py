@@ -37,6 +37,17 @@ class Test_Cla(unittest.TestCase):
         self.assertFalse(c.is_invalid('x', None))
 
 
+    def test_is_invalid_returns_false_for_token_not_valid(self):
+
+        c = C.Cla({
+            'x':{1,6},
+            'z': {6},
+            'q': set()
+        })
+
+        self.assertTrue(c.is_invalid('z', 1))
+
+
     def test_add_token_adds_to_token_set(self):
 
         c = C.Cla({
