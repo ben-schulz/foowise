@@ -21,7 +21,7 @@ class Cla:
                 raise TypeError(msg)
 
             tok = validities.keys()
-            typ = f.reduce(lambda x,y: x.union(y), \
+            typ = f.reduce(lambda x,y: x.union(y),
                            validities.values(), set())
 
             typ_count = len(typ)
@@ -38,13 +38,13 @@ class Cla:
             row_to_tok = map(lambda p: (p[1], p[0]), tok_to_row)
             self.row_to_tok = dict(row_to_tok)
 
-            self.matrix = Alg.Matrix(\
-                        [[1 \
-                          if x in validities \
-                          and alpha in validities[x] \
-                          else 0 \
+            self.matrix = Alg.Matrix(
+                        [[1
+                          if x in validities
+                          and alpha in validities[x]
+                          else 0
 
-                          for alpha in typ] \
+                          for alpha in typ]
                         for x in tok])
 
 
@@ -94,7 +94,7 @@ class Cla:
 
             row = self.matrix[tok_ix, :]
 
-            return { self.col_to_typ[ix] : row[0,ix] \
+            return { self.col_to_typ[ix] : row[0,ix]
                        for ix in self.col_to_typ.keys() }
 
         def col_values(self, typ):
@@ -103,7 +103,7 @@ class Cla:
 
             col = self.matrix[:, typ_ix]
             
-            return { self.row_to_tok[ix] : col[ix,0] \
+            return { self.row_to_tok[ix] : col[ix,0]
                      for ix in self.row_to_tok.keys() }
 
 
@@ -146,7 +146,7 @@ class Cla:
 
         for v in vals.keys():
             
-            ix_typs = [{(i,t) for t in cla[i].get_types(v[i])} \
+            ix_typs = [{(i,t) for t in cla[i].get_types(v[i])}
                        for i in range(0,len(cla))]
 
             vals[v] = S.Set.union(*ix_typs)
