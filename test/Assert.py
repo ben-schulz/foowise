@@ -1,12 +1,12 @@
 import functools as f
 
-class SetAssertion(AssertionError):
+class SetAssertionError(AssertionError):
     def __init__(self, msg=None):
 
         if msg:
-            Exception.__init__(self)
+            super(AssertionError, self)
         else:
-            Exception.__init__(self, msg)
+            super(AssertionError, self, msg)
 
 
 class Assert:
@@ -31,10 +31,10 @@ class Assert:
 
             formatted_right = f.reduce(lambda x,y: y + ', ' + x,
                                        missing_right, '\n')
-            msg += 'In the right but not expected: ' \
+            msg += '\n\nIn the right but not expected: ' \
                    + formatted_right
         
 
         if not (left.issubset(right) and right.issubset(left)):
-            raise AssertionError(msg)
+            raise SetAssertionError(msg)
 
