@@ -422,11 +422,11 @@ class Test_Cla(unittest.TestCase):
             'z' : {3,6,9,12}
             })
 
-        A.Assert.sets_equal(c.tok, c.co.typ)
-        A.Assert.sets_equal(c.typ, c.co.tok)
+        A.Assert.sets_equal(c.tok, c.dual.typ)
+        A.Assert.sets_equal(c.typ, c.dual.tok)
 
-        A.Assert.sets_equal(c.get_types('x'), c.co.get_tokens('x'))
-        A.Assert.sets_equal(c.get_tokens(2), c.co.get_types(2))
+        A.Assert.sets_equal(c.get_types('x'), c.dual.get_tokens('x'))
+        A.Assert.sets_equal(c.get_tokens(2), c.dual.get_types(2))
 
 
     def test_agree_funcs_are_dual(self):
@@ -443,10 +443,10 @@ class Test_Cla(unittest.TestCase):
         sigma_tok = {'x', 'y', 'z'}
 
         self.assertTrue(c.types_agree('x', 'y', sigma_typ),
-                        c.co.tokens_agree('x', 'y', sigma_typ))
+                        c.dual.tokens_agree('x', 'y', sigma_typ))
 
         self.assertTrue(c.tokens_agree(2, 5, sigma_tok),
-                        c.co.types_agree(2, 5, sigma_tok))
+                        c.dual.types_agree(2, 5, sigma_tok))
         
         
 

@@ -31,7 +31,7 @@ def dualizable(duals=[]):
 
             def __getattr__(self, name):
 
-                if 'co' == name:
+                if 'dual' == name:
                     return self.trans
 
                 return getattr(self.instance, name)

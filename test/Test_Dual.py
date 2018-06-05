@@ -55,23 +55,23 @@ class Test_Dual(unittest.TestCase):
 
         example = Test_Dual.Example('a', 'b')
 
-        self.assertEqual('call_b', example.co.call_a())
-        self.assertEqual('call_a', example.co.call_b())
+        self.assertEqual('call_b', example.dual.call_a())
+        self.assertEqual('call_a', example.dual.call_b())
 
 
     def test_dual_switches_members_on_dual_reference(self):
 
         example = Test_Dual.Example('a', 'b')
 
-        self.assertEqual('b', example.co.a)
-        self.assertEqual('a', example.co.b)
+        self.assertEqual('b', example.dual.a)
+        self.assertEqual('a', example.dual.b)
 
 
     def test_dual_does_not_persist_state_after_co(self):
 
         example = Test_Dual.Example('a', 'b')
 
-        dual = example.co
+        dual = example.dual
 
         self.assertEqual('b', dual.a)
         self.assertEqual('a', example.a)
@@ -81,7 +81,7 @@ class Test_Dual(unittest.TestCase):
 
         example = Test_Dual.Example('a', 'b')
 
-        dual = example.co
+        dual = example.dual
 
         self.assertEqual('b', dual.a)
         self.assertEqual('a', dual.b)
@@ -112,7 +112,7 @@ class Test_Dual(unittest.TestCase):
 
         example = Test_Dual.Example('a', 'b', 'non_dual_x')
 
-        self.assertEqual('non_dual_x', example.co.non_dual)
+        self.assertEqual('non_dual_x', example.dual.non_dual)
 
 
 if __name__ == '__main__':
