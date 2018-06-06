@@ -10,6 +10,7 @@ import Cla
 import Validity
 import Infomorphism
 import Invariant
+import Channel
 
 import InfomorphismError
 import InfoPair
