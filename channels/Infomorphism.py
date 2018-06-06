@@ -16,8 +16,7 @@ class Infomorphism:
         self.f_down_img = set(self.f_down.values())
         self.f_up_img = set(self.f_up.values())
 
-
-        self.satisfiesInfoAxioms()
+        self.satisfies_info_axioms()
 
 
     def is_valid_distal(self, x, alpha):
@@ -28,7 +27,7 @@ class Infomorphism:
         return self.proximal.is_valid(x, alpha)
 
 
-    def satisfiesInfoAxioms(self):
+    def satisfies_info_axioms(self):
             
         if not self.f_down_img.issubset(self.proximal.tok):
             f_name = "f_down"
