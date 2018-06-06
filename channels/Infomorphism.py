@@ -16,11 +16,8 @@ class Infomorphism:
         self.f_down_img = set(self.f_down.values())
         self.f_up_img = set(self.f_up.values())
 
-        try:
-            self.satisfiesInfoAxioms()
 
-        except Exception as e:
-            raise e
+        self.satisfiesInfoAxioms()
 
 
     def is_valid_distal(self, x, alpha):
