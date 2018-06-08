@@ -11,6 +11,9 @@ import Validity
 import Infomorphism
 import Invariant
 import Channel
+import DistSys
+
+import Index
 
 import InfomorphismError
 import InfoPair

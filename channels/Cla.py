@@ -1,6 +1,6 @@
 import functools as f
 
-import uuid as u
+import Index as Id
 
 import Set as S
 import InfoPair as I
@@ -138,13 +138,13 @@ class Cla:
         self.table = Cla.ClaTable(self.validities)
 
         if not index:
-            index = u.uuid1().int
+            index = Id.Index()
+
+        self.index = index
 
         if NotImplemented == index.__eq__(0):
             msg = "'index' must have an implementation of '__eq__'."
             raise ValueError(msg)
-
-        self.index = index
 
 
     def is_valid(self, tok, typ):
