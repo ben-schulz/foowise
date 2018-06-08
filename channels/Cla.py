@@ -1,5 +1,7 @@
 import functools as f
 
+import uuid as u
+
 import Set as S
 import InfoPair as I
 import LinAlg as Alg
@@ -136,7 +138,7 @@ class Cla:
         self.table = Cla.ClaTable(self.validities)
 
         if not index:
-            index = id(self.table)
+            index = u.uuid1().int
 
         if NotImplemented == index.__eq__(0):
             msg = "'index' must have an implementation of '__eq__'."

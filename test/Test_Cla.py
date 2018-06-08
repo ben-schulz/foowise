@@ -1,5 +1,7 @@
 import unittest
 
+import uuid as u
+
 import Assert as A
 from test_context import Cla as C
 from test_context import InfoPair as I
@@ -498,10 +500,10 @@ class Test_Cla(unittest.TestCase):
             pass
 
 
-    def test_index_equal_to_table_id_if_not_specified(self):
+    def test_index_equal_to_random_uuid_int_if_not_specified(self):
 
         c = C.Cla({})
-        self.assertEqual(id(c.table), c.index)
+        self.assertTrue(isinstance(c.index, int))
 
 
     def test_index_equal_to_kwarg_if_specified_and_equable(self):
