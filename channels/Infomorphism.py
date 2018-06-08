@@ -1,6 +1,9 @@
+import uuid as u
+
 import Cla as C
 import Validity as V
 import InfomorphismError as IE
+import Index as Id
 import InfoPair as I
 
 class Infomorphism:
@@ -17,6 +20,8 @@ class Infomorphism:
         self.f_up_img = set(self.f_up.values())
 
         self.satisfies_info_axioms()
+
+        self.index = Id.Index()
 
 
     def is_valid_distal(self, x, alpha):
