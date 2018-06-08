@@ -483,7 +483,33 @@ class Test_Cla(unittest.TestCase):
 
         self.assertTrue(c.dual.is_valid(1, 'y'))
         self.assertTrue(c.dual.is_invalid(2, 'y'))
-        
+
+
+    def test_index_raises_valueerror_if_not_equable(self):
+
+        class NonEquableTestClass:
+            pass
+
+        try:
+            c = C.Cla({}, index=NonEquableTestClass())
+            self.assertTrue(False, "Expected 'ValueError'.")
+
+        except ValueError:
+            pass
+
+
+    def test_index_equal_to_table_id_if_not_specified(self):
+
+        c = C.Cla({})
+        self.assertEqual(id(c.table), c.index)
+
+
+    def test_index_equal_to_kwarg_if_specified_and_equable(self):
+
+        c = C.Cla({}, index=255)
+
+        self.assertEqual(c.index, 255)
+
 
 class EquableTestClass:
 

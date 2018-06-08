@@ -110,7 +110,7 @@ class Cla:
                      for ix in self.row_to_tok.keys() }
 
 
-    def __init__(self, validities):
+    def __init__(self, validities, index=None):
 
         if not isinstance(validities, dict):
 
@@ -118,6 +118,8 @@ class Cla:
             msg = "expected arg type 'dict' but got " \
                   + "'" + repr(given_type) + "'."
             raise TypeError(msg)
+
+        self.index = index
 
         self.tok = set()
         self.typ = set()
@@ -132,6 +134,15 @@ class Cla:
 
         self.validities = validities
         self.table = Cla.ClaTable(self.validities)
+
+        if not index:
+            index = id(self.table)
+
+        if NotImplemented == index.__eq__(0):
+            msg = "'index' must have an implementation of '__eq__'."
+            raise ValueError(msg)
+
+        self.index = index
 
 
     def is_valid(self, tok, typ):
