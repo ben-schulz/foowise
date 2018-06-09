@@ -93,5 +93,21 @@ class Test_Set(unittest.TestCase):
         self.assertFalse(S.Set.are_equal(left, right))
 
 
+    def test_rand_subset_returns_a_subset(self):
+
+        x = {1,2,3,4}
+
+        subset = S.Set.rand_subset(x)
+
+        sets = [next(subset) for _ in range(0,32)]
+
+        at_least_one_size_three = map(lambda y: 2 < len(y), sets)
+
+        are_subsets = map(lambda y: y.issubset(x), sets)
+
+        self.assertTrue(any(at_least_one_size_three))
+        self.assertTrue(all(are_subsets))
+
+
 if __name__ == '__main__':
     unittest.main()

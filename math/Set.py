@@ -1,10 +1,13 @@
 import functools as f
 import itertools as it
 
+import random
+
 class Set:
 
     def are_equal(left, right):
         return left.issubset(right) and right.issubset(left)
+
 
     def product(*xs):
         return it.product(*xs)
@@ -35,3 +38,19 @@ class Set:
             return False
 
         return True
+
+
+    def rand_subset(x):
+
+        _x = list(x)
+        l_x = len(x)
+
+        def in_range():
+            return random.randint(0, l_x-1)
+
+        while True:
+            size = random.randint(1, l_x-1)
+
+            rand_ixs = {in_range() for _ in range(0,size)}
+
+            yield {_x[i] for i in rand_ixs}
