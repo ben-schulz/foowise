@@ -83,6 +83,31 @@ class Cla:
             self.matrix[tok_ix][typ_ix] = value
 
 
+        def __str__(self):
+
+            toks = [x for x in self.tok_to_row.keys()]
+            typs = [t for t in self.typ_to_col.keys()]
+
+            max_col_width = max(map(lambda x:len(str(x)), typs))
+
+            start_col_ix = max(map(lambda x:len(str(x)), toks))
+
+            pad = 2
+
+            fmt = '\n' + ' ' * (start_col_ix + pad + 1)
+
+            fmt += f.reduce(lambda acc,n: str(n) + ' '*pad + acc,
+                           typs, '\n\n')
+
+            for x in toks:
+                fmt += str(x) + ' '
+                for t in typs:
+                    fmt += ' '* pad + str(self[(x,t)])
+                fmt += '\n\n'
+
+            return fmt
+
+
         def is_valid(self, tok, typ):
 
             return 1 == self[(tok,typ)]
