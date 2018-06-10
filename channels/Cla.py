@@ -96,8 +96,9 @@ class Cla:
 
             fmt = '\n' + ' ' * (start_col_ix + pad + 1)
 
-            fmt += f.reduce(lambda acc,n: str(n) + ' '*pad + acc,
-                           typs, '\n\n')
+            fmt += f.reduce(lambda acc,n: acc + str(n) + ' '*pad,
+                            typs, '')
+            fmt += '\n\n'
 
             for x in toks:
                 fmt += str(x) + ' '
