@@ -32,6 +32,10 @@ class Invariant(R.EqRelation):
         self.isdual = dual
 
 
+    def __str__(self):
+        return str(self.parts)
+
+
     def quotient(self):
 
         c_dict = { }
