@@ -95,11 +95,8 @@ class Test_Set(unittest.TestCase):
 
         sets = [next(subset) for _ in range(0,32)]
 
-        at_least_one_size_three = map(lambda y: 2 < len(y), sets)
-
         are_subsets = map(lambda y: y.issubset(x), sets)
 
-        self.assertTrue(any(at_least_one_size_three))
         self.assertTrue(all(are_subsets))
 
 
