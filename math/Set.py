@@ -17,10 +17,6 @@ class Set:
         return f.reduce(lambda y,z: z.union(y), xs, set())
 
 
-    def make_indexed(s):
-        return set(zip(range(0,len(s)), s))
-
-
     def is_partition(sigma, parts):
 
         _parts = list(parts)

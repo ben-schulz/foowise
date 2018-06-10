@@ -2,14 +2,8 @@ import unittest
 
 from test_context import Set as S
 
-class Test_Set(unittest.TestCase):
+class Test_Set(unittest.TestCase):        
 
-    def test_make_indexed_produces_correct_count(self):
-        s = {'1','2','3','4','5','6'}
-
-        result = S.Set.make_indexed(s)
-        self.assertEqual(len(s), len(result))
-        
 
     def test_union_includes_all_elements_if_disjoint(self):
 
