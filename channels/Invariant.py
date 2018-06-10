@@ -12,8 +12,10 @@ class Invariant(R.EqRelation):
 
         parts = []
         toks = list(cla.tok)
+        tok_reps = {}
         while toks:
             x = toks.pop()
+
             typs_x = cla.get_types(x, subset=sigma)
 
             part = { y for y in toks
@@ -24,6 +26,7 @@ class Invariant(R.EqRelation):
 
             part.add(x)
             parts.append(part)
+            tok_reps[x] = part
 
         R.EqRelation.__init__(self, cla.tok, parts)
 
@@ -31,17 +34,23 @@ class Invariant(R.EqRelation):
         self.sigma = sigma
         self.isdual = dual
 
+        self.tok_reps = tok_reps
+
 
     def __str__(self):
         return str(self.parts)
+
+
+    def canon_rep(self, x):
+        return next(iter({y for y in self.tok_reps.keys()
+                     if x in self.tok_reps[y]}))
 
 
     def quotient(self):
 
         c_dict = { }
 
-        for p in self.parts:
-            x = next(iter(p))
+        for x in self.tok_reps:
             c_dict[x] = self.cla.get_types(x, subset=self.sigma)
 
         cla = C.Cla(c_dict)

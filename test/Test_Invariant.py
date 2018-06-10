@@ -133,5 +133,23 @@ class Test_Invariant(unittest.TestCase):
             self.asserTrue(False, msg)
 
 
+    def test_each_token_has_canonical_representative(self):
+
+        cla = C.Cla({
+            'x':{1,2,3,4,5,6,7},
+            'y':{2,4,6,8,10,12},
+            'z':{3,6,9,12},
+            'q':{2,4,8,16}
+        })
+
+        sigma = {1, 6}
+
+        inv = I.Invariant(cla, sigma)
+        quot = inv.quotient()
+
+        for x in cla.tok:
+            self.assertTrue(inv.canon_rep(x) in quot.tok)
+
+
 if __name__ == '__main__':
     unittest.main()
