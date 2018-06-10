@@ -85,25 +85,33 @@ class Cla:
 
         def __str__(self):
 
+            def _strlen(x):
+                return len(str(x))
+
             toks = [x for x in self.tok_to_row.keys()]
             typs = [t for t in self.typ_to_col.keys()]
 
-            max_col_width = max(map(lambda x:len(str(x)), typs))
+            max_col_width = max(map(lambda x: _strlen(x), typs))
 
-            start_col_ix = max(map(lambda x:len(str(x)), toks))
+            start_col_ix = max(map(lambda x: _strlen(x), toks))
 
-            pad = 2
+            pad = 1 + max_col_width
 
             fmt = '\n' + ' ' * (start_col_ix + pad + 1)
 
-            fmt += f.reduce(lambda acc,n: acc + str(n) + ' '*pad,
-                            typs, '')
+            fmt += f.reduce(lambda acc,n:
+                            acc + str(n)
+                            + ' '*(pad - _strlen(n) + 1), typs, '')
+
             fmt += '\n\n'
 
             for x in toks:
-                fmt += str(x) + ' '
+                _str = str(x)
+                fmt += _str + ' '*(start_col_ix - len(_str) + 4)
+
                 for t in typs:
-                    fmt += ' '* pad + str(self[(x,t)])
+                    _str = str(self[(x,t)])
+                    fmt += _str + ' '* (pad)
                 fmt += '\n\n'
 
             return fmt
