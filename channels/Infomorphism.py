@@ -108,27 +108,32 @@ class Infomorphism:
                                         img=self.f_up_img,
                                         target=self.distal.typ)
 
+        def failure_case(f_down_x, t, x, f_up_t):
+            
+            if self.proximal.is_valid(f_down_x, t):
+                prox = Infomorphism.InfoPair.valid(f_down_x, t)
+            else:
+                prox = Infomorphism.InfoPair.invalid(f_down_x, t)
+
+            if self.distal.is_valid(x, f_up_t):
+                dist = Infomorphism.InfoPair.valid(x, f_up_t)
+            else:
+                dist = Infomorphism.InfoPair.invalid(x, f_up_t)
+
+            return (prox, dist)
+
+
         violations = []
-        for x in self.distal.tok:
 
-            x_validities = self.proximal.get_types(x)
+        toks = [(x, self.f_down[x]) for x in self.distal.tok]
+        typs = [(self.f_up[t], t) for t in self.proximal.typ]
 
-            f_down_x = self.f_down[x]
-
-            f_x_validities = self.distal.get_types(f_down_x)
-
-            for t in f_x_validities:
-
-                if t in self.f_up:
-                    f_up_t = self.f_up[t]
-
-                    if not self.is_valid_proximal(x, f_up_t):
-
-                        not_in_prox = Infomorphism.InfoPair.invalid(x, f_up_t)
-                        bad_pair = (not_in_prox,
-                                    Infomorphism.InfoPair.valid(f_down_x, t))
-
-                        violations.append(bad_pair)
+        for (x, f_down_x) in toks:
+            for (f_up_t, t) in typs:
+                if (self.proximal.is_valid(f_down_x, t)
+                    != self.distal.is_valid(x, f_up_t)):
+                    violations.append(
+                        failure_case(f_down_x, t, x, f_up_t))
 
         if violations:
 

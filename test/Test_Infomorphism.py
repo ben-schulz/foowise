@@ -6,9 +6,9 @@ from test_context import Invariant as Inv
 
 from test_context import Validity as V
 from test_context import InfomorphismError as IE
-from test_context import InfoPair as IP
 
-class Infomorphism_Test(unittest.TestCase):
+
+class Test_Infomorphism(unittest.TestCase):
 
     def test_raiseInvalidInfomorphismErrorOnEmptyDomain(self):
 
@@ -33,18 +33,19 @@ class Infomorphism_Test(unittest.TestCase):
     def test_identity_valid(self):
 
         f_down = lambda x: x
-        f_up = lambda x:  x
+        f_up = lambda x: x
 
         p = C.Cla({
             'x':{'alpha','beta'},
             'y':{'beta'}
         })
+
         d = C.Cla({
             'x':{'alpha','beta'},
             'y':{'beta'}
         })
 
-        result = I.Infomorphism(p, d, f_down, f_up)
+        result = I.Infomorphism(p, d, f_up, f_down)
 
 
     def test_inclusion_valid(self):
@@ -120,7 +121,7 @@ class Infomorphism_Test(unittest.TestCase):
             pass
 
 
-    def test_InfomorphismConstraintError_IncludesInvalidRels(self):
+    def test_infomorphismconstrainterror_includes_invalids(self):
 
         f_down = lambda x : x
         f_up = lambda x : 'alpha'
@@ -146,12 +147,12 @@ class Infomorphism_Test(unittest.TestCase):
 
         except IE.InfomorphismAxiomError as e:
 
-            inDistal = I.Infomorphism.InfoPair.valid('x', 'alpha')
+            in_distal = I.Infomorphism.InfoPair.valid('x', 'alpha')
 
-            notInProximal = (I.Infomorphism.InfoPair
+            not_in_proximal = (I.Infomorphism.InfoPair
                              .invalid('x', 'alpha'))
 
-            failureCase = (notInProximal, inDistal)
+            failureCase = (not_in_proximal, in_distal)
 
             message = 'Expected \'' + str(failureCase) \
                       + '\' but got: \'' + str(e.violations) + '\''
