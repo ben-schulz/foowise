@@ -216,29 +216,6 @@ class Cla:
         return Cla(vals)
 
 
-    def infopairs_by_token(self, tok):
-
-        pairs = set()
-
-        if tok not in self.validities:
-            return pairs
-
-        for typ in self.validities[tok]:
-            pairs.add(I.InfoPair.valid(tok, typ))
-
-        return pairs
-
-
-    def infopairs_by_type(self, typ):
-
-        pairs = set()
-        for tok in self.tok:
-            if typ in self.validities[tok]:
-                pairs.add(I.InfoPair.valid(tok, typ))
-
-        return pairs
-
-
     def get_types(self, tok, subset=None):
 
         if not tok in self.tok:

@@ -2,6 +2,8 @@ import unittest
 
 from test_context import Infomorphism as I
 from test_context import Cla as C
+from test_context import Invariant as Inv
+
 from test_context import Validity as V
 from test_context import InfomorphismError as IE
 from test_context import InfoPair as IP
@@ -28,10 +30,10 @@ class Infomorphism_Test(unittest.TestCase):
             pass
 
 
-    def test_create_identityAlwaysValid(self):
+    def test_identity_valid(self):
 
-        f_down = lambda x : x
-        f_up = lambda x : x
+        f_down = lambda x: x
+        f_up = lambda x:  x
 
         p = C.Cla({
             'x':{'alpha','beta'},
@@ -43,6 +45,23 @@ class Infomorphism_Test(unittest.TestCase):
         })
 
         result = I.Infomorphism(p, d, f_down, f_up)
+
+
+    def test_inclusion_valid(self):
+
+        f_down = lambda x: x
+        f_up = lambda x: x
+
+        p = C.Cla({
+            'x':{'beta'},
+            'y':{'beta'}
+        })
+        d = C.Cla({
+            'x':{'alpha','beta'}
+        })
+
+        result = I.Infomorphism(p, d, f_down, f_up)
+        
 
 
     def test_create_raiseErrorIfValidityViolatedForward(self):
@@ -127,14 +146,40 @@ class Infomorphism_Test(unittest.TestCase):
 
         except IE.InfomorphismAxiomError as e:
 
-            inDistal = IP.InfoPair.valid('x', 'alpha')
-            notInProximal = IP.InfoPair.invalid('x', 'alpha')
+            inDistal = I.Infomorphism.InfoPair.valid('x', 'alpha')
+
+            notInProximal = (I.Infomorphism.InfoPair
+                             .invalid('x', 'alpha'))
+
             failureCase = (notInProximal, inDistal)
 
             message = 'Expected \'' + str(failureCase) \
                       + '\' but got: \'' + str(e.violations) + '\''
 
             self.assertTrue(failureCase in e.violations, message)
+
+
+    def test_canon_quot_produces_the_canonical_quotient(self):
+
+        c = C.Cla({
+            'x':{1,2,3,4,5,6,7,8,9,10},
+            'y':{1,3,5,7,9},
+            'z':{2,4,6,8,10},
+            'u':{3,6,9},
+            'v':{5,10},
+            'w':{2,3,5,7}
+        })
+
+        sigma = {2,3,5}
+        inv = Inv.Invariant(c, sigma)
+
+#        print(c.table)
+#        print(inv)
+#        print(inv.quotient().table)
+
+        quot = I.Infomorphism.canon_quot(c, inv)
+
+        self.assertTrue(isinstance(quot, I.Infomorphism))
 
 
 if __name__ == '__main__':

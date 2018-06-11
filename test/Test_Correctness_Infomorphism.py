@@ -67,7 +67,7 @@ class Infomorphism_Correctness(unittest.TestCase):
         self.expect_infomorphism(p, d, f_up, f_down)
 
 
-    def test_minNonemptyNotInfomorphic(self):
+    def test_min_nonempty_not_infomorphic(self):
 
         v1 = {'x':{'alpha'}}
 
@@ -80,7 +80,8 @@ class Infomorphism_Correctness(unittest.TestCase):
         f_up = lambda x: 'alpha'
         f_down = lambda x: 'x'
 
-        expected_violations = [IP.InfoPair.invalid('y', 'alpha')]
+        expected_violations = [I.Infomorphism.InfoPair
+                               .invalid('y', 'alpha')]
 
         self.expect_axiom_violation(p, d, f_up, f_down, \
                             expected_violations=expected_violations)

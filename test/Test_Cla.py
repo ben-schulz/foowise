@@ -237,46 +237,6 @@ class Test_Cla(unittest.TestCase):
         self.assertValid(c, 'z', 'gamma')
 
 
-    def test_infoPairsByToken_ReturnsEachValidType(self):
-
-        vals = {
-            'x':{'alpha', 'beta'},
-            'y':{'beta'},
-            'z':{'gamma'}
-            }
-
-        c = C.Cla(vals)
-
-        result = c.infopairs_by_token('x')
-
-        expectAlpha = I.InfoPair.valid('x', 'alpha')
-        expectBeta = I.InfoPair.valid('x', 'beta')
-
-        self.assertEqual(2, len(result))
-        self.assertTrue(expectAlpha in result)
-        self.assertTrue(expectBeta in result)
-
-
-    def test_infoPairsByType_ReturnsEachValidToken(self):
-
-        vals = {
-            'x':{'alpha', 'beta'},
-            'y':{'beta'},
-            'z':{'gamma'}
-            }
-
-        c = C.Cla(vals)
-
-        result = c.infopairs_by_type('beta')
-
-        expect_x = I.InfoPair.valid('x', 'beta')
-        expect_y = I.InfoPair.valid('y', 'beta')
-
-        self.assertEqual(2, len(result))
-        self.assertTrue(expect_x in result)
-        self.assertTrue(expect_y in result)
-
-
     def test_from_dictionary_raises_typeerror_on_bad_type(self):
 
         vals = [('x', 'alpha'), ('y', 'beta')]

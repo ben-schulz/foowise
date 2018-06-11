@@ -4,9 +4,66 @@ import Cla as C
 import Validity as V
 import InfomorphismError as IE
 import Index as Id
-import InfoPair as I
 
 class Infomorphism:
+
+    class InfoPair:
+        def __init__(self, x, t, holds):
+
+            self.tok = x
+            self.typ = t
+            self.holds = holds
+
+
+        def __eq__(self, other):
+
+            try:
+                return\
+                    self.tok == other.tok and\
+                    self.typ == other.typ and\
+                    self.holds == other.holds
+
+            except:
+                return False
+
+
+        def __neq__(self, other):
+            return not self == other
+
+
+        def __hash__(self):
+
+            if V.HasType.VALID == self.holds:
+                parity = 1
+            else:
+                parity = -1
+
+            return parity * hash(self.tok) * hash(self.typ)
+
+
+        def __repr__(self):
+
+            if V.HasType.VALID == self.holds:
+                infixOperator = ' |= '
+            elif V.HasType.INVALID == self.holds:
+                infixOperator = ' |\= '
+
+            return '< ' +\
+                repr(self.tok) + infixOperator  + repr(self.typ) +\
+                ' >'
+        
+
+        def __str__(self):
+            return repr(self)
+
+
+        def valid(x, t):        
+            return Infomorphism.InfoPair(x, t, V.HasType.VALID)
+
+
+        def invalid(x, t):
+            return Infomorphism.InfoPair(x, t, V.HasType.INVALID)
+
 
     def __init__(self, c_proximal, c_distal, f_up, f_down):
 
@@ -54,28 +111,37 @@ class Infomorphism:
         violations = []
         for x in self.distal.tok:
 
-            x_validities = (self.proximal
-                            .infopairs_by_token(x))
+            x_validities = self.proximal.get_types(x)
 
             f_down_x = self.f_down[x]
 
-            f_x_validities = (self.distal
-                              .infopairs_by_token(f_down_x))
+            f_x_validities = self.distal.get_types(f_down_x)
 
-            for distal_val in f_x_validities:
+            for t in f_x_validities:
 
-                t = distal_val.typ
-                f_up_t = self.f_up[t]
+                if t in self.f_up:
+                    f_up_t = self.f_up[t]
 
-                if not self.is_valid_proximal(x, f_up_t):
+                    if not self.is_valid_proximal(x, f_up_t):
 
-                    not_in_prox = I.InfoPair.invalid(x, f_up_t)
-                    bad_pair = (not_in_prox, distal_val)
+                        not_in_prox = Infomorphism.InfoPair.invalid(x, f_up_t)
+                        bad_pair = (not_in_prox,
+                                    Infomorphism.InfoPair.valid(f_down_x, t))
 
-                    violations.append(bad_pair)
+                        violations.append(bad_pair)
 
         if violations:
 
             raise IE.InfomorphismAxiomError(violations)
 
         return
+
+
+    def canon_quot(cla, inv):
+
+        f_up = lambda typ: typ
+        f_down = lambda x: inv.canon_rep(x)
+
+        quot = inv.quotient()
+
+        return Infomorphism(quot, cla, f_up, f_down)
