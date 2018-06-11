@@ -51,10 +51,15 @@ class Infomorphism:
             return Infomorphism.InfoPair(x, t, False)
 
 
-    def __init__(self, c_proximal, c_distal, f_up, f_down):
+    def __init__(self,
+                 proximal,
+                 distal,
+                 f_up,
+                 f_down,
+                 validate=True):
 
-        self.proximal = c_proximal
-        self.distal = c_distal
+        self.proximal = proximal
+        self.distal = distal
 
         self.f_down = {x:f_down(x) for x in self.distal.tok}
         self.f_up = {x:f_up(x) for x in self.proximal.typ}
@@ -62,17 +67,10 @@ class Infomorphism:
         self.f_down_img = set(self.f_down.values())
         self.f_up_img = set(self.f_up.values())
 
-        self.satisfies_info_axioms()
+        if validate:
+            self.satisfies_info_axioms()
 
         self.index = Id.Index()
-
-
-    def is_valid_distal(self, x, alpha):
-        return self.distal.is_valid(x, alpha)
-
-
-    def is_valid_proximal(self, x, alpha):
-        return self.proximal.is_valid(x, alpha)
 
 
     def satisfies_info_axioms(self):
