@@ -1,13 +1,13 @@
 import uuid as u
 
 import Cla as C
-import Validity as V
 import InfomorphismError as IE
 import Index as Id
 
 class Infomorphism:
 
     class InfoPair:
+
         def __init__(self, x, t, holds):
 
             self.tok = x
@@ -18,51 +18,37 @@ class Infomorphism:
         def __eq__(self, other):
 
             try:
-                return\
-                    self.tok == other.tok and\
-                    self.typ == other.typ and\
-                    self.holds == other.holds
+                return (
+                    self.tok == other.tok
+                    and self.typ == other.typ
+                    and self.holds == other.holds)
 
             except:
                 return False
 
 
         def __neq__(self, other):
-            return not self == other
+            return not self.__eq__(other)
 
-
-        def __hash__(self):
-
-            if V.HasType.VALID == self.holds:
-                parity = 1
-            else:
-                parity = -1
-
-            return parity * hash(self.tok) * hash(self.typ)
-
-
-        def __repr__(self):
-
-            if V.HasType.VALID == self.holds:
-                infixOperator = ' |= '
-            elif V.HasType.INVALID == self.holds:
-                infixOperator = ' |\= '
-
-            return '< ' +\
-                repr(self.tok) + infixOperator  + repr(self.typ) +\
-                ' >'
-        
 
         def __str__(self):
-            return repr(self)
+
+            if self.holds:
+                infix_op = ' |= '
+            elif self.holds:
+                infix_op = ' |\= '
+
+            return ('< '
+                + repr(self.tok) + infix_op  + repr(self.typ)
+                + ' >')
 
 
         def valid(x, t):        
-            return Infomorphism.InfoPair(x, t, V.HasType.VALID)
+            return Infomorphism.InfoPair(x, t, True)
 
 
         def invalid(x, t):
-            return Infomorphism.InfoPair(x, t, V.HasType.INVALID)
+            return Infomorphism.InfoPair(x, t, False)
 
 
     def __init__(self, c_proximal, c_distal, f_up, f_down):

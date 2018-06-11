@@ -4,7 +4,6 @@ from test_context import Infomorphism as I
 from test_context import Cla as C
 from test_context import Invariant as Inv
 
-from test_context import Validity as V
 from test_context import InfomorphismError as IE
 
 

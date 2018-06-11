@@ -1,7 +1,7 @@
 import unittest
 
-from test_context import Validity as V
 from test_context import Cla as C
+
 
 class ClaTable_Test(unittest.TestCase):
 

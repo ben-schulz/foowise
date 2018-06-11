@@ -18,7 +18,6 @@ sys.path.insert(0,
 
 
 import Cla
-import Validity
 import Infomorphism
 import Invariant
 import Channel

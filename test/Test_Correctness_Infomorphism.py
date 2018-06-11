@@ -2,11 +2,10 @@ import unittest
 
 from test_context import Infomorphism as I
 from test_context import Cla as C
-from test_context import Validity as V
 from test_context import InfomorphismError as IE
-from test_context import InfoPair as IP
 
-class Infomorphism_Correctness(unittest.TestCase):
+
+class Test_Infomorphism_Correctness(unittest.TestCase):
 
 
     def expect_infomorphism(self, p, d, f_up, f_down):
