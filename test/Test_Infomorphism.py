@@ -1,5 +1,7 @@
 import unittest
 
+import Assert as A
+
 from test_context import Infomorphism as I
 from test_context import Cla as C
 from test_context import Invariant as Inv
@@ -173,13 +175,17 @@ class Test_Infomorphism(unittest.TestCase):
         sigma = {2,3,5}
         inv = Inv.Invariant(c, sigma)
 
-#        print(c.table)
-#        print(inv)
-#        print(inv.quotient().table)
-
         quot = I.Infomorphism.canon_quot(c, inv)
 
         self.assertTrue(isinstance(quot, I.Infomorphism))
+        self.assertTrue(quot.proximal.typ.issubset(c.typ))
+
+        toks_map_to_eq_classes = [inv.canon_rep(x)
+                                  == quot.f_down[x]
+                                  for x in c.tok]
+
+        self.assertTrue(all(toks_map_to_eq_classes))
+
 
 
 if __name__ == '__main__':
