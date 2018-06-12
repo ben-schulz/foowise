@@ -151,5 +151,25 @@ class Test_Invariant(unittest.TestCase):
             self.assertTrue(inv.canon_rep(x) in quot.tok)
 
 
+    def test_each_dual_token_has_canonical_representative(self):
+
+        cla = C.Cla({
+            'x':{1,2,3,4,5,6,7,8,9,10},
+            'y':{1,3,5,7,9},
+            'z':{2,4,6,8,10},
+            'u':{3,6,9},
+            'v':{5,10},
+            'w':{2,3,5,7}
+        })
+
+        sigma = {'x', 'z'}
+        inv = I.Invariant(cla, sigma, dual=True)
+
+        quot = inv.quotient()
+
+        for x in cla.typ:
+            self.assertTrue(inv.canon_rep(x) in quot.typ)
+
+
 if __name__ == '__main__':
     unittest.main()

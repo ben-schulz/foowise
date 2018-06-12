@@ -43,7 +43,7 @@ class Invariant(R.EqRelation):
 
     def canon_rep(self, x):
         return next(iter({y for y in self.tok_reps.keys()
-                     if x in self.tok_reps[y]}))
+                              if x in self.tok_reps[y]}))
 
 
     def quotient(self):

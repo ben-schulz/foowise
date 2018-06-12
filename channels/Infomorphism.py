@@ -141,4 +141,7 @@ class Infomorphism:
 
         quot = inv.quotient()
 
+        if inv.isdual:
+            return Infomorphism(cla, quot, f_down, f_up)
+
         return Infomorphism(quot, cla, f_up, f_down)

@@ -219,5 +219,31 @@ class Test_Infomorphism(unittest.TestCase):
                          inf.f_down['y'])
 
 
+    def test_canon_quot_produces_dual_quotient(self):
+
+        c = C.Cla({
+            'x':{1,2,3,4,5,6,7,8,9,10},
+            'y':{1,3,5,7,9},
+            'z':{2,4,6,8,10},
+            'u':{3,6,9},
+            'v':{5,10},
+            'w':{2,3,5,7}
+        })
+
+        sigma = {'x', 'z'}
+        inv = Inv.Invariant(c, sigma, dual=True)
+
+        quot = I.Infomorphism.canon_quot(c, inv)
+
+        self.assertTrue(isinstance(quot, I.Infomorphism))
+        self.assertTrue(quot.distal.tok.issubset(c.tok))
+
+        typs_map_to_eq_classes = [inv.canon_rep(x)
+                                  == quot.f_up[x]
+                                  for x in c.typ]
+
+        self.assertTrue(all(typs_map_to_eq_classes))
+
+        
 if __name__ == '__main__':
     unittest.main()
