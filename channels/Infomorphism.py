@@ -4,6 +4,12 @@ import Cla as C
 import InfomorphismError as IE
 import Index as Id
 
+import Dual as D
+
+@D.dualizable(duals=[
+    ('proximal', 'distal'),
+    ('f_up', 'f_down')
+])
 class Infomorphism:
 
     class InfoPair:
@@ -114,8 +120,10 @@ class Infomorphism:
 
         for (x, f_down_x) in toks:
             for (f_up_t, t) in typs:
+
                 if (self.proximal.is_valid(f_down_x, t)
                     != self.distal.is_valid(x, f_up_t)):
+
                     violations.append(
                         failure_case(f_down_x, t, x, f_up_t))
 

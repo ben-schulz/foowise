@@ -187,6 +187,37 @@ class Test_Infomorphism(unittest.TestCase):
         self.assertTrue(all(toks_map_to_eq_classes))
 
 
+    def test_infomorphism_dualizable(self):
+
+        prox = C.Cla({
+            'x': {1}
+        })
+
+        dist = C.Cla({
+            'y': {2}
+        })
+
+        f_up = lambda _: 2
+        f_down = lambda _: 'x'
+
+        inf = I.Infomorphism(prox, dist, f_up, f_down)
+
+
+        self.assertTrue(isinstance(inf.dual.proximal, C.Cla))
+        self.assertTrue(isinstance(inf.dual.distal, C.Cla))
+
+        A.Assert.sets_equal(inf.dual.proximal.tok,
+                            inf.distal.tok)
+
+        A.Assert.sets_equal(inf.dual.distal.typ,
+                            inf.proximal.typ)
+
+        self.assertEqual(inf.dual.f_down[1],
+                         inf.f_up[1])
+
+        self.assertEqual(inf.dual.f_up['y'],
+                         inf.f_down['y'])
+
 
 if __name__ == '__main__':
     unittest.main()
