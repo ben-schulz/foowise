@@ -303,21 +303,25 @@ class Test_Cla(unittest.TestCase):
 
         self.assertTrue(isinstance(result, C.Cla))
 
-        expect_tok = {(x,y) for x in c_left.tok \
+        expect_tok = {((c_left.index, x), (c_right.index, y))
+                      for x in c_left.tok 
                       for y in c_right.tok}
 
-        expect_typ = {(1,t) for t in c_left.typ} \
-                     .union({(2,t) for t in c_right.typ})
+        expect_typ = ({(c_left.index, t)
+                       for t in c_left.typ}
 
-        mismatched_tok_msg = "Result tokens do not match expected."\
-                             "\nExpected: " + repr(expect_tok) \
-                             + "\nActual: " + repr(result.tok)
+                     .union({(c_right.index, t)
+                             for t in c_right.typ}))
 
-        self.assertEqual(expect_tok, result.tok, \
+        mismatched_tok_msg = ("Result tokens do not match expected."
+                             + "\nExpected: " + repr(expect_tok)
+                             + "\nActual: " + repr(result.tok))
+
+        self.assertEqual(expect_tok, result.tok,
                          msg=mismatched_tok_msg)
 
         mismatched_typ_msg = "Result types do not matched expected."
-        self.assertEqual(expect_typ, result.typ, \
+        self.assertEqual(expect_typ, result.typ,
                          msg=mismatched_typ_msg)
 
 
@@ -337,27 +341,31 @@ class Test_Cla(unittest.TestCase):
 
         result = C.Cla.sum(c_left, c_right)
 
-        for (x,y) in result.tok:
+        for ((i_left, x), (i_right, y)) in result.tok:
 
             for(i, t) in result.typ:
 
-                valid_result = result.is_valid((x,y), (i,t))
+                self.assertTrue(i == i_left or i == i_right)
+
+                valid_result = result.is_valid(
+                    ((i_left, x), (i_right, y)), (i,t))
+
                 if 1 == i:
                     valid_part = c_left.is_valid(x, t)
-                    msg = "c_left.is_valid" \
-                          + repr((x,t)) + " = " + repr(valid_part)
+                    msg = ("c_left.is_valid"
+                          + str((x,t)) + " = " + str(valid_part))
 
                 elif 2 == i:
                     valid_part = c_right.is_valid(y, t)
-                    msg = "c_right.is_valid" \
-                          + repr((x,t)) + " = " + repr(valid_part)
+                    msg = ("c_right.is_valid"
+                          + str((x,t)) + " = " + str(valid_part))
 
                 else:
-                    msg = "Unexpected type index: " + repr(i)
+                    msg = "Unexpected type index: " + str(i)
                     raise ValueError(msg)
 
-                msg += " but sum.is_valid" + repr(((x,y),(i,t))) \
-                       + " = " + repr(valid_result)
+                msg += (" but sum.is_valid" + str(((x,y),(i,t)))
+                       + " = " + str(valid_result))
 
                 self.assertEqual(valid_part, valid_result, msg=msg)
 
@@ -389,14 +397,14 @@ class Test_Cla(unittest.TestCase):
                 self.assertEqual(1, i)
                 valid_result = result.is_valid(x, (i,t))
 
-                valid_part = c_left.is_valid(x[0], t)
-                msg = "c_left.is_valid" \
-                      + repr((x,t)) + " = " + repr(valid_part)
+                valid_part = c_left.is_valid(x[0][1], t)
+                msg = ("c_left.is_valid"
+                      + str((x,t)) + " = " + str(valid_part))
 
-                msg += " but sum.is_valid" + repr((x,(i,t))) \
-                       + " = " + repr(valid_result)
+                msg += (" but sum.is_valid" + str((x,(i,t)))
+                       + " = " + str(valid_result))
 
-                self.assertEqual(valid_part, valid_result, msg=msg)
+                self.assertEqual(valid_result, valid_part, msg=msg)
 
 
     def test_tok_typ_are_duals(self):
@@ -487,14 +495,19 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue(c0.is_valid('x', 0))
         self.assertTrue(c1.is_valid('y', -1))
 
-        self.assertTrue(c_sum.is_valid(('x','y'), (c0.index, 0)))
-        self.assertTrue(c_sum.is_valid(('x','y'), (c1.index, -1)))
+        self.assertTrue(c_sum.is_valid(((c0.index, 'x'),
+                                        (c1.index, 'y')),
+                                       (c0.index, 0)))
+
+        self.assertTrue(c_sum.is_valid(((c0.index, 'x'),
+                                        (c1.index, 'y')),
+                                       (c1.index, -1)))
 
 
 class EquableTestClass:
 
-    def __init__(self, primitiveValuedId):
-        self.id = primitiveValuedId
+    def __init__(self, id_val):
+        self.id = id_val
 
     def __hash__(self):
         return self.id
