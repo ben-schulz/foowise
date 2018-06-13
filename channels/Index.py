@@ -26,10 +26,13 @@ class Index:
         if isinstance(other, int):
             return self.int == other
 
-        try:
-            self.uuid == other.uuid
-        except:
-            return False
+        if hasattr(other, 'int'):
+            return self.int == other.int
+
+        if hasattr(other, 'uuid'):
+            return self.uuid.int == other.uuid.int
+
+        return NotImplemented
 
 
     def __neq__(self, other):

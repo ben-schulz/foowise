@@ -43,5 +43,12 @@ class Test_Index(unittest.TestCase):
         self.assertEqual(255, i)
 
 
+    def test_equality_reflexive(self):
+
+        i = I.Index.from_int(255)
+
+        self.assertEqual(i, i)
+
+
 if __name__ == '__main__':
     unittest.main()

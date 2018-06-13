@@ -24,6 +24,7 @@ import Channel
 import DistSys
 
 import Index
+import Value
 
 import InfomorphismError
 import InfoPair
