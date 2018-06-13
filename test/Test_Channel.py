@@ -3,6 +3,7 @@ import unittest
 from test_context import Cla as C
 from test_context import Infomorphism as I
 
+from test_context import DistSys as D
 from test_context import Channel as Ch
 from test_context import GenQuotient as Q
 
@@ -23,14 +24,17 @@ class Test_Channel(unittest.TestCase):
         quot = Q.get_invariant(c)
 
         inv1 = next(quot)
-        q1 = inv1.quotient()
+        inf1 = I.Infomorphism.canon_quot(c, inv1)
 
         inv2 = next(quot)
-        q2 = inv2.quotient()
+        inf2 = I.Infomorphism.canon_quot(c, inv2)
 
         inv3 = next(quot)
-        q3 = inv3.quotient()
+        inf3 = I.Infomorphism.canon_quot(c, inv3)
 
+        d = D.DistSys({inf1, inf2, inf3})
+
+        ch = Ch.Channel.colimit(d)
 
 
 if __name__ == '__main__':

@@ -10,8 +10,10 @@ class DistSys:
         self._clas = {c.index:c for c in clas}
         self.clas = self._clas.values()
 
+
     def get_cla(self, ix):
         return self._clas.get(ix, None)
+
 
     def get_infomorphisms(self, prox_ix, dist_ix):
 

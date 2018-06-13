@@ -38,3 +38,7 @@ class Index:
 
     def __hash__(self):
         return self.int
+
+
+    def __str__(self):
+        return str(self.int)
