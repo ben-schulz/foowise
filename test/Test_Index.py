@@ -36,5 +36,12 @@ class Test_Index(unittest.TestCase):
             pass
 
 
+    def test_compares_equal_when_int_value_equal(self):
+
+        i = I.Index.from_int(255)
+
+        self.assertEqual(255, i)
+
+
 if __name__ == '__main__':
     unittest.main()

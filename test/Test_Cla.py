@@ -284,19 +284,20 @@ class Test_Cla(unittest.TestCase):
         for tok in result.tok:
             self.assertNotValid(result, tok, 'omega')
 
+
     def test_sum_includes_all_tokens_and_all_types(self):
 
         c_left = C.Cla({
             'x': {1,2,3},
             'y': {2,5},
             'z': {1}
-            })
+            }, index=1)
 
         c_right = C.Cla({
             'a': {'alpha', 'beta', 'gamma'},
             'b': {'beta'},
             'c': {'gamma'}
-            })
+            }, index=2)
 
         result = C.Cla.sum(c_left, c_right)
 
@@ -305,8 +306,8 @@ class Test_Cla(unittest.TestCase):
         expect_tok = {(x,y) for x in c_left.tok \
                       for y in c_right.tok}
 
-        expect_typ = {(0,t) for t in c_left.typ} \
-                     .union({(1,t) for t in c_right.typ})
+        expect_typ = {(1,t) for t in c_left.typ} \
+                     .union({(2,t) for t in c_right.typ})
 
         mismatched_tok_msg = "Result tokens do not match expected."\
                              "\nExpected: " + repr(expect_tok) \
@@ -326,13 +327,13 @@ class Test_Cla(unittest.TestCase):
             'x': {1,2,3},
             'y': {2,5},
             'z': {1}
-            })
+            }, index=1)
 
         c_right = C.Cla({
             'a': {'alpha', 'beta', 'gamma'},
             'b': {'beta'},
             'c': {'gamma'}
-            })
+            }, index=2)
 
         result = C.Cla.sum(c_left, c_right)
 
@@ -341,12 +342,12 @@ class Test_Cla(unittest.TestCase):
             for(i, t) in result.typ:
 
                 valid_result = result.is_valid((x,y), (i,t))
-                if 0 == i:
+                if 1 == i:
                     valid_part = c_left.is_valid(x, t)
                     msg = "c_left.is_valid" \
                           + repr((x,t)) + " = " + repr(valid_part)
 
-                elif 1 == i:
+                elif 2 == i:
                     valid_part = c_right.is_valid(y, t)
                     msg = "c_right.is_valid" \
                           + repr((x,t)) + " = " + repr(valid_part)
@@ -377,7 +378,7 @@ class Test_Cla(unittest.TestCase):
             'x': {1,2,3},
             'y': {2,5},
             'z': {1}
-            })
+            }, index=1)
 
         result = C.Cla.sum(c_left)
 
@@ -385,7 +386,7 @@ class Test_Cla(unittest.TestCase):
 
             for(i, t) in result.typ:
 
-                self.assertEqual(0, i)
+                self.assertEqual(1, i)
                 valid_result = result.is_valid(x, (i,t))
 
                 valid_part = c_left.is_valid(x[0], t)
@@ -409,8 +410,11 @@ class Test_Cla(unittest.TestCase):
         A.Assert.sets_equal(c.tok, c.dual.typ)
         A.Assert.sets_equal(c.typ, c.dual.tok)
 
-        A.Assert.sets_equal(c.get_types('x'), c.dual.get_tokens('x'))
-        A.Assert.sets_equal(c.get_tokens(2), c.dual.get_types(2))
+        A.Assert.sets_equal(c.get_types('x'),
+                            c.dual.get_tokens('x'))
+
+        A.Assert.sets_equal(c.get_tokens(2),
+                            c.dual.get_types(2))
 
 
     def test_agree_funcs_are_dual(self):
@@ -471,6 +475,20 @@ class Test_Cla(unittest.TestCase):
         c = C.Cla({}, index=255)
 
         self.assertEqual(c.index, 255)
+
+
+    def test_sum_indexes_tokens_by_classification_index(self):
+
+        c0 = C.Cla({'x':{0}}, index=256)
+        c1 = C.Cla({'y':{-1}}, index=255)
+
+        c_sum = C.Cla.sum(c0, c1)
+
+        self.assertTrue(c0.is_valid('x', 0))
+        self.assertTrue(c1.is_valid('y', -1))
+
+        self.assertTrue(c_sum.is_valid(('x','y'), (c0.index, 0)))
+        self.assertTrue(c_sum.is_valid(('x','y'), (c1.index, -1)))
 
 
 class EquableTestClass:

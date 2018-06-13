@@ -23,6 +23,9 @@ class Index:
 
     def __eq__(self, other):
 
+        if isinstance(other, int):
+            return self.int == other
+
         try:
             self.uuid == other.uuid
         except:

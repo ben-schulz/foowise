@@ -208,8 +208,10 @@ class Cla:
 
         for v in vals.keys():
             
-            ix_typs = [{(i,t) for t in cla[i].get_types(v[i])}
-                       for i in range(0,len(cla))]
+            ix_typs = [
+                {(cla[i].index, t)
+                 for t in cla[i].get_types(v[i])}
+                for i in range(0,len(cla))]
 
             vals[v] = S.Set.union(*ix_typs)
 
