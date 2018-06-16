@@ -202,10 +202,7 @@ class Cla:
         if 0 == len(cla):
             return Cla.empty()
 
-        indexed_tokens = map(lambda c:
-                             map(lambda x: (c.index, x),
-                                 c.tok),
-                             cla)
+        indexed_tokens = map((lambda c: c.tok), cla)
 
         tok = S.Set.product(*indexed_tokens)
 
@@ -215,7 +212,7 @@ class Cla:
             
             ix_typs = [
                 {(cla[i].index, t)
-                 for t in cla[i].get_types(v[i][1])}
+                 for t in cla[i].get_types(v[i])}
                 for i in range(0,len(cla))]
 
             vals[v] = S.Set.union(*ix_typs)

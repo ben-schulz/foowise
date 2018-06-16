@@ -4,7 +4,9 @@ import Invariant as I
 class Channel:
 
     def colimit(d):
+        raise NotImplementedError
 
+    def _colimit(d):
         c_sum = C.Cla.sum(*d.clas)             
 
         infs = {(inf.proximal.index, inf.distal.index)

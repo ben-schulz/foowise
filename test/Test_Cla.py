@@ -303,7 +303,7 @@ class Test_Cla(unittest.TestCase):
 
         self.assertTrue(isinstance(result, C.Cla))
 
-        expect_tok = {((c_left.index, x), (c_right.index, y))
+        expect_tok = {(x, y)
                       for x in c_left.tok 
                       for y in c_right.tok}
 
@@ -333,22 +333,22 @@ class Test_Cla(unittest.TestCase):
             'z': {1}
             }, index=1)
 
+        i_left = c_left.index
+
         c_right = C.Cla({
             'a': {'alpha', 'beta', 'gamma'},
             'b': {'beta'},
             'c': {'gamma'}
             }, index=2)
+        i_right = c_right.index
 
         result = C.Cla.sum(c_left, c_right)
 
-        for ((i_left, x), (i_right, y)) in result.tok:
+        for (x, y) in result.tok:
 
             for(i, t) in result.typ:
 
-                self.assertTrue(i == i_left or i == i_right)
-
-                valid_result = result.is_valid(
-                    ((i_left, x), (i_right, y)), (i,t))
+                valid_result = result.is_valid((x, y), (i,t))
 
                 if 1 == i:
                     valid_part = c_left.is_valid(x, t)
@@ -397,7 +397,7 @@ class Test_Cla(unittest.TestCase):
                 self.assertEqual(1, i)
                 valid_result = result.is_valid(x, (i,t))
 
-                valid_part = c_left.is_valid(x[0][1], t)
+                valid_part = c_left.is_valid(x[0], t)
                 msg = ("c_left.is_valid"
                       + str((x,t)) + " = " + str(valid_part))
 
@@ -495,12 +495,10 @@ class Test_Cla(unittest.TestCase):
         self.assertTrue(c0.is_valid('x', 0))
         self.assertTrue(c1.is_valid('y', -1))
 
-        self.assertTrue(c_sum.is_valid(((c0.index, 'x'),
-                                        (c1.index, 'y')),
+        self.assertTrue(c_sum.is_valid(('x', 'y'),
                                        (c0.index, 0)))
 
-        self.assertTrue(c_sum.is_valid(((c0.index, 'x'),
-                                        (c1.index, 'y')),
+        self.assertTrue(c_sum.is_valid(('x', 'y'),
                                        (c1.index, -1)))
 
 
