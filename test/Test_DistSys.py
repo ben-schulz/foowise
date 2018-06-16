@@ -2,7 +2,9 @@ import unittest
 
 from test_context import Cla as C
 from test_context import Infomorphism as I
+from test_context import Invariant as Inv
 from test_context import DistSys as D
+from test_context import Value
 
 class Test_DistSys(unittest.TestCase):
 
@@ -83,6 +85,31 @@ class Test_DistSys(unittest.TestCase):
         self.assertTrue(inf_1_2 in c1_to_c2)
         self.assertTrue(inf_2_1 in c2_to_c1)
         self.assertTrue(inf_2_3 in c2_to_c3)
+
+
+    def test_get_infomorphisms_accepts_wildcard(self):
+
+        c = C.Cla({
+            'x':{1,2,3,4,5,6,7,8,9,10},
+            'y':{1,3,5,7,9},
+            'z':{2,4,6,8,10},
+            'u':{3,6,9},
+            'v':{5,10},
+            'w':{2,3,5,7}
+        })
+
+        inv_left = Inv.Invariant(c, {2, 4})
+        inv_right = Inv.Invariant(c, {3, 5})
+
+        f_left = I.Infomorphism.canon_quot(c, inv_left)
+        f_right = I.Infomorphism.canon_quot(c, inv_right)
+
+        d = D.DistSys({f_left, f_right})
+
+        result = d.get_infomorphisms(Value.Any, c.index)
+
+        self.assertTrue(f_left in result)
+        self.assertTrue(f_right in result)
 
 
 if __name__ == '__main__':

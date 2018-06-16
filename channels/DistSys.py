@@ -1,3 +1,4 @@
+import Value
 
 class DistSys:
 
@@ -16,6 +17,14 @@ class DistSys:
 
 
     def get_infomorphisms(self, prox_ix, dist_ix):
+
+        if Value.Any == prox_ix:
+            return [inf for inf in self.infs
+                    if inf.distal.index == dist_ix]
+
+        if Value.Any == dist_ix:
+            return [inf for inf in self.infs
+                    if inf.proximal.index == prox_ix]
 
         return [inf for inf in self.infs
                 if inf.proximal.index == prox_ix

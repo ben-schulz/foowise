@@ -1,3 +1,5 @@
+Any = object()
+
 class Value:
 
     def __init__(self, index, name):
