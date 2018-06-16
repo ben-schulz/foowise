@@ -28,7 +28,6 @@ import Value
 
 import InfomorphismError
 import InfoPair
-import InfoTetrad
 import Theory
 import JudgeSet
 import Sequent
