@@ -1,6 +1,6 @@
 import unittest
 
-import Assert as A
+import Assert
 
 from test_context import Cla as C
 from test_context import Invariant as I
@@ -81,7 +81,7 @@ class Test_Invariant(unittest.TestCase):
         inv = I.Invariant(cla, sigma)
         quot = inv.quotient()
 
-        A.Assert.sets_equal(sigma, quot.typ)
+        Assert.sets_equal(sigma, quot.typ)
 
         self.assertEqual(3, len(quot.tok))
 
@@ -118,7 +118,7 @@ class Test_Invariant(unittest.TestCase):
         quot = inv.quotient()
 
         self.assertTrue(inv.isdual)
-        A.Assert.sets_equal(sigma, quot.tok)
+        Assert.sets_equal(sigma, quot.tok)
 
         self.assertEqual(3, len(quot.typ))
 

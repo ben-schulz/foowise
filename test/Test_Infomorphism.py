@@ -1,6 +1,6 @@
 import unittest
 
-import Assert as A
+import Assert
 
 from test_context import Infomorphism as I
 from test_context import Cla as C
@@ -206,10 +206,10 @@ class Test_Infomorphism(unittest.TestCase):
         self.assertTrue(isinstance(inf.dual.proximal, C.Cla))
         self.assertTrue(isinstance(inf.dual.distal, C.Cla))
 
-        A.Assert.sets_equal(inf.dual.proximal.tok,
+        Assert.sets_equal(inf.dual.proximal.tok,
                             inf.distal.tok)
 
-        A.Assert.sets_equal(inf.dual.distal.typ,
+        Assert.sets_equal(inf.dual.distal.typ,
                             inf.proximal.typ)
 
         self.assertEqual(inf.dual.f_down[1],

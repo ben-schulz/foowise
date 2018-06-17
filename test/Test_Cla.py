@@ -2,7 +2,7 @@ import unittest
 
 import uuid as u
 
-import Assert as A
+import Assert
 from test_context import Cla as C
 from test_context import InfoPair as I
 from test_context import Index as Id
@@ -415,13 +415,13 @@ class Test_Cla(unittest.TestCase):
             'z' : {3,6,9,12}
             })
 
-        A.Assert.sets_equal(c.tok, c.dual.typ)
-        A.Assert.sets_equal(c.typ, c.dual.tok)
+        Assert.sets_equal(c.tok, c.dual.typ)
+        Assert.sets_equal(c.typ, c.dual.tok)
 
-        A.Assert.sets_equal(c.get_types('x'),
+        Assert.sets_equal(c.get_types('x'),
                             c.dual.get_tokens('x'))
 
-        A.Assert.sets_equal(c.get_tokens(2),
+        Assert.sets_equal(c.get_tokens(2),
                             c.dual.get_types(2))
 
 
