@@ -34,7 +34,7 @@ class Test_Channel(unittest.TestCase):
 
         d = D.DistSys({inf1, inf2, inf3})
 
-#        ch = Ch.Channel.colimit(d)
+        ch = Ch.Channel.colimit(d)
 
 
 if __name__ == '__main__':
