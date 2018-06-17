@@ -126,5 +126,6 @@ class Test_Set(unittest.TestCase):
 
         A.Assert.sets_equal(set(), S.Set.intersect(x0,x1,x2,x3))
 
+
 if __name__ == '__main__':
     unittest.main()
