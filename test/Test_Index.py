@@ -31,7 +31,8 @@ class Test_Index(unittest.TestCase):
 
         try:
             I.Index.from_int(object())
-            self.assertFalse(True, "Expected 'TypeError' raised.")
+            Assert.fail("Expected 'TypeError' raised.")
+
         except TypeError:
             pass
 

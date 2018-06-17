@@ -30,7 +30,7 @@ class Test_Infomorphism_Correctness(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, message)
+            Assert.fail(message)
 
         except IE.InfomorphismAxiomError as e:
             pass

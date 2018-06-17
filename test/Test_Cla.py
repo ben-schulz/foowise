@@ -466,7 +466,7 @@ class Test_Cla(unittest.TestCase):
 
         try:
             c = C.Cla({}, index=NonEquableTestClass())
-            self.assertTrue(False, "Expected 'ValueError'.")
+            Assert.fail("Expected 'ValueError'.")
 
         except ValueError:
             pass

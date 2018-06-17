@@ -9,6 +9,14 @@ class SetAssertionError(AssertionError):
             super(AssertionError, self, msg)
 
 
+def fail(msg=None):
+
+    if msg:
+        raise AssertionError(msg)
+
+    raise AssertionError
+
+
 def sets_equal(left, right):
 
     missing_left = [str(l) for l in left if l not in right]

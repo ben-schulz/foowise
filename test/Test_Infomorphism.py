@@ -24,8 +24,7 @@ class Test_Infomorphism(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_down, f_up)
-
-            self.assertTrue(False, "Expected 'MorphismRangeError'.")
+            Asset.fail("Expected 'MorphismRangeError'.")
 
         except IE.MorphismRangeError:
             pass
@@ -87,8 +86,7 @@ class Test_Infomorphism(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, \
-                            "Expected 'InfomorphismAxiomError'.")
+            Assert.fail("Expected 'InfomorphismAxiomError'.")
 
         except IE.InfomorphismAxiomError:
             pass
@@ -115,9 +113,8 @@ class Test_Infomorphism(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, \
-                            "Expected 'InfomorphismAxiomError'.")
-
+            Assert.fail("Expected 'InfomorphismAxiomError'.")
+                            
         except IE.InfomorphismAxiomError:
             pass
 
@@ -143,8 +140,7 @@ class Test_Infomorphism(unittest.TestCase):
 
         try:
             I.Infomorphism(p, d, f_up, f_down)
-            self.assertTrue(False, \
-                            "Expected 'InfomorphismAxiomError'.")
+            Assert.fail("Expected 'InfomorphismAxiomError'.")
 
         except IE.InfomorphismAxiomError as e:
 

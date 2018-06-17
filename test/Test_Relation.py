@@ -84,10 +84,9 @@ class Test_Relation(unittest.TestCase):
         parts = [{1}, {1,2,4,8}, {3,6,9}, {5,7}]
 
         try:
-
             rel = R.EqRelation(sigma, parts)
             msg = "Expected 'ValueError' raised."
-            self.assertTrue(False, msg=msg)
+            Assert.fail(msg)
 
         except ValueError:
             pass
@@ -101,7 +100,7 @@ class Test_Relation(unittest.TestCase):
         try:
             rel = R.EqRelation(sigma, parts)
             msg = "Expected 'ValueError' raised."
-            self.assertTrue(False, msg=msg)
+            Assert.fail(msg)
 
         except ValueError:
             pass

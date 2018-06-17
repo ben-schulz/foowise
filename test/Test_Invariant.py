@@ -100,7 +100,7 @@ class Test_Invariant(unittest.TestCase):
 
         else:
             msg = 'Expected exactly one of {y, z} in result tokens.'
-            self.assertTrue(False, msg)
+            Assert.fail(msg)
 
 
     def test_dual_quotient_returns_correct_classification(self):
