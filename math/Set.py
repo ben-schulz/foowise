@@ -10,7 +10,11 @@ class Set:
 
 
     def product(*xs):
-        return it.product(*xs)
+
+        if xs:
+            return it.product(*xs)
+
+        return set()
 
 
     def union(*xs):
