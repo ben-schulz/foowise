@@ -8,7 +8,7 @@ class Channel:
 
     def colimit(d):
 
-        c_sum = C.Cla.sum(*d.clas)             
+        c_sum = C.Sum(*d.clas)             
 
         infs = {(inf.proximal.index, inf.distal.index)
                 for inf in d.infs}

@@ -197,29 +197,6 @@ class Cla:
         return self.table.is_invalid(tok, typ)
 
 
-    def sum(*cla):
-
-        if 0 == len(cla):
-            return Cla.empty()
-
-        indexed_tokens = map((lambda c: c.tok), cla)
-
-        tok = S.Set.product(*indexed_tokens)
-
-        vals = {x:set() for x in tok}
-
-        for v in vals.keys():
-            
-            ix_typs = [
-                {(cla[i].index, t)
-                 for t in cla[i].get_types(v[i])}
-                for i in range(0,len(cla))]
-
-            vals[v] = S.Set.union(*ix_typs)
-
-        return Cla(vals)
-
-
     def get_types(self, tok, subset=None):
 
         if not tok in self.tok:
@@ -281,3 +258,25 @@ class Cla:
 
     def empty():
         return Cla({})
+
+
+class Sum(Cla):
+
+    def __init__(self, *cla):
+
+        indexed_tokens = map((lambda c: c.tok), cla)
+
+        tok = S.Set.product(*indexed_tokens)
+
+        vals = {x:set() for x in tok}
+
+        for v in vals.keys():
+
+            ix_typs = [
+                {(cla[i].index, t)
+                 for t in cla[i].get_types(v[i])}
+                for i in range(0,len(cla))]
+
+            vals[v] = S.Set.union(*ix_typs)
+
+        Cla.__init__(self, vals)

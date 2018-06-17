@@ -299,7 +299,7 @@ class Test_Cla(unittest.TestCase):
             'c': {'gamma'}
             }, index=2)
 
-        result = C.Cla.sum(c_left, c_right)
+        result = C.Sum(c_left, c_right)
 
         self.assertTrue(isinstance(result, C.Cla))
 
@@ -342,7 +342,7 @@ class Test_Cla(unittest.TestCase):
             }, index=2)
         i_right = c_right.index
 
-        result = C.Cla.sum(c_left, c_right)
+        result = C.Sum(c_left, c_right)
 
         for (x, y) in result.tok:
 
@@ -372,7 +372,7 @@ class Test_Cla(unittest.TestCase):
 
     def test_sum_returns_empty_on_no_args(self):
 
-        result = C.Cla.sum()
+        result = C.Sum()
 
         self.assertTrue(isinstance(result, C.Cla))
         self.assertEqual(0, len(result.tok))
@@ -388,7 +388,7 @@ class Test_Cla(unittest.TestCase):
             'z': {1}
             }, index=1)
 
-        result = C.Cla.sum(c_left)
+        result = C.Sum(c_left)
 
         for x in result.tok:
 
@@ -490,7 +490,7 @@ class Test_Cla(unittest.TestCase):
         c0 = C.Cla({'x':{0}}, index=256)
         c1 = C.Cla({'y':{-1}}, index=255)
 
-        c_sum = C.Cla.sum(c0, c1)
+        c_sum = C.Sum(c0, c1)
 
         self.assertTrue(c0.is_valid('x', 0))
         self.assertTrue(c1.is_valid('y', -1))
