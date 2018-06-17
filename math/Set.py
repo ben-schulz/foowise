@@ -17,6 +17,14 @@ class Set:
         return f.reduce(lambda y,z: z.union(y), xs, set())
 
 
+    def intersect(*xs):
+
+        if not xs:
+            return set()
+        
+        return f.reduce(lambda y,z: z.intersection(y), xs, xs[0])
+
+
     def is_partition(sigma, parts):
 
         _parts = list(parts)

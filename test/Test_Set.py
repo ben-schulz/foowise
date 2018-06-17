@@ -1,5 +1,5 @@
 import unittest
-
+import Assert as A
 from test_context import Set as S
 
 class Test_Set(unittest.TestCase):        
@@ -99,6 +99,32 @@ class Test_Set(unittest.TestCase):
 
         self.assertTrue(all(are_subsets))
 
+
+    def test_intersection_all_and_only_shared_elements(self):
+
+        x0 = {1,2,3,4,5,6,7,8}
+        x1 = {2,4,6,8,10,12}
+        x2 = {3,6,9}
+
+        result = S.Set.intersect(x0,x1,x2)
+
+        A.Assert.sets_equal({6}, result)
+
+
+    def test_insersection_of_no_sets_empty(self):
+
+        A.Assert.sets_equal(set(), S.Set.intersect())
+
+
+    def test_intersection_with_any_empty_set_is_empty(self):
+
+        x0 = {1,2,3,4,5,6,7,8}
+        x1 = {2,4,6,8,10,12}
+        x2 = {3,6,9}
+        x3 = set()
+
+
+        A.Assert.sets_equal(set(), S.Set.intersect(x0,x1,x2,x3))
 
 if __name__ == '__main__':
     unittest.main()
