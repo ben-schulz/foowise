@@ -16,12 +16,12 @@ class Channel:
         sigma_parts = []
         for dist_ix in range(0, len(d.clas)):
 
-            dist_id = d.id_at(dist_ix)
+            dist_id = c_sum.ident_at(dist_ix)
             dist_infs = d.get_infomorphisms(Value.Any, dist_id)
 
             for f in dist_infs:
                 prox_id = f.proximal.index
-                prox_ix = d.index_of(prox_id)
+                prox_ix = c_sum.index_of(prox_id)
 
                 toks = {x for x in c_sum.tok
                        if x[prox_ix] == f.f_down[x[dist_ix]]}

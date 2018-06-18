@@ -264,9 +264,15 @@ class Sum(Cla):
 
     def __init__(self, *cla):
 
-        indexed_tokens = map((lambda c: c.tok), cla)
+        indexes = enumerate(map(lambda c: c.index, cla))
 
-        tok = S.Set.product(*indexed_tokens)
+        self._ix_to_id = dict(indexes)
+        self._id_to_ix = {self._ix_to_id[k]:k for k in
+                          self._ix_to_id.keys()}
+
+        tokens = map((lambda c: c.tok), cla)
+
+        tok = S.Set.product(*tokens)
 
         vals = {x:set() for x in tok}
 
@@ -280,3 +286,11 @@ class Sum(Cla):
             vals[v] = S.Set.union(*ix_typs)
 
         Cla.__init__(self, vals)
+
+
+    def index_of(self, ident):
+        return self._id_to_ix.get(ident, None)
+
+
+    def ident_at(self, index):
+        return self._ix_to_id.get(index, None)

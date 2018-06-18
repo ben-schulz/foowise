@@ -502,6 +502,18 @@ class Test_Cla(unittest.TestCase):
                                        (c1.index, -1)))
 
 
+    def test_sum_index_of_inverts_ident_at(self):
+
+        c0 = C.Cla({'x':{0}}, index=256)
+        c1 = C.Cla({'y':{-1}}, index=255)
+
+        c_sum = C.Sum(c0, c1)
+
+        self.assertEqual(c0.index,
+                         c_sum.ident_at(
+                             c_sum.index_of(c0.index)))
+
+
 class EquableTestClass:
 
     def __init__(self, id_val):
