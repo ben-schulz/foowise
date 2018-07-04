@@ -1,5 +1,13 @@
+# python virtual environment
 env/**
-**/*.swp
+
+# compiled artifacts
 **/*.pyc
+
+# setuptools distribution folder
+/dist/
+
+# text editor temp files
 **/*~
 **/*#
+**/*.swp

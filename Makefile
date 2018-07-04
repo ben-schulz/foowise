@@ -1,6 +1,6 @@
 watch:
-	. env/bin/activate && python3 ./test/test_watcher.py --project channels math heuristic test --tests test --pattern Test*.py
+	. env/bin/activate && python3 ./foowise/test/test_watcher.py --project ./foowise/channels ./foowise/math ./foowise/heuristic ./foowise/test --tests ./foowise/test --pattern Test*.py
 test:
-	. env/bin/activate && python3 -m unittest discover -s ./test -p "Test_*.py"
+	. env/bin/activate && python3 -m unittest discover -s ./foowise/test -p "Test_*.py"
 
 .PHONY: test
