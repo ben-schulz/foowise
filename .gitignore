@@ -6,6 +6,7 @@ env/**
 
 # setuptools distribution folder
 /dist/
+foowise.egg-info/**
 
 # text editor temp files
 **/*~
