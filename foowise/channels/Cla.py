@@ -1,12 +1,11 @@
 import functools as f
 
-import Index as Id
+from foowise.channels import Index as Id
+from foowise.channels import InfoPair as I
 
-import Set as S
-import InfoPair as I
-import LinAlg as Alg
-import Dual as D
-
+from foowise.math import Set as S
+from foowise.math import LinAlg as Alg
+from foowise.math import Dual as D
 
 @D.dualizable(duals=[
     ('tok', 'typ'),

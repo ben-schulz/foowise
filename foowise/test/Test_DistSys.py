@@ -1,10 +1,11 @@
 import unittest
 
-from test_context import Cla as C
-from test_context import Infomorphism as I
-from test_context import Invariant as Inv
-from test_context import DistSys as D
-from test_context import Value
+import foowise.channels.Cla as C
+import foowise.channels.Infomorphism as I
+import foowise.channels.Invariant as Inv
+import foowise.channels.DistSys as D
+import foowise.channels.Value as Value
+
 
 class Test_DistSys(unittest.TestCase):
 

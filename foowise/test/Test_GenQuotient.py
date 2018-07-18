@@ -1,8 +1,8 @@
 import unittest
 
-import Cla as C
-import Invariant as I
-import GenQuotient as Q
+import foowise.channels.Cla as C
+import foowise.channels.Invariant as I
+import foowise.heuristic.GenQuotient as Q
 
 class Test_GenQuotient(unittest.TestCase):
 

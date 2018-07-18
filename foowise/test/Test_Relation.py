@@ -1,7 +1,7 @@
 import unittest
 
-from test_context import Relation as R
-from test_context import Set as S
+import foowise.math.Relation as R
+import foowise.math.Set as S
 
 class Test_Relation(unittest.TestCase):
 

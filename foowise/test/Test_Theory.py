@@ -1,9 +1,9 @@
 import unittest
 
-from test_context import Cla as C
-from test_context import JudgeSet as J
-from test_context import Sequent as S
-from test_context import Theory as T
+import foowise.channels.Cla as C
+import foowise.channels.JudgeSet as J
+import foowise.channels.Sequent as S
+import foowise.channels.Theory as T
 
 class Theory_Test(unittest.TestCase):
 

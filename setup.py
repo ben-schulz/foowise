@@ -6,7 +6,7 @@ def readme():
 
 setuptools.setup(
     name='foowise',
-    version='0.0',    
+    version='0.8',
     description='An implementation of Barwise-Seligman Channels',
     long_description=readme(),
     
@@ -29,6 +29,8 @@ setuptools.setup(
     entry_points={
         'console_scripts':['foowise=foowise.command_line:main']
     },
+
+    test_suite='foowise.test.suite',
 
     include_package_data=True,
     zip_safe=False

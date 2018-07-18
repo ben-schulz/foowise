@@ -1,6 +1,7 @@
 import unittest
 import Assert
-from test_context import Set as S
+
+import foowise.math.Set as S
 
 class Test_Set(unittest.TestCase):        
 

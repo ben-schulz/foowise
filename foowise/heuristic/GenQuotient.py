@@ -1,7 +1,7 @@
-import Set as S
+import foowise.math.Set as S
 
-import Cla as C
-import Invariant as I
+import foowise.channels.Cla as C
+import foowise.channels.Invariant as I
 
 
 def get_invariant(cla):

@@ -1,7 +1,7 @@
 import unittest
 
-from test_context import Index as Id
-from test_context import Value as V
+import foowise.channels.Index as Id
+import foowise.channels.Value as V
 
 class Test_Value(unittest.TestCase):
 

@@ -1,6 +1,7 @@
 import unittest
 
-from test_context import Dual as D
+import foowise.math.Dual as D
+
 
 class Test_Dual(unittest.TestCase):
 

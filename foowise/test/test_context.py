@@ -17,24 +17,24 @@ sys.path.insert(0,
                         os.path.dirname(__file__), '../heuristic')))
 
 
-import Cla
-import Infomorphism
-import Invariant
-import Channel
-import DistSys
+import foowise.channels.Cla
+import foowise.channels.Infomorphism
+import foowise.channels.Invariant
+import foowise.channels.Channel
+import foowise.channels.DistSys
 
-import Index
-import Value
+import foowise.channels.Index
+import foowise.channels.Value
 
-import InfomorphismError
-import InfoPair
-import Theory
-import JudgeSet
-import Sequent
+import foowise.channels.InfomorphismError
+import foowise.channels.InfoPair
+import foowise.channels.Theory
+import foowise.channels.JudgeSet
+import foowise.channels.Sequent
 
-import LinAlg
-import Set
-import Relation
-import Dual
+import foowise.math.LinAlg
+import foowise.math.Set
+import foowise.math.Relation
+import foowise.math.Dual
 
-import GenQuotient
+import foowise.heuristic.GenQuotient

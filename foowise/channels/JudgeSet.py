@@ -1,4 +1,4 @@
-import Sequent as S
+from . import Sequent as S
 
 class JudgeSet:
 

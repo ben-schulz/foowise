@@ -1,8 +1,8 @@
-import Value
-import Cla as C
-import Invariant as I
+from . import Value
+from . import Cla as C
+from . import Invariant as I
 
-import Set as S
+from ..math import Set as S
 
 class Channel:
 

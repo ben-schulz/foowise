@@ -1,5 +1,5 @@
-import LinAlg as A
-import Set as S
+from . import LinAlg as A
+from. import Set as S
 
 class Relation:
 

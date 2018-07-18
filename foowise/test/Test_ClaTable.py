@@ -1,6 +1,6 @@
 import unittest
 
-from test_context import Cla as C
+import foowise.channels.Cla as C
 
 
 class ClaTable_Test(unittest.TestCase):

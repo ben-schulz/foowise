@@ -1,7 +1,7 @@
-import Cla as C
+from foowise.channels import Cla as C
 
-import Set as S
-import Relation as R
+from foowise.math import Set as S
+from foowise.math import Relation as R
 
 class Invariant(R.EqRelation):
 

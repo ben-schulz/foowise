@@ -2,9 +2,10 @@ import unittest
 
 import Assert
 
-from test_context import Cla as C
-from test_context import Invariant as I
-from test_context import Relation as R
+import foowise.channels.Cla as C
+import foowise.channels.Invariant as I
+
+import foowise.math.Relation as R
 
 class Test_Invariant(unittest.TestCase):
 

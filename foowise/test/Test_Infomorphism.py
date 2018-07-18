@@ -2,11 +2,11 @@ import unittest
 
 import Assert
 
-from test_context import Infomorphism as I
-from test_context import Cla as C
-from test_context import Invariant as Inv
+import foowise.channels.Infomorphism as I
+import foowise.channels.Cla as C
+import foowise.channels.Invariant as Inv
 
-from test_context import InfomorphismError as IE
+import foowise.channels.InfomorphismError as IE
 
 
 class Test_Infomorphism(unittest.TestCase):

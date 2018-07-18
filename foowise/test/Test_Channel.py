@@ -1,11 +1,11 @@
 import unittest
 
-from test_context import Cla as C
-from test_context import Infomorphism as I
+import foowise.channels.Cla as C
+import foowise.channels.Infomorphism as I
+import foowise.channels.DistSys as D
+import foowise.channels.Channel as Ch
 
-from test_context import DistSys as D
-from test_context import Channel as Ch
-from test_context import GenQuotient as Q
+import foowise.heuristic.GenQuotient as Q
 
 class Test_Channel(unittest.TestCase):
 

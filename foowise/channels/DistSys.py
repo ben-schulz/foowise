@@ -1,4 +1,4 @@
-import Value
+from . import Value
 
 class DistSys:
 

@@ -1,10 +1,10 @@
 import uuid as u
 
-import Cla as C
-import InfomorphismError as IE
-import Index as Id
+from . import Cla as C
+from . import InfomorphismError as IE
+from . import Index as Id
 
-import Dual as D
+from ..math import Dual as D
 
 @D.dualizable(duals=[
     ('proximal', 'distal'),

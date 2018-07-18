@@ -1,7 +1,7 @@
 import unittest
 
-from test_context import JudgeSet as J
-from test_context import Sequent as S
+import foowise.channels.JudgeSet as J
+import foowise.channels.Sequent as S
 
 class Sequent_Test(unittest.TestCase):
 

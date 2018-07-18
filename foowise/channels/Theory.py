@@ -1,5 +1,5 @@
-import Sequent as S
-import LinAlg as m
+from . import Sequent as S
+from ..math import LinAlg as m
 
 class Theory:
 

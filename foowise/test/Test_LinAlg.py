@@ -1,6 +1,6 @@
 import unittest
 
-from test_context import LinAlg as m
+import foowise.math.LinAlg as m
 
 class Test_LinAlg(unittest.TestCase):
 

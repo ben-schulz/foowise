@@ -1,6 +1,7 @@
 import unittest
 
-from test_context import Index as I
+import foowise.channels.Index as I
+
 
 class Test_Index(unittest.TestCase):
 

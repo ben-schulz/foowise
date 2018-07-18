@@ -3,9 +3,9 @@ import unittest
 import uuid as u
 
 import Assert
-from test_context import Cla as C
-from test_context import InfoPair as I
-from test_context import Index as Id
+import foowise.channels.Cla as C
+import foowise.channels.InfoPair as I
+import foowise.channels.Index as Id
 
 class Test_Cla(unittest.TestCase):
 

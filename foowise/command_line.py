@@ -1,2 +1,2 @@
 def main():
-    print 'reserved for future use'
+    print('reserved for future use')

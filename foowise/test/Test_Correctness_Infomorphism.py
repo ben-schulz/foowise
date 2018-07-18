@@ -1,8 +1,8 @@
 import unittest
 
-from test_context import Infomorphism as I
-from test_context import Cla as C
-from test_context import InfomorphismError as IE
+import foowise.channels.Infomorphism as I
+import foowise.channels.Cla as C
+import foowise.channels.InfomorphismError as IE
 
 
 class Test_Infomorphism_Correctness(unittest.TestCase):
