@@ -6,7 +6,7 @@ def readme():
 
 setuptools.setup(
     name='foowise',
-    version='0.8',
+    version='0.9',
     description='An implementation of Barwise-Seligman Channels',
     long_description=readme(),
     
@@ -21,7 +21,12 @@ setuptools.setup(
         'Topic :: Scientific/Engineering',
         ],
 
-    packages=['foowise'],
+    packages=[
+        'foowise.channels',
+        'foowise.math',
+        'foowise.heuristic'
+    ],
+
     install_requires=[
         'numpy'
     ],
