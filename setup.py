@@ -35,8 +35,6 @@ setuptools.setup(
         'console_scripts':['foowise=foowise.command_line:main']
     },
 
-    test_suite='foowise.test.suite',
-
     include_package_data=True,
     zip_safe=False
 )
