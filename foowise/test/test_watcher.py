@@ -37,8 +37,9 @@ def get_matching_files(project_path, pattern=None):
 
 
 def run_tests(test_path, test_pattern='Test_*.py'):
-    cmd = [ 'python3', '-m', 'unittest', 'discover',\
-           '-s', test_path, '-p', test_pattern]
+
+    cmd = [ 'python3', '-m', 'unittest', 'discover',
+            '-s', test_path, '-p', test_pattern]
 
     subprocess.call(cmd)
 
@@ -73,7 +74,8 @@ def watcher(test_path, watch_paths=None, test_pattern=None):
     filemod_lookup = {}
     while True:
 
-        test_files = get_fullpath_listing(test_path, test_pattern)
+        test_files = get_fullpath_listing(test_path,
+                                          test_pattern)
 
         watch_files = []
         for p in watch_paths:
@@ -93,9 +95,6 @@ def watcher(test_path, watch_paths=None, test_pattern=None):
         time.sleep(1)
 
 
-def main():
+if __name__ == '__main__':
     args = get_args()
     w = watcher(args.tests, args.project, args.pattern)
-
-if __name__ == '__main__':
-    main()
