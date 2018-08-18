@@ -2,7 +2,7 @@ import unittest
 
 import uuid as u
 
-import Assert
+import foowise.test.Assert as Assert
 import foowise.channels.Cla as C
 import foowise.channels.InfoPair as I
 import foowise.channels.Index as Id
