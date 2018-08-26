@@ -3,7 +3,7 @@ import numpy as np
 class Matrix:
 
     def __init__(self, m):
-        self.matrix = np.matrix(m, copy=True)
+        self.matrix = np.array(m, copy=True)
 
 
     def rows(self):
@@ -62,18 +62,9 @@ class Matrix:
 
         if not vals:
             row_count = self.matrix.shape[0]
-            vals = np.matrix(np.zeros((row_count,1)))
+            vals = np.array(np.zeros((row_count,1)))
 
         self.matrix = np.append(self.matrix, vals, axis=1)
-
-
-    def add_row(self, vals=None):
-
-        if not vals:
-            col_count = self.matrix.shape[1]
-            vals = np.matrix(np.zeros(col_count))
-
-        self.matrix = np.append(self.matrix, vals, axis=0)
 
 
     def zeros(dims):

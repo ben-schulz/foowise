@@ -132,7 +132,7 @@ class Cla:
 
             row = self.matrix[tok_ix, :]
 
-            return { self.col_to_typ[ix] : row[0,ix]
+            return { self.col_to_typ[ix] : row[ix]
                        for ix in self.col_to_typ.keys() }
 
         def col_values(self, typ):
@@ -141,7 +141,7 @@ class Cla:
 
             col = self.matrix[:, typ_ix]
             
-            return { self.row_to_tok[ix] : col[ix,0]
+            return { self.row_to_tok[ix] : col[ix]
                      for ix in self.row_to_tok.keys() }
 
 
