@@ -1,4 +1,5 @@
 # foowise
+[![Build Status](https://travis-ci.org/ben-schulz/foowise.svg?branch=master)](https://travis-ci.org/ben-schulz/foowise)
 
 Infomorphic channels ([Barwise and Seligman, 1997][blue book]) rigorously formalize what it means for data to carry meaning across time, space, and subjectivity.
 
